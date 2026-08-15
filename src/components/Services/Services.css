@@ -1,4 +1,4 @@
-.services-section.carousel-mode {
+.services-section {
   position: relative;
   width: 100%;
   background-color: var(--bg-primary);
@@ -15,18 +15,10 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  gap: 40px;
+  gap: 48px;
 }
 
-/* Header Row with Navigation Controls */
-.carousel-header-row {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  width: 100%;
-  gap: 32px;
-}
-
+/* Header */
 .services-header {
   display: flex;
   flex-direction: column;
@@ -62,6 +54,12 @@
   color: var(--text-muted);
 }
 
+.services-title-wrapper {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
 .services-title {
   font-family: var(--font-primary);
   font-size: clamp(2rem, 3.6vw, 3rem);
@@ -69,6 +67,9 @@
   color: var(--text-white);
   letter-spacing: -0.03em;
   line-height: 1.15;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28em;
 }
 
 .services-subtitle {
@@ -79,126 +80,159 @@
   font-weight: 400;
 }
 
-/* Navigation Arrows */
-.carousel-nav-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-  margin-bottom: 8px;
-  z-index: 10;
-}
-
-.carousel-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(245, 247, 250, 0.05);
-  border: 1px solid rgba(245, 247, 250, 0.14);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-white);
-  cursor: pointer;
-  pointer-events: auto;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.carousel-btn:hover:not(:disabled) {
-  background: var(--yellow-primary);
-  border-color: var(--yellow-highlight);
-  color: #000814;
-  transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(255, 195, 0, 0.45);
-}
-
-.carousel-btn:active:not(:disabled) {
-  transform: scale(0.96);
-}
-
-.carousel-btn:disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
-  border-color: rgba(245, 247, 250, 0.05);
-}
-
-/* Viewport and Drag Track */
-.carousel-viewport {
-  width: 100%;
-  overflow: hidden;
-  cursor: grab;
-  user-select: none;
-  touch-action: pan-y;
-  padding: 10px 0 20px;
-}
-
-.carousel-viewport:active {
-  cursor: grabbing;
-}
-
-.carousel-track {
-  display: flex;
+/* 3x2 Bento Grid */
+.services-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 28px;
-  width: max-content;
-  will-change: transform;
+  width: 100%;
 }
 
-/* Panoramic Card */
-.panoramic-card {
-  flex: 0 0 380px;
-  width: 380px;
-  height: 520px;
+/* Bento Card Container */
+.bento-card-container {
+  position: relative;
   border-radius: 20px;
-  background: rgba(0, 20, 42, 0.45);
-  border: 1px solid rgba(245, 247, 250, 0.08);
+  background: rgba(0, 20, 42, 0.4);
+  padding: 1px;
   overflow: hidden;
-  box-shadow: 0 20px 45px -15px rgba(0, 8, 20, 0.9);
-  cursor: pointer;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 20px 40px -15px rgba(0, 8, 20, 0.8);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
 }
 
-.panoramic-card.is-active-card,
-.panoramic-card:hover {
-  border-color: rgba(255, 195, 0, 0.4);
-  box-shadow: 0 25px 55px -12px rgba(0, 8, 20, 0.95), 0 0 25px rgba(255, 195, 0, 0.15);
+.bento-card-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 195, 0, 0.12);
 }
 
-.panoramic-card:hover {
-  transform: translateY(-4px);
+/* Static Default Subtle Border */
+.bento-card-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(245, 247, 250, 0.08);
+  pointer-events: none;
+  z-index: 1;
 }
 
-.panoramic-card-inner {
+/* 1. Animated Conic Border Beam Wrapper */
+.bento-conic-border-wrapper {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.bento-card-container.is-card-hovered .bento-conic-border-wrapper {
+  opacity: 1;
+}
+
+.bento-conic-border-spinner {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 260deg,
+    rgba(255, 195, 0, 0.25) 310deg,
+    rgba(255, 214, 10, 0.9) 360deg
+  );
+  animation: rotateBorderBeam 3.6s linear infinite;
+}
+
+@keyframes rotateBorderBeam {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 2. Dynamic Cursor Spotlight Border Tracker */
+.bento-spotlight-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+  transition: opacity 0.3s ease;
+}
+
+.bento-card-container.is-card-hovered .bento-spotlight-border {
+  opacity: 1;
+}
+
+/* Card Inner Content & Surface */
+.bento-card-inner {
+  position: relative;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 28px;
-  gap: 18px;
-  box-sizing: border-box;
+  gap: 20px;
+  border-radius: 19px;
+  background: rgba(0, 14, 32, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  overflow: hidden;
+}
+
+/* 3. Dynamic Cursor Spotlight Inner Surface Glow */
+.bento-spotlight-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 19px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.bento-card-container.is-card-hovered .bento-spotlight-glow {
+  opacity: 1;
+}
+
+/* Card Elements (Above Glow) */
+.bento-card-header,
+.bento-body,
+.bento-visual-frame,
+.bento-tags-footer {
+  position: relative;
+  z-index: 2;
 }
 
 /* Card Header */
-.panoramic-card-header {
+.bento-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
 
-.panoramic-meta {
+.bento-meta-wrap {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.panoramic-num {
+.bento-num {
   font-family: var(--font-primary);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--yellow-primary);
   letter-spacing: -0.02em;
 }
 
-.panoramic-category {
+.bento-category {
   font-family: var(--font-primary);
   font-size: 0.7rem;
   font-weight: 600;
@@ -207,7 +241,7 @@
   text-transform: uppercase;
 }
 
-.panoramic-arrow-link {
+.bento-arrow-btn {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -220,23 +254,23 @@
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.panoramic-card:hover .panoramic-arrow-link {
+.bento-card-container:hover .bento-arrow-btn {
   background: var(--yellow-primary);
   border-color: var(--yellow-highlight);
   color: #000814;
   transform: rotate(45deg) scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 195, 0, 0.4);
+  box-shadow: 0 0 15px rgba(255, 195, 0, 0.35);
 }
 
 /* Card Body */
-.panoramic-body {
+.bento-body {
   display: flex;
   flex-direction: column;
   gap: 8px;
   text-align: left;
 }
 
-.panoramic-title {
+.bento-title {
   font-family: var(--font-primary);
   font-size: 1.35rem;
   font-weight: 600;
@@ -245,7 +279,7 @@
   line-height: 1.25;
 }
 
-.panoramic-desc {
+.bento-desc {
   font-family: var(--font-primary);
   font-size: 0.88rem;
   line-height: 1.55;
@@ -253,36 +287,36 @@
   margin: 0;
 }
 
-/* Media Showcase */
-.panoramic-media-frame {
+/* Visual Frame */
+.bento-visual-frame {
   position: relative;
   width: 100%;
-  height: 190px;
-  border-radius: 14px;
+  height: 175px;
+  border-radius: 12px;
   overflow: hidden;
   background: #000814;
   border: 1px solid rgba(245, 247, 250, 0.06);
 }
 
-.panoramic-img {
+.bento-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.panoramic-card:hover .panoramic-img {
+.bento-card-container:hover .bento-img {
   transform: scale(1.05);
 }
 
-.panoramic-media-gradient {
+.bento-visual-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, transparent 40%, rgba(0, 8, 20, 0.8) 100%);
   pointer-events: none;
 }
 
-.panoramic-metric-badge {
+.bento-metric-pill {
   position: absolute;
   bottom: 10px;
   left: 10px;
@@ -293,21 +327,21 @@
   backdrop-filter: blur(10px);
   padding: 4px 10px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 195, 0, 0.3);
+  border: 1px solid rgba(255, 195, 0, 0.25);
 }
 
 .metric-sparkle {
   color: var(--yellow-primary);
 }
 
-.metric-val {
+.bento-metric-val {
   font-family: var(--font-primary);
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--yellow-primary);
 }
 
-.metric-lbl {
+.bento-metric-lbl {
   font-family: var(--font-primary);
   font-size: 0.7rem;
   color: var(--text-dim);
@@ -316,7 +350,7 @@
 }
 
 /* Tags Matrix Footer */
-.panoramic-tags-footer {
+.bento-tags-footer {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -324,7 +358,7 @@
   margin-top: auto;
 }
 
-.panoramic-tag-pill {
+.bento-tag-pill {
   font-family: var(--font-primary);
   font-size: 0.68rem;
   font-weight: 500;
@@ -337,100 +371,28 @@
   transition: all 0.25s ease;
 }
 
-.panoramic-card:hover .panoramic-tag-pill {
-  background: rgba(255, 195, 0, 0.08);
-  border-color: rgba(255, 195, 0, 0.2);
+.bento-card-container:hover .bento-tag-pill {
+  background: rgba(255, 195, 0, 0.06);
+  border-color: rgba(255, 195, 0, 0.15);
   color: var(--yellow-primary);
-}
-
-/* Bottom Progress Deck */
-.carousel-bottom-deck {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  gap: 28px;
-  padding-top: 10px;
-}
-
-.carousel-counter {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-family: var(--font-primary);
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.counter-current {
-  color: var(--yellow-primary);
-}
-
-.counter-divider {
-  color: var(--text-dim);
-}
-
-.counter-total {
-  color: var(--text-muted);
-}
-
-.carousel-progress-track {
-  flex: 1;
-  height: 2px;
-  background: rgba(245, 247, 250, 0.1);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.carousel-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--yellow-primary), var(--yellow-highlight));
-  border-radius: 2px;
-  box-shadow: 0 0 10px rgba(255, 195, 0, 0.5);
-  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.carousel-drag-hint {
-  font-family: var(--font-primary);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--text-dim);
-  text-transform: uppercase;
 }
 
 /* Responsiveness */
-@media (max-width: 1024px) {
-  .services-section.carousel-mode {
-    padding: 90px 32px 100px;
-  }
-  .panoramic-card {
-    flex: 0 0 340px;
-    width: 340px;
-    height: 490px;
-  }
-  .carousel-track {
-    gap: 24px;
+@media (max-width: 1140px) {
+  .services-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .services-section.carousel-mode {
+  .services-section {
     padding: 70px 20px 80px;
   }
-  .carousel-header-row {
-    flex-direction: column;
-    align-items: flex-start;
+  .services-bento-grid {
+    grid-template-columns: 1fr;
     gap: 20px;
   }
-  .panoramic-card {
-    flex: 0 0 300px;
-    width: 300px;
-    height: 480px;
-  }
-  .carousel-track {
-    gap: 20px;
-  }
-  .panoramic-card-inner {
+  .bento-card-inner {
     padding: 22px;
   }
 }

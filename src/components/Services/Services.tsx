@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'motion/react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Sparkles } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { motion, useMotionValue, useMotionTemplate } from 'motion/react';
+import { ArrowUpRight, Sparkles } from 'lucide-react';
+import BlurText from '../BlurText/BlurText';
 
 import imgDigitalMarketing from '../../assets/services/digital-marketing.jpg';
 import imgSocialMedia from '../../assets/services/social-media.jpg';
@@ -30,7 +31,7 @@ const SERVICES_DATA: ServiceItem[] = [
     title: 'Digital Marketing',
     category: 'Growth & Acquisition',
     description: 'Data-driven omnichannel acquisition funnels, technical SEO architectures, and full-funnel conversion engines.',
-    tags: ['Omnichannel Growth', 'Technical SEO', 'Conversion Rate'],
+    tags: ['Omnichannel Growth', 'Technical SEO', 'Conversion Optimization'],
     metricLabel: 'Acquisition Surge',
     metricValue: '+185%',
     image: imgDigitalMarketing
@@ -63,7 +64,7 @@ const SERVICES_DATA: ServiceItem[] = [
     title: 'Web Development',
     category: 'Engineering & Systems',
     description: 'Bespoke web platforms, scalable React/Next.js architectures, and ultra-fast digital experiences built for speed.',
-    tags: ['React & Next.js', 'Sub-second TTFB', 'Clean Code'],
+    tags: ['React & Next.js', 'Sub-second TTFB', 'Clean Architecture'],
     metricLabel: 'Core Web Vitals',
     metricValue: '99.8%',
     image: imgWebDev
@@ -85,187 +86,173 @@ const SERVICES_DATA: ServiceItem[] = [
     title: 'E-Commerce Solutions',
     category: 'Commerce Architecture',
     description: 'Headless storefronts, instant 1-click checkout flows, and high-volume commerce architectures that maximize revenue.',
-    tags: ['Headless Stores', 'Instant Checkout', 'High Conversion'],
+    tags: ['Headless Stores', 'Instant Checkout', 'Conversion Rate'],
     metricLabel: 'Checkout Speed',
     metricValue: '< 1.2s',
     image: imgEcommerce
   }
 ];
 
-export const Services: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [cardStep, setCardStep] = useState(408); // 380px width + 28px gap
-  const viewportRef = useRef<HTMLDivElement>(null);
+// Interactive Spotlight & Animated Border Card Component
+const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = ({ service, index }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const mouseX = useMotionValue(-1000);
+  const mouseY = useMotionValue(-1000);
 
-  // Update step size dynamically based on screen width
-  const updateStep = () => {
-    if (window.innerWidth <= 768) {
-      setCardStep(320); // 300px + 20px gap
-    } else if (window.innerWidth <= 1024) {
-      setCardStep(364); // 340px + 24px gap
-    } else {
-      setCardStep(408); // 380px + 28px gap
-    }
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
   };
 
-  useEffect(() => {
-    updateStep();
-    window.addEventListener('resize', updateStep);
-    return () => window.removeEventListener('resize', updateStep);
-  }, []);
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => Math.max(0, prev - 1));
+  const handleMouseEnter = () => {
+    setIsHovered(true);
   };
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => Math.min(SERVICES_DATA.length - 1, prev + 1));
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    mouseX.set(-1000);
+    mouseY.set(-1000);
   };
 
-  // Drag Gesture Handling
-  const handleDragEnd = (_: any, info: { offset: { x: number }; velocity: { x: number } }) => {
-    const swipeThreshold = 40;
-    const velocityThreshold = 300;
+  // Vivid cursor-following spotlight glow
+  const spotlightBackground = useMotionTemplate`
+    radial-gradient(380px circle at ${mouseX}px ${mouseY}px, rgba(255, 195, 0, 0.12), transparent 80%)
+  `;
 
-    if (
-      (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) &&
-      currentIndex < SERVICES_DATA.length - 1
-    ) {
-      setCurrentIndex((prev) => prev + 1);
-    } else if (
-      (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) &&
-      currentIndex > 0
-    ) {
-      setCurrentIndex((prev) => prev - 1);
-    }
-  };
-
-  // Progress percentage (0% to 100%)
-  const progressPercent = ((currentIndex + 1) / SERVICES_DATA.length) * 100;
+  // Cursor-following border highlight
+  const spotlightBorder = useMotionTemplate`
+    radial-gradient(280px circle at ${mouseX}px ${mouseY}px, rgba(255, 214, 10, 0.55), transparent 75%)
+  `;
 
   return (
-    <section id="services" className="services-section carousel-mode">
-      <div className="services-container">
-        {/* Header with Navigation Controls */}
-        <div className="carousel-header-row">
-          <div className="services-header">
-            <div className="services-eyebrow">
-              <span className="services-square" />
-              <span className="services-eyebrow-text">OUR EXPERTISE // CAPABILITIES</span>
-            </div>
-            <h2 className="services-title">Engineered Digital Capabilities</h2>
-            <p className="services-subtitle">
-              Drag, swipe, or use the navigation controls to explore our six specialized digital disciplines.
-            </p>
+    <motion.div
+      ref={cardRef}
+      className={`bento-card-container ${isHovered ? 'is-card-hovered' : ''}`}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, delay: 0.1 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {/* 1. Animated Rotating Conic Border Beam on Hover */}
+      <div className="bento-conic-border-wrapper">
+        <div className="bento-conic-border-spinner" />
+      </div>
+
+      {/* 2. Dynamic Cursor Spotlight Border Tracker */}
+      <motion.div
+        className="bento-spotlight-border"
+        style={{ background: spotlightBorder }}
+      />
+
+      {/* Card Inner Container */}
+      <div className="bento-card-inner">
+        {/* 3. Dynamic Cursor Spotlight Inner Surface Glow */}
+        <motion.div
+          className="bento-spotlight-glow"
+          style={{ background: spotlightBackground }}
+        />
+
+        {/* Card Header */}
+        <div className="bento-card-header">
+          <div className="bento-meta-wrap">
+            <span className="bento-num">{service.num}</span>
+            <span className="bento-category">{service.category}</span>
           </div>
 
-          {/* Carousel Arrows */}
-          <div className="carousel-nav-controls">
-            <button 
-              type="button" 
-              className="carousel-btn prev-btn" 
-              onClick={handlePrev}
-              disabled={currentIndex === 0}
-              aria-label="Previous service"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <button 
-              type="button" 
-              className="carousel-btn next-btn" 
-              onClick={handleNext}
-              disabled={currentIndex === SERVICES_DATA.length - 1}
-              aria-label="Next service"
-            >
-              <ArrowRight size={18} />
-            </button>
-          </div>
+          <a href="#hero" className="bento-arrow-btn" title="Scope service">
+            <ArrowUpRight size={18} />
+          </a>
         </div>
 
-        {/* Horizontal Panoramic Drag Track */}
-        <div className="carousel-viewport" ref={viewportRef}>
-          <motion.div
-            className="carousel-track"
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.25}
-            onDragEnd={handleDragEnd}
-            animate={{ x: -currentIndex * cardStep }}
-            transition={{
-              type: 'spring',
-              stiffness: 240,
-              damping: 28,
-              mass: 0.8
-            }}
+        {/* Card Title & Description with Fade Reveal */}
+        <div className="bento-body">
+          <h3 className="bento-title">{service.title}</h3>
+          <motion.p 
+            className="bento-desc"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 + index * 0.08 }}
           >
-            {SERVICES_DATA.map((service, index) => (
-              <div 
-                key={service.id} 
-                className={`panoramic-card ${currentIndex === index ? 'is-active-card' : ''}`}
-                onClick={() => setCurrentIndex(index)}
-              >
-                <div className="panoramic-card-inner">
-                  {/* Top Meta */}
-                  <div className="panoramic-card-header">
-                    <div className="panoramic-meta">
-                      <span className="panoramic-num">{service.num}</span>
-                      <span className="panoramic-category">{service.category}</span>
-                    </div>
-
-                    <a href="#hero" className="panoramic-arrow-link" title="Scope service">
-                      <ArrowUpRight size={17} />
-                    </a>
-                  </div>
-
-                  {/* Title & Narrative */}
-                  <div className="panoramic-body">
-                    <h3 className="panoramic-title">{service.title}</h3>
-                    <p className="panoramic-desc">{service.description}</p>
-                  </div>
-
-                  {/* Media Visual Showcase */}
-                  <div className="panoramic-media-frame">
-                    <img src={service.image} alt={service.title} className="panoramic-img" />
-                    <div className="panoramic-media-gradient" />
-                    
-                    {/* Live Metric Badge */}
-                    <div className="panoramic-metric-badge">
-                      <Sparkles size={12} className="metric-sparkle" />
-                      <span className="metric-val">{service.metricValue}</span>
-                      <span className="metric-lbl">{service.metricLabel}</span>
-                    </div>
-                  </div>
-
-                  {/* Tags Footer */}
-                  <div className="panoramic-tags-footer">
-                    {service.tags.map((tag) => (
-                      <span key={tag} className="panoramic-tag-pill">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </motion.div>
+            {service.description}
+          </motion.p>
         </div>
 
-        {/* Bottom Progress Bar & Counter */}
-        <div className="carousel-bottom-deck">
-          <div className="carousel-counter">
-            <span className="counter-current">0{currentIndex + 1}</span>
-            <span className="counter-divider">/</span>
-            <span className="counter-total">0{SERVICES_DATA.length}</span>
+        {/* Visual Showcase Stage */}
+        <div className="bento-visual-frame">
+          <img src={service.image} alt={service.title} className="bento-img" />
+          <div className="bento-visual-overlay" />
+          
+          {/* Live Metric Badge */}
+          <div className="bento-metric-pill">
+            <Sparkles size={13} className="metric-sparkle" />
+            <span className="bento-metric-val">{service.metricValue}</span>
+            <span className="bento-metric-lbl">{service.metricLabel}</span>
           </div>
+        </div>
 
-          <div className="carousel-progress-track">
-            <div 
-              className="carousel-progress-bar" 
-              style={{ width: `${progressPercent}%` }} 
+        {/* Tags Matrix */}
+        <div className="bento-tags-footer">
+          {service.tags.map((tag) => (
+            <span key={tag} className="bento-tag-pill">{tag}</span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+export const Services: React.FC = () => {
+  return (
+    <section id="services" className="services-section">
+      <div className="services-container">
+        {/* Eyebrow Header */}
+        <div className="services-header">
+          <motion.div 
+            className="services-eyebrow"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="services-square" />
+            <span className="services-eyebrow-text">OUR EXPERTISE // CAPABILITIES</span>
+          </motion.div>
+
+          {/* Section Title with BlurText reveal */}
+          <h2 className="services-title-wrapper">
+            <BlurText
+              text="Engineered Digital Capabilities"
+              delay={80}
+              className="services-title"
+              direction="bottom"
+              stepDuration={0.35}
             />
-          </div>
+          </h2>
 
-          <div className="carousel-drag-hint">
-            <span>DRAG OR CLICK ARROWS</span>
-          </div>
+          {/* Section Subtitle with Fade Reveal */}
+          <motion.p 
+            className="services-subtitle"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          >
+            Six high-performance disciplines engineered to accelerate brand authority, cloud infrastructure, and revenue growth.
+          </motion.p>
+        </div>
+
+        {/* 3x2 Bento Grid with Dynamic Cursor Spotlight & Animated Border */}
+        <div className="services-bento-grid">
+          {SERVICES_DATA.map((service, index) => (
+            <BentoSpotlightCard key={service.id} service={service} index={index} />
+          ))}
         </div>
       </div>
     </section>

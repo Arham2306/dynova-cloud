@@ -6,6 +6,8 @@ import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
 import Services from './components/Services/Services';
+import Process from './components/Process/Process';
+import Testimonials from './components/Testimonials/Testimonials';
 import { Cloud } from 'lucide-react';
 import './App.css';
 
@@ -47,6 +49,8 @@ export function App() {
         <Hero />
         <About />
         <Services />
+        <Process />
+        <Testimonials />
       </main>
 
       {/* Agency Footer */}
@@ -83,8 +87,8 @@ export function App() {
               <h4>Company</h4>
               <a href="#about">About Dynova</a>
               <a href="#services">Our Capabilities</a>
+              <a href="#testimonials">Client Voices</a>
               <a href="#hero">Start a Project</a>
-              <a href="#hero">Security & SLA</a>
             </div>
           </div>
         </div>

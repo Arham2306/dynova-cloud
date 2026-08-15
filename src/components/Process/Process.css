@@ -1,0 +1,446 @@
+/* ═══════════════════════════════════════════════════════════════
+   DYNOVA CLOUD — 4-PHASE LUXURY BENTO PROCESS SECTION
+   ═══════════════════════════════════════════════════════════════ */
+
+.process-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-primary);
+  padding: 120px 56px 140px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.process-container {
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 48px;
+}
+
+/* ── Section Header ── */
+.process-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 780px;
+  text-align: left;
+}
+
+.process-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-primary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.process-square {
+  width: 7px;
+  height: 7px;
+  background-color: var(--yellow-primary);
+  display: inline-block;
+  border-radius: 1px;
+  box-shadow: 0 0 8px var(--yellow-highlight);
+  flex-shrink: 0;
+}
+
+.process-eyebrow-text {
+  color: var(--text-muted);
+}
+
+.process-title-wrapper {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.process-title {
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 600;
+  color: var(--text-white);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28em;
+}
+
+.process-subtitle {
+  font-family: var(--font-primary);
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ── 4-Column Bento Grid ── */
+.process-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  width: 100%;
+  align-items: stretch;
+}
+
+/* Bento Card Container */
+.process-bento-container {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(0, 20, 42, 0.4);
+  padding: 1px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px -15px rgba(0, 8, 20, 0.8);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.process-bento-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 195, 0, 0.12);
+}
+
+/* Static Default Subtle Border */
+.process-bento-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(245, 247, 250, 0.08);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 1. Animated Conic Border Beam Wrapper */
+.process-conic-border-wrapper {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.process-bento-container.is-card-hovered .process-conic-border-wrapper {
+  opacity: 1;
+}
+
+.process-conic-border-spinner {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 260deg,
+    rgba(255, 195, 0, 0.25) 310deg,
+    rgba(255, 214, 10, 0.9) 360deg
+  );
+  animation: rotateProcessBorderBeam 3.6s linear infinite;
+}
+
+@keyframes rotateProcessBorderBeam {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 2. Dynamic Cursor Spotlight Border Tracker */
+.process-spotlight-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+  transition: opacity 0.3s ease;
+}
+
+.process-bento-container.is-card-hovered .process-spotlight-border {
+  opacity: 1;
+}
+
+/* Card Inner Surface */
+.process-bento-inner {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 22px;
+  gap: 18px;
+  border-radius: 19px;
+  background: rgba(0, 14, 32, 0.9);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 3. Dynamic Cursor Spotlight Surface Glow */
+.process-spotlight-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 19px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.process-bento-container.is-card-hovered .process-spotlight-glow {
+  opacity: 1;
+}
+
+/* Card Content Above Glow */
+.process-visual-frame,
+.process-card-content,
+.process-deliverables-wrap,
+.process-tech-footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Visual Frame ── */
+.process-visual-frame {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000814;
+  border: 1px solid rgba(245, 247, 250, 0.08);
+}
+
+.process-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.process-bento-container:hover .process-img {
+  transform: scale(1.06);
+}
+
+.process-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 8, 20, 0.2) 0%, rgba(0, 8, 20, 0.85) 100%);
+  pointer-events: none;
+}
+
+/* Image Top Bar */
+.process-img-top-bar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+}
+
+.process-num-pill {
+  font-family: var(--font-primary);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--yellow-primary);
+  background: rgba(0, 8, 20, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 195, 0, 0.3);
+}
+
+.process-duration-pill {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-white);
+  background: rgba(0, 8, 20, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(245, 247, 250, 0.12);
+}
+
+/* Metric Badge */
+.process-metric-pill {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0, 8, 20, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 195, 0, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 3;
+}
+
+.process-metric-sparkle {
+  color: var(--yellow-primary);
+}
+
+.process-metric-val {
+  font-family: var(--font-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--yellow-primary);
+}
+
+.process-metric-lbl {
+  font-family: var(--font-primary);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Card Content ── */
+.process-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.process-tag-row {
+  display: flex;
+  align-items: center;
+}
+
+.process-phase-tag {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--yellow-primary);
+  text-transform: uppercase;
+}
+
+.process-card-title {
+  font-family: var(--font-primary);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-white);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.process-card-desc {
+  font-family: var(--font-primary);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Deliverables Checklist ── */
+.process-deliverables-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(245, 247, 250, 0.06);
+}
+
+.process-deliverables-title {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+
+.process-deliverables-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.process-deliv-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-family: var(--font-primary);
+  font-size: 0.76rem;
+  color: #cbd5e1;
+  line-height: 1.35;
+}
+
+.process-deliv-icon {
+  color: var(--yellow-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Tech Stack Footer ── */
+.process-tech-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.process-tech-pill {
+  font-family: var(--font-primary);
+  font-size: 0.64rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: rgba(245, 247, 250, 0.04);
+  border: 1px solid rgba(245, 247, 250, 0.06);
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.02em;
+  transition: all 0.25s ease;
+}
+
+.process-bento-container:hover .process-tech-pill {
+  background: rgba(255, 195, 0, 0.06);
+  border-color: rgba(255, 195, 0, 0.15);
+  color: var(--yellow-primary);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  .process-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .process-section {
+    padding: 70px 20px 80px;
+  }
+  .process-bento-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .process-bento-inner {
+    padding: 18px;
+  }
+}

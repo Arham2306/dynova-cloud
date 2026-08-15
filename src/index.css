@@ -1,3 +1,36 @@
+@import "tailwindcss";
+
+@theme inline {
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-white);
+  --color-card: var(--bg-navy-dark);
+  --color-card-foreground: var(--text-white);
+  --color-muted: rgba(245, 247, 250, 0.08);
+  --color-muted-foreground: var(--text-muted);
+  --color-border: rgba(245, 247, 250, 0.12);
+  --color-secondary-foreground: #CBD5E1;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+  }
+}
+
 :root {
   /* Dynova Cloud Official Brand Color Palette */
   --bg-primary: #000814;
