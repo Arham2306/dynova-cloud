@@ -1,10 +1,12 @@
 .about-section {
   position: relative;
   width: 100%;
-  background-color: var(--bg-primary);
-  padding: 100px 56px 120px;
+  background-color: #F5F7FA;
+  color: #000814;
+  padding: 120px 56px 140px;
   overflow: hidden;
   box-sizing: border-box;
+  transition: background-color var(--transition-smooth);
 }
 
 .about-container {
@@ -15,7 +17,7 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  gap: 40px;
+  gap: 48px;
 }
 
 /* Eyebrow */
@@ -25,27 +27,27 @@
   gap: 10px;
   font-family: var(--font-primary);
   font-size: 0.78rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.16em;
-  color: var(--text-muted);
+  color: #475569;
   text-transform: uppercase;
 }
 
 .about-square {
   width: 7px;
   height: 7px;
-  background-color: var(--yellow-primary);
+  background-color: var(--primary-blue);
   display: inline-block;
   border-radius: 1px;
-  box-shadow: 0 0 8px var(--yellow-highlight);
+  box-shadow: 0 0 8px rgba(0, 53, 102, 0.35);
   flex-shrink: 0;
 }
 
 .about-eyebrow-text {
-  color: var(--text-muted);
+  color: #475569;
 }
 
-/* Large Statement */
+/* Large Statement with font-weight 600 */
 .about-text-wrapper {
   width: 100%;
   max-width: 1080px;
@@ -56,10 +58,15 @@
   font-family: var(--font-primary);
   font-size: clamp(1.6rem, 3.2vw, 2.75rem);
   line-height: 1.35;
-  font-weight: 500;
-  color: var(--text-white);
+  font-weight: 600;
+  color: #000814;
   letter-spacing: -0.02em;
   text-align: left;
+}
+
+.about-large-text .scroll-reveal-word {
+  color: #000814;
+  font-weight: 600;
 }
 
 /* Subtext Grid */
@@ -68,8 +75,8 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 36px;
   width: 100%;
-  padding-top: 40px;
-  border-top: 1px solid rgba(245, 247, 250, 0.06);
+  padding-top: 48px;
+  border-top: 1px solid rgba(0, 8, 20, 0.1);
   margin-top: 16px;
 }
 
@@ -83,17 +90,17 @@
 .subtext-num {
   font-family: var(--font-primary);
   font-size: 0.74rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.16em;
-  color: var(--yellow-primary);
+  color: var(--primary-blue);
   text-transform: uppercase;
 }
 
 .about-subtext-item p {
   font-family: var(--font-primary);
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: var(--text-muted);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: #475569;
   font-weight: 400;
   margin: 0;
 }
@@ -101,7 +108,7 @@
 /* Responsiveness */
 @media (max-width: 1024px) {
   .about-section {
-    padding: 80px 32px 90px;
+    padding: 90px 32px 100px;
   }
   .about-subtext-grid {
     grid-template-columns: 1fr;
@@ -111,7 +118,7 @@
 
 @media (max-width: 768px) {
   .about-section {
-    padding: 60px 20px 70px;
+    padding: 70px 20px 80px;
   }
   .about-large-text {
     font-size: clamp(1.4rem, 4.8vw, 2rem);

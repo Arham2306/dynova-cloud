@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
+import Services from './components/Services/Services';
 import { Cloud } from 'lucide-react';
 import './App.css';
 
@@ -45,6 +46,7 @@ export function App() {
       <main>
         <Hero />
         <About />
+        <Services />
       </main>
 
       {/* Agency Footer */}
@@ -69,17 +71,18 @@ export function App() {
           <div className="footer-links-group">
             <div className="footer-col">
               <h4>Solutions</h4>
-              <a href="#hero">Web Development</a>
-              <a href="#hero">E-Commerce</a>
-              <a href="#hero">Digital Marketing</a>
-              <a href="#hero">Meta Ads</a>
-              <a href="#hero">Analytics & Reporting</a>
+              <a href="#services">Digital Marketing</a>
+              <a href="#services">Social Media Management</a>
+              <a href="#services">Meta Ads</a>
+              <a href="#services">Web Development</a>
+              <a href="#services">Analytics & Reporting</a>
+              <a href="#services">E-Commerce Solutions</a>
             </div>
 
             <div className="footer-col">
               <h4>Company</h4>
               <a href="#about">About Dynova</a>
-              <a href="#hero">Featured Work</a>
+              <a href="#services">Our Capabilities</a>
               <a href="#hero">Start a Project</a>
               <a href="#hero">Security & SLA</a>
             </div>
