@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Cloud, ArrowUpRight, Menu, X } from 'lucide-react';
 import './Navbar.css';
 
+const NAV_ITEMS = [
+  { label: 'Solutions', href: '#hero' },
+  { label: 'Work', href: '#hero' },
+  { label: 'Capabilities', href: '#hero' },
+  { label: 'About', href: '#hero' },
+  { label: 'Contact', href: '#hero' },
+];
+
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,26 +38,20 @@ export const Navbar: React.FC = () => {
 
         {/* Desktop Navigation Links */}
         <nav className="navbar-nav">
-          <a href="#solutions" className="nav-link">
-            Solutions
-          </a>
-          <a href="#work" className="nav-link">
-            Work
-          </a>
-          <a href="#capabilities" className="nav-link">
-            Capabilities
-          </a>
-          <a href="#about" className="nav-link">
-            About
-          </a>
-          <a href="#contact" className="nav-link">
-            Contact
-          </a>
+          {NAV_ITEMS.map((item) => (
+            <a 
+              key={item.label} 
+              href={item.href} 
+              className="nav-link"
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
         {/* Action Button */}
         <div className="navbar-actions">
-          <a href="#contact" className="cta-button-primary">
+          <a href="#hero" className="cta-button-primary">
             <span>Start a Project</span>
             <ArrowUpRight size={16} className="cta-icon" />
           </a>
@@ -70,13 +72,17 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="mobile-drawer glass-panel">
           <nav className="mobile-nav">
-            <a href="#solutions" onClick={() => setMobileMenuOpen(false)}>Solutions</a>
-            <a href="#work" onClick={() => setMobileMenuOpen(false)}>Work</a>
-            <a href="#capabilities" onClick={() => setMobileMenuOpen(false)}>Capabilities</a>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)}>About</a>
-            <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Contact</a>
+            {NAV_ITEMS.map((item) => (
+              <a 
+                key={item.label} 
+                href={item.href} 
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
             <div className="mobile-cta-wrapper">
-              <a href="#contact" className="cta-button-primary" onClick={() => setMobileMenuOpen(false)}>
+              <a href="#hero" className="cta-button-primary" onClick={() => setMobileMenuOpen(false)}>
                 <span>Start a Project</span>
                 <ArrowUpRight size={16} />
               </a>

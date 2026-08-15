@@ -1,0 +1,149 @@
+:root {
+  --color-1: #FFC300;
+  --color-2: #FFD60A;
+  --color-3: #F5F7FA;
+  --color-4: #003566;
+}
+
+.gooey-nav-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.gooey-nav-container nav {
+  display: flex;
+  position: relative;
+  transform: translate3d(0, 0, 0.01px);
+}
+
+.gooey-nav-container nav ul {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 3;
+}
+
+.gooey-nav-container nav ul li {
+  border-radius: var(--radius-full);
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.gooey-nav-container nav ul li a {
+  display: inline-block;
+  font-family: var(--font-primary);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.gooey-nav-container nav ul li:hover a {
+  color: var(--text-white);
+  background: rgba(245, 247, 250, 0.08);
+}
+
+.gooey-nav-container nav ul li.active a {
+  color: var(--yellow-primary);
+  font-weight: 600;
+}
+
+.gooey-nav-container .effect {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  opacity: 1;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+.gooey-nav-container .effect.text {
+  color: var(--yellow-primary);
+  font-family: var(--font-primary);
+  font-size: 0.92rem;
+  font-weight: 600;
+  opacity: 0;
+}
+
+.gooey-nav-container .effect.filter {
+  filter: blur(4px) contrast(15) blur(0);
+  mix-blend-mode: screen;
+}
+
+.particle,
+.point {
+  display: block;
+  opacity: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.particle {
+  --time: 600ms;
+  position: absolute;
+  top: calc(50% - 7px);
+  left: calc(50% - 7px);
+  animation: particle var(--time) cubic-bezier(0.16, 1, 0.3, 1) 1 -50ms;
+}
+
+.point {
+  background: var(--color, #FFC300);
+  opacity: 1;
+  box-shadow: 0 0 10px var(--color, #FFC300);
+  animation: point var(--time) cubic-bezier(0.16, 1, 0.3, 1) 1 -50ms;
+}
+
+@keyframes particle {
+  0% {
+    transform: rotate(0deg) translate(calc(var(--start-x)), calc(var(--start-y)));
+    opacity: 1;
+  }
+
+  70% {
+    transform: rotate(calc(var(--rotate) * 0.5)) translate(calc(var(--end-x) * 1.2), calc(var(--end-y) * 1.2));
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: rotate(calc(var(--rotate) * 1.1)) translate(calc(var(--end-x) * 1.4), calc(var(--end-y) * 1.4));
+    opacity: 0;
+  }
+}
+
+@keyframes point {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+
+  25% {
+    transform: scale(calc(var(--scale) * 0.8));
+    opacity: 1;
+  }
+
+  70% {
+    transform: scale(var(--scale));
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}

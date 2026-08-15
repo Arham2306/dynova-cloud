@@ -1,0 +1,120 @@
+.about-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-primary);
+  padding: 100px 56px 120px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.about-container {
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 40px;
+}
+
+/* Eyebrow */
+.about-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-primary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.about-square {
+  width: 7px;
+  height: 7px;
+  background-color: var(--yellow-primary);
+  display: inline-block;
+  border-radius: 1px;
+  box-shadow: 0 0 8px var(--yellow-highlight);
+  flex-shrink: 0;
+}
+
+.about-eyebrow-text {
+  color: var(--text-muted);
+}
+
+/* Large Statement */
+.about-text-wrapper {
+  width: 100%;
+  max-width: 1080px;
+  text-align: left;
+}
+
+.about-large-text {
+  font-family: var(--font-primary);
+  font-size: clamp(1.6rem, 3.2vw, 2.75rem);
+  line-height: 1.35;
+  font-weight: 500;
+  color: var(--text-white);
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+/* Subtext Grid */
+.about-subtext-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  width: 100%;
+  padding-top: 40px;
+  border-top: 1px solid rgba(245, 247, 250, 0.06);
+  margin-top: 16px;
+}
+
+.about-subtext-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.subtext-num {
+  font-family: var(--font-primary);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--yellow-primary);
+  text-transform: uppercase;
+}
+
+.about-subtext-item p {
+  font-family: var(--font-primary);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .about-section {
+    padding: 80px 32px 90px;
+  }
+  .about-subtext-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    padding: 60px 20px 70px;
+  }
+  .about-large-text {
+    font-size: clamp(1.4rem, 4.8vw, 2rem);
+    line-height: 1.35;
+  }
+}

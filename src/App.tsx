@@ -1,14 +1,50 @@
+import { useEffect } from 'react';
+import Lenis from 'lenis';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
+import About from './components/About/About';
 import { Cloud } from 'lucide-react';
 import './App.css';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export function App() {
+  useEffect(() => {
+    // Initialize Lenis Smooth Scrolling
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
+    });
+
+    // Synchronize Lenis scroll updates with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Drive Lenis RAF from GSAP ticker for perfect 60-120fps frame sync
+    const updateRaf = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(updateRaf);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      gsap.ticker.remove(updateRaf);
+      lenis.destroy();
+    };
+  }, []);
+
   return (
     <div className="app-layout">
       <Navbar />
       <main>
         <Hero />
+        <About />
       </main>
 
       {/* Agency Footer */}
@@ -42,7 +78,7 @@ export function App() {
 
             <div className="footer-col">
               <h4>Company</h4>
-              <a href="#hero">About Dynova</a>
+              <a href="#about">About Dynova</a>
               <a href="#hero">Featured Work</a>
               <a href="#hero">Start a Project</a>
               <a href="#hero">Security & SLA</a>
