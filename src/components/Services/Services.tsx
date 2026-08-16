@@ -165,7 +165,7 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = Re
             <span className="bento-category">{service.category}</span>
           </div>
 
-          <a href="#hero" className="bento-arrow-btn" title="Scope service">
+          <a href="#contact" className="bento-arrow-btn" title="Scope service" aria-label="Scope service">
             <ArrowUpRight size={18} />
           </a>
         </div>

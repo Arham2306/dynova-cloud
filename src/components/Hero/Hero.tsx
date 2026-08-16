@@ -155,7 +155,7 @@ export const Hero: React.FC = () => {
                 ease: [0.16, 1, 0.3, 1] 
               }}
             >
-              <a href="#about" className="editorial-cta-link">
+              <a href="#contact" className="editorial-cta-link">
                 <span>Start a Project</span>
                 <ArrowUpRight size={16} />
               </a>

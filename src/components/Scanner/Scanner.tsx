@@ -220,7 +220,7 @@ export const Scanner: React.FC<ScannerProps> = ({
         alpha: true,
         premultipliedAlpha: true,
         antialias: false,
-        dpr: Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 2)
+        dpr: Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 1.5)
       });
     } catch {
       return;

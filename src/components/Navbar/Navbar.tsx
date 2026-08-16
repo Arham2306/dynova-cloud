@@ -3,11 +3,11 @@ import { Cloud, ArrowUpRight, Menu, X } from 'lucide-react';
 import './Navbar.css';
 
 const NAV_ITEMS = [
-  { label: 'Solutions', href: '#hero' },
-  { label: 'Work', href: '#hero' },
-  { label: 'Capabilities', href: '#hero' },
-  { label: 'About', href: '#hero' },
-  { label: 'Contact', href: '#hero' },
+  { label: 'Solutions', href: '#services' },
+  { label: 'Work', href: '#work' },
+  { label: 'Capabilities', href: '#services' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 export const Navbar: React.FC = () => {
@@ -51,7 +51,7 @@ export const Navbar: React.FC = () => {
 
         {/* Action Button */}
         <div className="navbar-actions">
-          <a href="#hero" className="cta-button-primary">
+          <a href="#contact" className="cta-button-primary">
             <span>Start a Project</span>
             <ArrowUpRight size={16} className="cta-icon" />
           </a>
@@ -82,7 +82,7 @@ export const Navbar: React.FC = () => {
               </a>
             ))}
             <div className="mobile-cta-wrapper">
-              <a href="#hero" className="cta-button-primary" onClick={() => setMobileMenuOpen(false)}>
+              <a href="#contact" className="cta-button-primary" onClick={() => setMobileMenuOpen(false)}>
                 <span>Start a Project</span>
                 <ArrowUpRight size={16} />
               </a>

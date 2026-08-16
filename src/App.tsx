@@ -92,7 +92,7 @@ export function App() {
               <a href="#about">About Dynova</a>
               <a href="#services">Our Capabilities</a>
               <a href="#testimonials">Client Voices</a>
-              <a href="#hero">Start a Project</a>
+              <a href="#contact">Start a Project</a>
             </div>
           </div>
         </div>
