@@ -266,7 +266,18 @@
 
 @media (max-width: 768px) {
   .editorial-hero-section {
-    padding: calc(var(--header-height) + 16px) 20px 36px;
+    padding: calc(var(--header-height) + 16px) 18px 36px;
+  }
+  .headline-subtitle {
+    margin-bottom: 12px;
+  }
+  .headline-text,
+  .headline-highlight {
+    font-size: clamp(1.75rem, 7.5vw, 3rem);
+  }
+  .inline-media-pill {
+    height: clamp(1.6rem, 6.2vw, 2.4rem);
+    width: clamp(3.8rem, 14vw, 5.5rem);
   }
   .hero-bottom-row {
     flex-direction: column;

@@ -250,17 +250,18 @@ export const Portfolio: React.FC = () => {
     const deck = deckRef.current;
     if (!section || !deck) return;
 
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 901px)', () => {
       const cardContainers = cardContainersRef.current.filter(Boolean) as HTMLDivElement[];
       if (cardContainers.length === 0) return;
 
       const totalCards = cardContainers.length;
 
       cardContainers.forEach((cardContainer, index) => {
-        // Pin every card except the last one, or pin all cards so they stack in sequence
+        // Pin cards on desktop so they stack in sequence
         if (index < totalCards - 1) {
           const topOffset = 110 + index * 16; // Stepped top offset
-          // Cache DOM reference once — avoid querySelector on every scroll frame
           const cardEl = cardContainer.querySelector('.portfolio-stack-card') as HTMLElement | null;
           
           ScrollTrigger.create({
@@ -273,9 +274,7 @@ export const Portfolio: React.FC = () => {
             anticipatePin: 1,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
-              // As the user continues scrolling past this card, smoothly scale and dim
               if (cardEl) {
-                // Calculate progress through remaining cards
                 const remainingProgress = self.progress;
                 const scale = Math.max(0.88, 1 - remainingProgress * 0.08);
                 const brightness = Math.max(0.6, 1 - remainingProgress * 0.35);
@@ -289,9 +288,9 @@ export const Portfolio: React.FC = () => {
           });
         }
       });
-    }, section);
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   return (

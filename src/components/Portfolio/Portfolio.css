@@ -453,37 +453,83 @@
     aspect-ratio: 16 / 9;
   }
   .portfolio-stack-card-container {
-    margin-bottom: 60px;
+    margin-bottom: 50px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .portfolio-stack-section {
-    padding: 70px 20px 80px;
+    padding: 70px 16px 80px;
   }
-  .portfolio-stack-header {
-    gap: 10px;
+  .portfolio-stack-container {
+    gap: 36px;
+  }
+  .portfolio-stack-card-container {
+    margin-bottom: 28px;
+  }
+  .portfolio-stack-card-container:last-child {
+    margin-bottom: 0;
+  }
+  .portfolio-stack-card {
+    border-radius: 22px;
   }
   .portfolio-stack-inner {
-    padding: 22px 18px;
-    gap: 22px;
+    padding: 24px 18px;
+    gap: 20px;
+    border-radius: 21px;
+  }
+  .stack-card-left {
+    gap: 14px;
   }
   .stack-card-title {
-    font-size: 1.25rem;
+    font-size: clamp(1.2rem, 5.2vw, 1.55rem);
+    line-height: 1.25;
   }
   .stack-card-desc {
     font-size: 0.86rem;
+    line-height: 1.55;
+  }
+  .stack-metric-box {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    gap: 12px;
+    border-radius: 12px;
+  }
+  .stack-metric-val {
+    font-size: 1.05rem;
+  }
+  .stack-visual-frame {
+    aspect-ratio: 16 / 10;
+    border-radius: 14px;
   }
   .stack-footer-row {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: stretch;
+    gap: 14px;
+    width: 100%;
   }
   .stack-cta-btn {
     width: 100%;
     justify-content: center;
+    padding: 11px 20px;
+    font-size: 0.85rem;
   }
-  .portfolio-stack-card-container {
-    margin-bottom: 40px;
+}
+
+@media (max-width: 480px) {
+  .portfolio-stack-section {
+    padding: 60px 14px 70px;
+  }
+  .portfolio-stack-inner {
+    padding: 20px 14px;
+    gap: 16px;
+  }
+  .stack-tech-pills {
+    gap: 4px;
+  }
+  .stack-tech-pill {
+    font-size: 0.68rem;
+    padding: 2px 7px;
   }
 }

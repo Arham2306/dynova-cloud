@@ -14,6 +14,7 @@
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   background-color: #F5F7FA;
   overflow: hidden;
   display: flex;
@@ -324,19 +325,26 @@
 
 @media (max-width: 768px) {
   .process-stage-inner {
-    padding: 86px 20px 20px;
+    padding: 82px 18px 18px;
   }
   .process-progress-track-outer {
-    width: 70px;
+    width: 60px;
   }
   .process-step-indicators {
     display: none;
   }
   .process-giant-title {
-    font-size: clamp(1.85rem, 7vw, 2.75rem);
+    font-size: clamp(1.65rem, 6.5vw, 2.5rem);
     line-height: 1.15;
   }
   .process-slide-desc {
-    font-size: 0.95rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  .process-slide-content {
+    gap: 14px;
+  }
+  .process-slide-cta-wrap {
+    margin-top: 4px;
   }
 }
