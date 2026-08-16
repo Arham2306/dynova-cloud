@@ -82,7 +82,7 @@ const testimonials = [
   },
 ];
 
-function TestimonialCard({ img, name, role, company, body, country }: (typeof testimonials)[number]) {
+const TestimonialCard = React.memo(function TestimonialCard({ img, name, role, company, body, country }: (typeof testimonials)[number]) {
   return (
     <div className="testimonial-card">
       <div className="testimonial-card-inner">
@@ -115,7 +115,7 @@ function TestimonialCard({ img, name, role, company, body, country }: (typeof te
       </div>
     </div>
   );
-}
+});
 
 export const Testimonials: React.FC = () => {
   return (

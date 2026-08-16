@@ -48,6 +48,7 @@ export const Process: React.FC = () => {
   const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
+  const lastStepRef = useRef(0);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -77,16 +78,19 @@ export const Process: React.FC = () => {
           scrub: 0.8,
           anticipatePin: 1,
           onUpdate: (self) => {
-            // Update progress bar
+            // Update progress bar directly in DOM without React re-render
             if (progressBarRef.current) {
               gsap.set(progressBarRef.current, { scaleX: self.progress });
             }
-            // Update active step indicator
+            // Update active step indicator only when phase actually changes (4 times total vs 100s of times)
             const step = Math.min(
               Math.floor(self.progress * PHASES.length),
               PHASES.length - 1
             );
-            setActiveStep(step);
+            if (step !== lastStepRef.current) {
+              lastStepRef.current = step;
+              setActiveStep(step);
+            }
           }
         }
       });

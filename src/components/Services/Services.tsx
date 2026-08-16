@@ -94,7 +94,7 @@ const SERVICES_DATA: ServiceItem[] = [
 ];
 
 // Interactive Spotlight & Animated Border Card Component
-const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = ({ service, index }) => {
+const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = React.memo(({ service, index }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const mouseX = useMotionValue(-1000);
@@ -186,7 +186,7 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = ({
 
         {/* Visual Showcase Stage */}
         <div className="bento-visual-frame">
-          <img src={service.image} alt={service.title} className="bento-img" />
+          <img src={service.image} alt={service.title} className="bento-img" loading="lazy" decoding="async" />
           <div className="bento-visual-overlay" />
           
           {/* Live Metric Badge */}
@@ -206,7 +206,7 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = ({
       </div>
     </motion.div>
   );
-};
+});
 
 export const Services: React.FC = () => {
   return (

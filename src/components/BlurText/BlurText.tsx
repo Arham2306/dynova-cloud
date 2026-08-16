@@ -30,7 +30,7 @@ const buildKeyframes = (
   return keyframes;
 };
 
-export const BlurText: React.FC<BlurTextProps> = ({
+const BlurTextComponent: React.FC<BlurTextProps> = ({
   text = '',
   delay = 120,
   className = '',
@@ -89,7 +89,15 @@ export const BlurText: React.FC<BlurTextProps> = ({
 
   const stepCount = toSnapshots.length + 1;
   const totalDuration = stepDuration * (stepCount - 1);
-  const times = Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1)));
+  const times = useMemo(
+    () => Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1))),
+    [stepCount]
+  );
+
+  const animateKeyframes = useMemo(
+    () => buildKeyframes(fromSnapshot, toSnapshots),
+    [fromSnapshot, toSnapshots]
+  );
 
   return (
     <Component 
@@ -99,8 +107,6 @@ export const BlurText: React.FC<BlurTextProps> = ({
       style={{ display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center' }}
     >
       {elements.map((segment, index) => {
-        const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
-
         const spanTransition: Transition = {
           duration: totalDuration,
           times,
@@ -129,4 +135,5 @@ export const BlurText: React.FC<BlurTextProps> = ({
   );
 };
 
+export const BlurText = React.memo(BlurTextComponent);
 export default BlurText;

@@ -78,7 +78,7 @@ export const Hero: React.FC = () => {
               }}
               whileHover={{ scale: 1.06 }}
             >
-              <img src={architectImg} alt="Dynova Cloud Architect" className="pill-img" />
+              <img src={architectImg} alt="Dynova Cloud Architect" className="pill-img" decoding="async" fetchPriority="high" />
               <div className="pill-gloss" />
             </motion.div>
           </div>
@@ -122,7 +122,7 @@ export const Hero: React.FC = () => {
               }}
               whileHover={{ scale: 1.06 }}
             >
-              <img src={platformImg} alt="Cloud Architecture Interface" className="pill-img" />
+              <img src={platformImg} alt="Cloud Architecture Interface" className="pill-img" decoding="async" fetchPriority="high" />
               <div className="pill-gloss" />
             </motion.div>
           </div>

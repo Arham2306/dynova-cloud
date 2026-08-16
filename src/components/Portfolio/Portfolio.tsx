@@ -116,7 +116,7 @@ const StackablePortfolioCard: React.FC<{
   item: CaseStudy; 
   index: number;
   setCardRef: (el: HTMLDivElement | null) => void;
-}> = ({ item, index, setCardRef }) => {
+}> = React.memo(({ item, index, setCardRef }) => {
   const cardInnerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const mouseX = useMotionValue(-1000);
@@ -222,7 +222,7 @@ const StackablePortfolioCard: React.FC<{
           {/* Right Column: High-Res Visual Frame */}
           <div className="stack-card-right">
             <div className="stack-visual-frame">
-              <img src={item.image} alt={item.title} className="stack-visual-img" />
+              <img src={item.image} alt={item.title} className="stack-visual-img" loading="lazy" decoding="async" />
               <div className="stack-visual-glare" />
             </div>
           </div>
@@ -231,7 +231,7 @@ const StackablePortfolioCard: React.FC<{
       </div>
     </div>
   );
-};
+});
 
 export const Portfolio: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -253,6 +253,8 @@ export const Portfolio: React.FC = () => {
         // Pin every card except the last one, or pin all cards so they stack in sequence
         if (index < totalCards - 1) {
           const topOffset = 110 + index * 16; // Stepped top offset
+          // Cache DOM reference once — avoid querySelector on every scroll frame
+          const cardEl = cardContainer.querySelector('.portfolio-stack-card') as HTMLElement | null;
           
           ScrollTrigger.create({
             trigger: cardContainer,
@@ -265,7 +267,6 @@ export const Portfolio: React.FC = () => {
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               // As the user continues scrolling past this card, smoothly scale and dim
-              const cardEl = cardContainer.querySelector('.portfolio-stack-card');
               if (cardEl) {
                 // Calculate progress through remaining cards
                 const remainingProgress = self.progress;
