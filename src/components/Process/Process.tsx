@@ -1,260 +1,215 @@
-import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useMotionTemplate } from 'motion/react';
-import { CheckCircle2, Sparkles } from 'lucide-react';
-import BlurText from '../BlurText/BlurText';
-
-import imgDiscovery from '../../assets/process/discovery.jpg';
-import imgDesign from '../../assets/process/design.jpg';
-import imgEngineering from '../../assets/process/engineering.jpg';
-import imgGrowth from '../../assets/process/growth.jpg';
-
+import React, { useRef, useEffect, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowDown, ArrowUpRight, Sparkles } from 'lucide-react';
 import './Process.css';
 
-interface ProcessItem {
-  id: string;
+gsap.registerPlugin(ScrollTrigger);
+
+interface ProcessPhase {
   num: string;
-  phaseTag: string;
+  keyword: string;
   title: string;
-  duration: string;
   description: string;
-  metricVal: string;
-  metricLabel: string;
-  image: string;
-  deliverables: string[];
-  techStack: string[];
+  hasCta?: boolean;
 }
 
-const PROCESS_DATA: ProcessItem[] = [
+const PHASES: ProcessPhase[] = [
   {
-    id: 'discovery',
     num: '01',
-    phaseTag: 'PHASE 01 // STRATEGY',
-    title: 'Diagnostic & Market Intelligence',
-    duration: 'Weeks 1 – 2',
-    description: 'Forensic audit of your brand footprint, competitor growth vectors, and user conversion funnels to build a quantitative roadmap with zero guesswork.',
-    metricVal: '360°',
-    metricLabel: 'Audit Scope',
-    image: imgDiscovery,
-    deliverables: [
-      'Full-Funnel Conversion Audit',
-      'Competitor Keyword & Moat Modeling',
-      'Technical Architecture Feasibility',
-      'Quarterly Execution Blueprint'
-    ],
-    techStack: ['GA4', 'Hotjar', 'SEMrush API', 'Attribution Matrix']
+    keyword: 'MARKET INTELLIGENCE',
+    title: 'Discovery & Strategy',
+    description: 'Forensic audit of your digital ecosystem, competitor growth vectors, and user conversion funnels to build a data-driven growth roadmap.'
   },
   {
-    id: 'architecture',
     num: '02',
-    phaseTag: 'PHASE 02 // DESIGN',
-    title: 'High-Impact Design Architecture',
-    duration: 'Weeks 2 – 4',
-    description: 'Interactive high-fidelity prototypes and conversion-first UI/UX systems. Every layout, typography scale, and interaction is engineered to drive user action.',
-    metricVal: '+48%',
-    metricLabel: 'Projected Lift',
-    image: imgDesign,
-    deliverables: [
-      'Tokenized Design System & UI Kit',
-      'Interactive Figma Prototyping',
-      'High-Converting Checkout Funnels',
-      'Mobile-First Responsive Layouts'
-    ],
-    techStack: ['Figma Tokens', 'Framer Motion', 'Tailwind Grid', 'AA+ Compliance']
+    keyword: 'CONVERSION UI/UX',
+    title: 'Architecture & Design',
+    description: 'Engineering high-converting design systems, tokenized UI kits, and interactive prototypes built for rapid user engagement.'
   },
   {
-    id: 'engineering',
     num: '03',
-    phaseTag: 'PHASE 03 // BUILD',
-    title: 'Production Engineering & Deploy',
-    duration: 'Weeks 4 – 7',
-    description: 'Ultra-fast React and Next.js web platforms with sub-second TTFB, automated CI/CD deployment pipelines, and enterprise-grade security standards.',
-    metricVal: '< 280ms',
-    metricLabel: 'Global TTFB',
-    image: imgEngineering,
-    deliverables: [
-      'Modern Next.js & React Architectures',
-      'Custom API & Webhook Pipelines',
-      'Headless Storefronts & 1-Click Pay',
-      'Global Edge CDN & Core Web Vitals'
-    ],
-    techStack: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Cloudflare Edge']
+    keyword: 'PRODUCTION SPEED',
+    title: 'Engineering & Deploy',
+    description: 'Modern Next.js platforms with sub-second page loads, automated CI/CD deployment pipelines, and global edge security standards.'
   },
   {
-    id: 'hyper-scale',
     num: '04',
-    phaseTag: 'PHASE 04 // SCALE',
-    title: 'Hyper-Scale & Revenue Optimization',
-    duration: 'Ongoing Growth',
-    description: 'Post-launch algorithmic ad scaling, aggressive multi-variant A/B testing, and real-time attribution dashboards to continuously compound business ROI.',
-    metricVal: '4.2x',
-    metricLabel: 'Target ROAS',
-    image: imgGrowth,
-    deliverables: [
-      'Algorithmic Meta & Search Scaling',
-      'Multi-Variant A/B Conversion Tests',
-      'Live Executive Telemetry Dashboards',
-      'Iterative Growth Feature Cycles'
-    ],
-    techStack: ['Meta Ads API', 'Segment CDP', 'BigQuery BI', 'Looker Studio']
+    keyword: 'REVENUE ENGINE',
+    title: 'Hyper-Scale & Growth',
+    description: 'Algorithmic paid media scaling, continuous multi-variant A/B conversion tests, and real-time revenue telemetry to compound ROI.',
+    hasCta: true
   }
 ];
 
-// Luxury Interactive Spotlight Process Card
-const ProcessCard: React.FC<{ item: ProcessItem; index: number }> = ({ item, index }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const mouseX = useMotionValue(-1000);
-  const mouseY = useMotionValue(-1000);
+export const Process: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const [activeStep, setActiveStep] = useState(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
-  };
+  useEffect(() => {
+    const container = containerRef.current;
+    const stage = stageRef.current;
+    if (!container || !stage) return;
 
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    mouseX.set(-1000);
-    mouseY.set(-1000);
-  };
+    const ctx = gsap.context(() => {
+      const slides = slidesRef.current.filter(Boolean) as HTMLDivElement[];
+      if (slides.length === 0) return;
 
-  const spotlightBackground = useMotionTemplate`
-    radial-gradient(360px circle at ${mouseX}px ${mouseY}px, rgba(255, 195, 0, 0.12), transparent 80%)
-  `;
+      // Initially set all slides except the first one below and hidden
+      slides.forEach((slide, index) => {
+        if (index === 0) {
+          gsap.set(slide, { opacity: 1, y: 0, filter: 'blur(0px)', pointerEvents: 'auto' });
+        } else {
+          gsap.set(slide, { opacity: 0, y: 80, filter: 'blur(12px)', pointerEvents: 'none' });
+        }
+      });
 
-  const spotlightBorder = useMotionTemplate`
-    radial-gradient(260px circle at ${mouseX}px ${mouseY}px, rgba(255, 214, 10, 0.5), transparent 75%)
-  `;
+      // Master Timeline linked to ScrollTrigger with pinning
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: '+=300%',
+          pin: stage,
+          scrub: 0.8,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            // Update progress bar
+            if (progressBarRef.current) {
+              gsap.set(progressBarRef.current, { scaleX: self.progress });
+            }
+            // Update active step indicator
+            const step = Math.min(
+              Math.floor(self.progress * PHASES.length),
+              PHASES.length - 1
+            );
+            setActiveStep(step);
+          }
+        }
+      });
+
+      // Animate transitions between slides
+      for (let i = 0; i < slides.length - 1; i++) {
+        const currentSlide = slides[i];
+        const nextSlide = slides[i + 1];
+
+        tl.to(
+          currentSlide,
+          {
+            opacity: 0,
+            y: -70,
+            filter: 'blur(12px)',
+            pointerEvents: 'none',
+            duration: 1,
+            ease: 'power2.inOut'
+          },
+          `step-${i}`
+        )
+        .to(
+          nextSlide,
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            pointerEvents: 'auto',
+            duration: 1,
+            ease: 'power2.inOut'
+          },
+          `step-${i}`
+        );
+      }
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <motion.div
-      ref={cardRef}
-      className={`process-bento-container ${isHovered ? 'is-card-hovered' : ''}`}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 35 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.6, delay: 0.1 + index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {/* 1. Animated Conic Border Beam */}
-      <div className="process-conic-border-wrapper">
-        <div className="process-conic-border-spinner" />
-      </div>
+    <section ref={containerRef} id="process" className="process-pinned-container">
+      {/* The Pinned Viewport Stage */}
+      <div ref={stageRef} className="process-pinned-stage">
+        <div className="process-stage-inner">
+          
+          {/* Top Control & Header Bar */}
+          <div className="process-stage-top">
+            <div className="process-stage-eyebrow">
+              <span className="process-stage-square" />
+              <span className="process-stage-eyebrow-text">OUR METHODOLOGY // HOW WE BUILD</span>
+            </div>
 
-      {/* 2. Cursor Spotlight Border Tracker */}
-      <motion.div
-        className="process-spotlight-border"
-        style={{ background: spotlightBorder }}
-      />
-
-      {/* Card Inner Surface */}
-      <div className="process-bento-inner">
-        {/* Cursor Glow */}
-        <motion.div
-          className="process-spotlight-glow"
-          style={{ background: spotlightBackground }}
-        />
-
-        {/* Visual Showcase Stage */}
-        <div className="process-visual-frame">
-          <img src={item.image} alt={item.title} className="process-img" />
-          <div className="process-visual-overlay" />
-
-          {/* Floating Top Header on Image */}
-          <div className="process-img-top-bar">
-            <span className="process-num-pill">{item.num}</span>
-            <span className="process-duration-pill">{item.duration}</span>
+            <div className="process-stage-progress-wrap">
+              <div className="process-phase-counter">
+                <span className="phase-active-num">0{activeStep + 1}</span>
+                <span className="phase-divider">/</span>
+                <span className="phase-total-num">0{PHASES.length}</span>
+              </div>
+              <div className="process-progress-track-outer">
+                <div ref={progressBarRef} className="process-progress-fill-bar" />
+              </div>
+            </div>
           </div>
 
-          {/* Live Metric Badge */}
-          <div className="process-metric-pill">
-            <Sparkles size={12} className="process-metric-sparkle" />
-            <span className="process-metric-val">{item.metricVal}</span>
-            <span className="process-metric-lbl">{item.metricLabel}</span>
-          </div>
-        </div>
+          {/* Center Stage: Giant Typography Kinetic Slides */}
+          <div className="process-slides-wrapper">
+            {PHASES.map((phase, index) => (
+              <div
+                key={phase.num}
+                ref={(el) => { slidesRef.current[index] = el; }}
+                className="process-slide"
+              >
+                <div className="process-slide-content">
+                  {/* Pillar Keyword Badge */}
+                  <div className="process-keyword-badge">
+                    <Sparkles size={13} className="text-[#003566]" />
+                    <span>{phase.keyword}</span>
+                  </div>
 
-        {/* Phase Header */}
-        <div className="process-card-content">
-          <div className="process-tag-row">
-            <span className="process-phase-tag">{item.phaseTag}</span>
-          </div>
+                  {/* Giant Bold Statement Title */}
+                  <h2 className="process-giant-title">
+                    <span className="process-title-num">{phase.num}.</span> {phase.title}
+                  </h2>
 
-          <h3 className="process-card-title">{item.title}</h3>
-          <p className="process-card-desc">{item.description}</p>
-        </div>
+                  {/* Clean 2-line Statement Narrative */}
+                  <p className="process-slide-desc">
+                    {phase.description}
+                  </p>
 
-        {/* Deliverables Checklist */}
-        <div className="process-deliverables-wrap">
-          <span className="process-deliverables-title">CORE DELIVERABLES:</span>
-          <div className="process-deliverables-list">
-            {item.deliverables.map((deliv, dIdx) => (
-              <div key={dIdx} className="process-deliv-item">
-                <CheckCircle2 size={13} className="process-deliv-icon" />
-                <span>{deliv}</span>
+                  {/* Inline CTA Button on Final Phase */}
+                  {phase.hasCta && (
+                    <div className="process-slide-cta-wrap">
+                      <a href="#contact" className="process-slide-cta-btn">
+                        <span>Initiate Phase 01</span>
+                        <ArrowUpRight size={16} className="process-cta-arrow" />
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Tech Stack Chips Footer */}
-        <div className="process-tech-footer">
-          {item.techStack.map((tech) => (
-            <span key={tech} className="process-tech-pill">{tech}</span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  );
-};
+          {/* Bottom Indicators & Scroll Prompt Bar */}
+          <div className="process-stage-bottom">
+            <div className="process-step-indicators">
+              {PHASES.map((phase, idx) => (
+                <div
+                  key={phase.num}
+                  className={`process-step-pill ${idx === activeStep ? 'is-active' : ''} ${idx < activeStep ? 'is-completed' : ''}`}
+                >
+                  <span className="step-pill-dot" />
+                  <span className="step-pill-text">{phase.num} {phase.title.split('&')[0]}</span>
+                </div>
+              ))}
+            </div>
 
-export const Process: React.FC = () => {
-  return (
-    <section id="process" className="process-section">
-      <div className="process-container">
-        {/* Section Header */}
-        <div className="process-header">
-          <motion.div 
-            className="process-eyebrow"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="process-square" />
-            <span className="process-eyebrow-text">OUR METHODOLOGY // HOW WE BUILD</span>
-          </motion.div>
+            <div className="process-scroll-hint">
+              <span>SCROLL TO ADVANCE</span>
+              <ArrowDown size={14} className="process-scroll-arrow" />
+            </div>
+          </div>
 
-          <h2 className="process-title-wrapper">
-            <BlurText
-              text="Four Phases. Zero Guesswork."
-              delay={75}
-              className="process-title"
-              direction="bottom"
-              stepDuration={0.35}
-            />
-          </h2>
-
-          <motion.p 
-            className="process-subtitle"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.65, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            A battle-tested 4-phase framework engineered to eliminate guesswork, accelerate engineering velocity, and compound enterprise revenue.
-          </motion.p>
-        </div>
-
-        {/* 4-Card Luxury Process Bento Grid */}
-        <div className="process-bento-grid">
-          {PROCESS_DATA.map((item, index) => (
-            <ProcessCard key={item.id} item={item} index={index} />
-          ))}
         </div>
       </div>
     </section>

@@ -1,0 +1,286 @@
+/* ═══════════════════════════════════════════════════════════════
+   DYNOVA CLOUD — CONVERSION CTA SECTION (CLEAN & STREAMLINED)
+   ═══════════════════════════════════════════════════════════════ */
+
+.cta-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-primary);
+  padding: 120px 56px 140px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Ambient Radial Glow Orbs behind section */
+.cta-ambient-glow {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 750px;
+  height: 450px;
+  background: radial-gradient(ellipse at center, rgba(0, 53, 102, 0.45) 0%, rgba(255, 195, 0, 0.12) 50%, transparent 75%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cta-ambient-glow-secondary {
+  position: absolute;
+  bottom: 10%;
+  left: 30%;
+  width: 450px;
+  height: 250px;
+  background: radial-gradient(ellipse at center, rgba(255, 214, 10, 0.08) 0%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cta-container {
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Card Shell with Permanent Conic Border Beam ── */
+.cta-card-shell {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 28px;
+  background: rgba(0, 20, 42, 0.45);
+  padding: 1.5px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px -20px rgba(0, 8, 20, 0.95);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.cta-card-shell:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 40px 90px -20px rgba(0, 0, 0, 0.95), 0 0 35px rgba(255, 195, 0, 0.15);
+}
+
+/* Static Default Subtle Border */
+.cta-card-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(245, 247, 250, 0.08);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 1. Animated Conic Border Beam (ALWAYS ACTIVE on Normal State) */
+.cta-conic-border-wrapper {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cta-conic-border-spinner {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 260deg,
+    rgba(255, 195, 0, 0.3) 310deg,
+    rgba(255, 214, 10, 0.95) 360deg
+  );
+  animation: rotateCtaBorderBeam 4s linear infinite;
+}
+
+@keyframes rotateCtaBorderBeam {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 2. Cursor Spotlight Border Tracker (Active on Hover) */
+.cta-spotlight-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+  transition: opacity 0.3s ease;
+}
+
+.cta-card-shell.is-card-hovered .cta-spotlight-border {
+  opacity: 1;
+}
+
+/* ── Card Inner Surface ── */
+.cta-card-inner {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 84px 56px;
+  border-radius: 26.5px;
+  background: radial-gradient(circle at 50% 0%, rgba(0, 28, 60, 0.92) 0%, rgba(0, 10, 24, 0.96) 85%);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 3. Cursor Spotlight Surface Glow (Active on Hover) */
+.cta-spotlight-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 26.5px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cta-card-shell.is-card-hovered .cta-spotlight-glow {
+  opacity: 1;
+}
+
+/* Content Container */
+.cta-content-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 820px;
+  width: 100%;
+}
+
+/* Eyebrow */
+.cta-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-primary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.cta-square {
+  width: 7px;
+  height: 7px;
+  background-color: var(--yellow-primary);
+  display: inline-block;
+  border-radius: 1px;
+  box-shadow: 0 0 8px var(--yellow-highlight);
+  flex-shrink: 0;
+}
+
+.cta-eyebrow-text {
+  color: var(--text-muted);
+}
+
+.cta-title-wrapper {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.cta-title {
+  font-family: var(--font-primary);
+  font-size: clamp(2.4rem, 4.2vw, 3.75rem);
+  font-weight: 700;
+  color: var(--text-white);
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.28em;
+}
+
+.cta-subtitle {
+  font-family: var(--font-primary);
+  font-size: clamp(1rem, 1.25vw, 1.12rem);
+  line-height: 1.65;
+  color: var(--text-muted);
+  font-weight: 400;
+  max-width: 700px;
+  margin: 0;
+}
+
+/* ── Actions Row ── */
+.cta-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* Single Primary Button */
+.cta-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--yellow-primary);
+  color: #000814;
+  padding: 16px 36px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-primary);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  box-shadow: 0 8px 25px rgba(255, 195, 0, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cta-primary-btn:hover {
+  background: var(--yellow-highlight);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(255, 195, 0, 0.5);
+}
+
+.cta-arrow-icon {
+  transition: transform 0.3s ease;
+}
+
+.cta-primary-btn:hover .cta-arrow-icon {
+  transform: translate(2px, -2px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .cta-section {
+    padding: 90px 32px 100px;
+  }
+  .cta-card-inner {
+    padding: 64px 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cta-section {
+    padding: 70px 20px 80px;
+  }
+  .cta-card-inner {
+    padding: 48px 20px;
+  }
+  .cta-primary-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

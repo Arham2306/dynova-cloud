@@ -254,6 +254,89 @@
   padding: 0;
 }
 
+/* ── Post-Testimonials Trust Anchor Banner ── */
+.testimonials-trust-anchor-container {
+  max-width: 1360px;
+  width: 100%;
+  margin: 36px auto 0;
+  padding: 0 56px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.testimonials-trust-anchor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: rgba(0, 20, 42, 0.7);
+  border: 1px solid rgba(255, 195, 0, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 195, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  width: fit-content;
+}
+
+.testimonials-trust-anchor:hover {
+  border-color: rgba(255, 195, 0, 0.45);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 195, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.trust-anchor-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trust-anchor-sparkle {
+  color: var(--yellow-primary);
+  flex-shrink: 0;
+}
+
+.trust-anchor-text {
+  font-family: var(--font-primary);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #e2e8f0;
+  letter-spacing: -0.01em;
+}
+
+.trust-anchor-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--yellow-primary);
+  color: #000814;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.trust-anchor-btn:hover {
+  background: var(--yellow-highlight);
+  transform: scale(1.04);
+}
+
+.trust-anchor-arrow {
+  transition: transform 0.25s ease;
+}
+
+.trust-anchor-btn:hover .trust-anchor-arrow {
+  transform: translate(2px, -2px);
+}
+
 /* Responsive adjustments */
 @media (max-width: 1024px) {
   .testimonials-section {
@@ -268,6 +351,9 @@
   .testimonials-perspective-track {
     transform: translateX(-20px) translateY(0px) translateZ(-20px) rotateX(12deg) rotateY(-6deg) rotateZ(6deg);
     gap: 16px;
+  }
+  .testimonials-trust-anchor-container {
+    padding: 0 32px;
   }
 }
 
@@ -284,5 +370,23 @@
   .testimonials-perspective-track {
     transform: scale(0.9) translateX(0) rotateX(8deg) rotateY(-4deg) rotateZ(4deg);
     gap: 12px;
+  }
+  .testimonials-trust-anchor-container {
+    padding: 0 20px;
+  }
+  .testimonials-trust-anchor {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 16px 20px;
+    width: 100%;
+    border-radius: 16px;
+  }
+  .trust-anchor-left {
+    justify-content: center;
+  }
+  .trust-anchor-btn {
+    width: 100%;
+    justify-content: center;
   }
 }

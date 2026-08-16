@@ -1,0 +1,489 @@
+/* ═══════════════════════════════════════════════════════════════
+   DYNOVA CLOUD — GSAP SCROLLTRIGGER STACKABLE CARDS PORTFOLIO
+   ═══════════════════════════════════════════════════════════════ */
+
+.portfolio-stack-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-primary);
+  color: var(--text-white);
+  padding: 120px 56px 140px;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.portfolio-stack-container {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+/* ── Section Header ── */
+.portfolio-stack-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 820px;
+  text-align: left;
+}
+
+.portfolio-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-primary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.portfolio-square {
+  width: 7px;
+  height: 7px;
+  background-color: var(--yellow-primary);
+  display: inline-block;
+  border-radius: 1px;
+  box-shadow: 0 0 8px var(--yellow-highlight);
+  flex-shrink: 0;
+}
+
+.portfolio-eyebrow-text {
+  color: var(--text-muted);
+}
+
+.portfolio-title-wrapper {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.portfolio-title {
+  font-family: var(--font-primary);
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  font-weight: 600;
+  color: var(--text-white);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28em;
+}
+
+.portfolio-subtitle {
+  font-family: var(--font-primary);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin: 0;
+}
+
+/* ── Stackable Cards Deck ── */
+.portfolio-stack-deck {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Individual Card Container */
+.portfolio-stack-card-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 80px;
+}
+
+.portfolio-stack-card-container:last-child {
+  margin-bottom: 0;
+}
+
+/* Card Outer Shell */
+.portfolio-stack-card {
+  position: relative;
+  width: 100%;
+  border-radius: 28px;
+  background: rgba(0, 18, 38, 0.65);
+  padding: 1px;
+  overflow: hidden;
+  box-shadow: 0 -20px 45px -5px rgba(0, 0, 0, 0.8), 0 30px 60px -10px rgba(0, 0, 0, 0.9);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  will-change: transform, filter;
+}
+
+.portfolio-stack-card.is-hovered {
+  box-shadow: 0 -20px 45px -5px rgba(0, 0, 0, 0.8), 0 40px 80px -10px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 195, 0, 0.15);
+}
+
+/* Static Default Subtle Border */
+.portfolio-stack-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(245, 247, 250, 0.09);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 1. Animated Conic Border Beam */
+.stack-conic-border-wrapper {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.portfolio-stack-card.is-hovered .stack-conic-border-wrapper {
+  opacity: 1;
+}
+
+.stack-conic-border-spinner {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 260deg,
+    rgba(255, 195, 0, 0.25) 310deg,
+    rgba(255, 214, 10, 0.9) 360deg
+  );
+  animation: rotateStackBorderBeam 4s linear infinite;
+}
+
+@keyframes rotateStackBorderBeam {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 2. Cursor Spotlight Border Tracker */
+.stack-spotlight-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+  transition: opacity 0.3s ease;
+}
+
+.portfolio-stack-card.is-hovered .stack-spotlight-border {
+  opacity: 1;
+}
+
+/* ── Card Inner Surface (2-Column Grid) ── */
+.portfolio-stack-inner {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 40px;
+  align-items: center;
+  padding: 38px 44px;
+  border-radius: 27px;
+  background: rgba(0, 12, 28, 0.96);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Cursor Glow */
+.stack-spotlight-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 27px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.portfolio-stack-card.is-hovered .stack-spotlight-glow {
+  opacity: 1;
+}
+
+/* ── Left Column: Narrative & Metrics ── */
+.stack-card-left {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.stack-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--yellow-primary);
+  text-transform: uppercase;
+}
+
+.stack-card-index {
+  color: var(--yellow-primary);
+}
+
+.stack-card-category {
+  color: var(--yellow-primary);
+}
+
+.stack-client-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245, 247, 250, 0.04);
+  border: 1px solid rgba(245, 247, 250, 0.08);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  width: fit-content;
+}
+
+.stack-client-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.stack-client-name {
+  font-family: var(--font-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+.stack-client-year {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+.stack-card-title {
+  font-family: var(--font-primary);
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: 700;
+  color: var(--text-white);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.stack-card-desc {
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Metric Box */
+.stack-metric-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 195, 0, 0.05);
+  border: 1px solid rgba(255, 195, 0, 0.2);
+  padding: 12px 18px;
+  border-radius: 16px;
+  width: fit-content;
+}
+
+.stack-metric-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 195, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stack-metric-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack-metric-val {
+  font-family: var(--font-primary);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--yellow-primary);
+  line-height: 1.2;
+}
+
+.stack-metric-lbl {
+  font-family: var(--font-primary);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+/* Footer Row */
+.stack-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(245, 247, 250, 0.06);
+}
+
+.stack-tech-pills {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.stack-tech-pill {
+  font-family: var(--font-primary);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: rgba(245, 247, 250, 0.04);
+  border: 1px solid rgba(245, 247, 250, 0.07);
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+}
+
+.portfolio-stack-card.is-hovered .stack-tech-pill {
+  border-color: rgba(255, 195, 0, 0.15);
+  color: var(--yellow-primary);
+}
+
+.stack-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--yellow-primary);
+  color: #000814;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.stack-cta-btn:hover {
+  background: var(--yellow-highlight);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 195, 0, 0.4);
+}
+
+.stack-cta-arrow {
+  transition: transform 0.25s ease;
+}
+
+.stack-cta-btn:hover .stack-cta-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* ── Right Column: High-Res Visual Frame ── */
+.stack-card-right {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.stack-visual-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000814;
+  border: 1px solid rgba(245, 247, 250, 0.08);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+}
+
+.stack-visual-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolio-stack-card.is-hovered .stack-visual-img {
+  transform: scale(1.04);
+}
+
+.stack-visual-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Responsive Breakpoints ── */
+@media (max-width: 1024px) {
+  .portfolio-stack-section {
+    padding: 90px 32px 100px;
+  }
+  .portfolio-stack-inner {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 30px 28px;
+  }
+  .stack-visual-frame {
+    aspect-ratio: 16 / 9;
+  }
+  .portfolio-stack-card-container {
+    margin-bottom: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-stack-section {
+    padding: 70px 20px 80px;
+  }
+  .portfolio-stack-header {
+    gap: 10px;
+  }
+  .portfolio-stack-inner {
+    padding: 22px 18px;
+    gap: 22px;
+  }
+  .stack-card-title {
+    font-size: 1.25rem;
+  }
+  .stack-card-desc {
+    font-size: 0.86rem;
+  }
+  .stack-footer-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .stack-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .portfolio-stack-card-container {
+    margin-bottom: 40px;
+  }
+}

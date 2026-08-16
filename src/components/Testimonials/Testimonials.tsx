@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Marquee } from '@/components/ui/3d-testimonails';
-import { Star } from 'lucide-react';
+import { Star, Sparkles, ArrowUpRight } from 'lucide-react';
 import BlurText from '../BlurText/BlurText';
 import './Testimonials.css';
 
@@ -212,6 +212,26 @@ export const Testimonials: React.FC = () => {
           <div className="testimonials-fade testimonials-fade-left" />
           <div className="testimonials-fade testimonials-fade-right" />
         </div>
+      </div>
+
+      {/* Post-Testimonials Trust Anchor Banner */}
+      <div className="testimonials-trust-anchor-container">
+        <motion.div 
+          className="testimonials-trust-anchor"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="trust-anchor-left">
+            <Sparkles size={16} className="trust-anchor-sparkle" />
+            <span className="trust-anchor-text">Ready to become our next growth benchmark?</span>
+          </div>
+          <a href="#contact" className="trust-anchor-btn">
+            <span>Explore Options</span>
+            <ArrowUpRight size={15} className="trust-anchor-arrow" />
+          </a>
+        </motion.div>
       </div>
     </section>
   );

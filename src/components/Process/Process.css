@@ -1,446 +1,342 @@
 /* ═══════════════════════════════════════════════════════════════
-   DYNOVA CLOUD — 4-PHASE LUXURY BENTO PROCESS SECTION
+   DYNOVA CLOUD — GSAP PINNED KINETIC TYPOGRAPHY SCROLL PROCESS
    ═══════════════════════════════════════════════════════════════ */
 
-.process-section {
+.process-pinned-container {
   position: relative;
   width: 100%;
-  background-color: var(--bg-primary);
-  padding: 120px 56px 140px;
+  background-color: #F5F7FA;
+  color: #000814;
+}
+
+/* 100vh Sticky Viewport Stage */
+.process-pinned-stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #F5F7FA;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box;
 }
 
-.process-container {
+.process-stage-inner {
   max-width: 1360px;
   width: 100%;
+  height: 100%;
   margin: 0 auto;
+  padding: 110px 56px 36px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 48px;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: relative;
 }
 
-/* ── Section Header ── */
-.process-header {
+/* ── Top Bar ── */
+.process-stage-top {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-  max-width: 780px;
-  text-align: left;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  z-index: 10;
 }
 
-.process-eyebrow {
+.process-stage-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   font-family: var(--font-primary);
   font-size: 0.78rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.16em;
-  color: var(--text-muted);
+  color: #475569;
   text-transform: uppercase;
 }
 
-.process-square {
+.process-stage-square {
   width: 7px;
   height: 7px;
-  background-color: var(--yellow-primary);
+  background-color: var(--primary-blue);
   display: inline-block;
   border-radius: 1px;
-  box-shadow: 0 0 8px var(--yellow-highlight);
+  box-shadow: 0 0 8px rgba(0, 53, 102, 0.35);
   flex-shrink: 0;
 }
 
-.process-eyebrow-text {
-  color: var(--text-muted);
+.process-stage-eyebrow-text {
+  color: #475569;
 }
 
-.process-title-wrapper {
-  margin: 0;
-  padding: 0;
-  display: block;
-}
-
-.process-title {
-  font-family: var(--font-primary);
-  font-size: clamp(2rem, 3.6vw, 3rem);
-  font-weight: 600;
-  color: var(--text-white);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
+.process-stage-progress-wrap {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.28em;
-}
-
-.process-subtitle {
-  font-family: var(--font-primary);
-  font-size: 0.96rem;
-  line-height: 1.6;
-  color: var(--text-muted);
-  font-weight: 400;
-}
-
-/* ── 4-Column Bento Grid ── */
-.process-bento-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  width: 100%;
-  align-items: stretch;
-}
-
-/* Bento Card Container */
-.process-bento-container {
-  position: relative;
-  border-radius: 20px;
-  background: rgba(0, 20, 42, 0.4);
-  padding: 1px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px -15px rgba(0, 8, 20, 0.8);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.process-bento-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 195, 0, 0.12);
-}
-
-/* Static Default Subtle Border */
-.process-bento-container::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 1px solid rgba(245, 247, 250, 0.08);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* 1. Animated Conic Border Beam Wrapper */
-.process-conic-border-wrapper {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 2;
-  transition: opacity 0.4s ease;
-}
-
-.process-bento-container.is-card-hovered .process-conic-border-wrapper {
-  opacity: 1;
-}
-
-.process-conic-border-spinner {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg 260deg,
-    rgba(255, 195, 0, 0.25) 310deg,
-    rgba(255, 214, 10, 0.9) 360deg
-  );
-  animation: rotateProcessBorderBeam 3.6s linear infinite;
-}
-
-@keyframes rotateProcessBorderBeam {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* 2. Dynamic Cursor Spotlight Border Tracker */
-.process-spotlight-border {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  z-index: 3;
-  transition: opacity 0.3s ease;
-}
-
-.process-bento-container.is-card-hovered .process-spotlight-border {
-  opacity: 1;
-}
-
-/* Card Inner Surface */
-.process-bento-inner {
-  position: relative;
-  z-index: 4;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 22px;
-  gap: 18px;
-  border-radius: 19px;
-  background: rgba(0, 14, 32, 0.9);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-/* 3. Dynamic Cursor Spotlight Surface Glow */
-.process-spotlight-glow {
-  position: absolute;
-  inset: 0;
-  border-radius: 19px;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.process-bento-container.is-card-hovered .process-spotlight-glow {
-  opacity: 1;
-}
-
-/* Card Content Above Glow */
-.process-visual-frame,
-.process-card-content,
-.process-deliverables-wrap,
-.process-tech-footer {
-  position: relative;
-  z-index: 2;
-}
-
-/* ── Visual Frame ── */
-.process-visual-frame {
-  position: relative;
-  width: 100%;
-  height: 180px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #000814;
-  border: 1px solid rgba(245, 247, 250, 0.08);
-}
-
-.process-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.process-bento-container:hover .process-img {
-  transform: scale(1.06);
-}
-
-.process-visual-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 8, 20, 0.2) 0%, rgba(0, 8, 20, 0.85) 100%);
-  pointer-events: none;
-}
-
-/* Image Top Bar */
-.process-img-top-bar {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  z-index: 3;
+  gap: 16px;
 }
 
-.process-num-pill {
-  font-family: var(--font-primary);
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: var(--yellow-primary);
-  background: rgba(0, 8, 20, 0.85);
-  backdrop-filter: blur(8px);
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 195, 0, 0.3);
-}
-
-.process-duration-pill {
+.process-phase-counter {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--text-white);
-  background: rgba(0, 8, 20, 0.85);
-  backdrop-filter: blur(8px);
-  padding: 3px 9px;
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(245, 247, 250, 0.12);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
 }
 
-/* Metric Badge */
-.process-metric-pill {
+.phase-active-num {
+  color: var(--primary-blue);
+  font-size: 1rem;
+}
+
+.phase-divider {
+  color: #94a3b8;
+  margin: 0 1px;
+}
+
+.phase-total-num {
+  color: #94a3b8;
+}
+
+.process-progress-track-outer {
+  width: 120px;
+  height: 3px;
+  background: rgba(0, 53, 102, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.process-progress-fill-bar {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  inset: 0;
+  background: linear-gradient(90deg, var(--primary-blue), var(--yellow-primary));
+  border-radius: 3px;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* ── Center Stage: Giant Typography Slides ── */
+.process-slides-wrapper {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.process-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity, filter;
+}
+
+.process-slide-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 20px;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* Keyword Badge */
+.process-keyword-badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: rgba(0, 8, 20, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 195, 0, 0.35);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  z-index: 3;
-}
-
-.process-metric-sparkle {
-  color: var(--yellow-primary);
-}
-
-.process-metric-val {
-  font-family: var(--font-primary);
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--yellow-primary);
-}
-
-.process-metric-lbl {
-  font-family: var(--font-primary);
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-/* ── Card Content ── */
-.process-card-content {
-  display: flex;
-  flex-direction: column;
   gap: 8px;
-  text-align: left;
-}
-
-.process-tag-row {
-  display: flex;
-  align-items: center;
-}
-
-.process-phase-tag {
+  background: rgba(0, 53, 102, 0.06);
+  border: 1px solid rgba(0, 53, 102, 0.12);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: var(--yellow-primary);
+  color: var(--primary-blue);
   text-transform: uppercase;
 }
 
-.process-card-title {
+/* Giant Statement Title */
+.process-giant-title {
   font-family: var(--font-primary);
-  font-size: 1.15rem;
+  font-size: clamp(2.6rem, 5.8vw, 5.8rem);
   font-weight: 700;
-  color: var(--text-white);
-  letter-spacing: -0.02em;
-  line-height: 1.25;
+  color: #000814;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
   margin: 0;
 }
 
-.process-card-desc {
+.process-title-num {
+  color: var(--primary-blue);
+  margin-right: 0.08em;
+}
+
+/* 2-line Description */
+.process-slide-desc {
   font-family: var(--font-primary);
-  font-size: 0.84rem;
-  line-height: 1.55;
-  color: var(--text-muted);
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  line-height: 1.6;
+  color: #475569;
+  font-weight: 400;
+  max-width: 820px;
   margin: 0;
 }
 
-/* ── Deliverables Checklist ── */
-.process-deliverables-wrap {
+/* Slide CTA Button (Phase 04) */
+.process-slide-cta-wrap {
+  margin-top: 10px;
   display: flex;
-  flex-direction: column;
+}
+
+.process-slide-cta-btn {
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(245, 247, 250, 0.06);
-}
-
-.process-deliverables-title {
-  font-family: var(--font-mono);
-  font-size: 0.64rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-}
-
-.process-deliverables-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.process-deliv-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
+  background: var(--primary-blue);
+  color: #FFFFFF;
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
   font-family: var(--font-primary);
-  font-size: 0.76rem;
-  color: #cbd5e1;
-  line-height: 1.35;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 53, 102, 0.25);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.process-deliv-icon {
-  color: var(--yellow-primary);
-  flex-shrink: 0;
-  margin-top: 2px;
+.process-slide-cta-btn:hover {
+  background: #001d3d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 53, 102, 0.35);
 }
 
-/* ── Tech Stack Footer ── */
-.process-tech-footer {
+.process-cta-arrow {
+  transition: transform 0.3s ease;
+}
+
+.process-slide-cta-btn:hover .process-cta-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* ── Bottom Status Bar ── */
+.process-stage-bottom {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: auto;
-  padding-top: 8px;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 8, 20, 0.08);
+  z-index: 10;
 }
 
-.process-tech-pill {
-  font-family: var(--font-primary);
-  font-size: 0.64rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  background: rgba(245, 247, 250, 0.04);
-  border: 1px solid rgba(245, 247, 250, 0.06);
-  padding: 2px 7px;
+.process-step-indicators {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.process-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
   border-radius: var(--radius-full);
-  letter-spacing: 0.02em;
-  transition: all 0.25s ease;
+  background: rgba(0, 8, 20, 0.04);
+  border: 1px solid rgba(0, 8, 20, 0.06);
+  font-family: var(--font-primary);
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: #64748b;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.process-bento-container:hover .process-tech-pill {
-  background: rgba(255, 195, 0, 0.06);
-  border-color: rgba(255, 195, 0, 0.15);
-  color: var(--yellow-primary);
+.step-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #94a3b8;
+  transition: all 0.3s ease;
 }
 
-/* ── Responsive ── */
-@media (max-width: 1200px) {
-  .process-bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+.process-step-pill.is-active {
+  background: #FFFFFF;
+  border-color: rgba(0, 53, 102, 0.25);
+  color: var(--primary-blue);
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 8, 20, 0.06);
+}
+
+.process-step-pill.is-active .step-pill-dot {
+  background: var(--primary-blue);
+  box-shadow: 0 0 8px rgba(0, 53, 102, 0.4);
+  transform: scale(1.2);
+}
+
+.process-step-pill.is-completed {
+  color: #000814;
+}
+
+.process-step-pill.is-completed .step-pill-dot {
+  background: var(--primary-blue);
+}
+
+.process-scroll-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.08em;
+}
+
+.process-scroll-arrow {
+  color: var(--primary-blue);
+  animation: bounceArrow 1.8s ease-in-out infinite;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* ── Responsive Breakpoints ── */
+@media (max-width: 1024px) {
+  .process-stage-inner {
+    padding: 96px 32px 28px;
+  }
+  .process-giant-title {
+    font-size: clamp(2.2rem, 5.2vw, 4rem);
   }
 }
 
 @media (max-width: 768px) {
-  .process-section {
-    padding: 70px 20px 80px;
+  .process-stage-inner {
+    padding: 86px 20px 20px;
   }
-  .process-bento-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  .process-progress-track-outer {
+    width: 70px;
   }
-  .process-bento-inner {
-    padding: 18px;
+  .process-step-indicators {
+    display: none;
+  }
+  .process-giant-title {
+    font-size: clamp(1.85rem, 7vw, 2.75rem);
+    line-height: 1.15;
+  }
+  .process-slide-desc {
+    font-size: 0.95rem;
   }
 }
