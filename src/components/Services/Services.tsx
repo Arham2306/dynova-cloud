@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useMotionTemplate } from 'motion/react';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
+import { useLeadModal } from '../../context/LeadModalContext';
 import BlurText from '../BlurText/BlurText';
 
 import imgDigitalMarketing from '../../assets/services/digital-marketing.jpg';
@@ -95,6 +96,7 @@ const SERVICES_DATA: ServiceItem[] = [
 
 // Interactive Spotlight & Animated Border Card Component
 const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = React.memo(({ service, index }) => {
+  const { openLeadModal } = useLeadModal();
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const mouseX = useMotionValue(-1000);
@@ -165,9 +167,15 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = Re
             <span className="bento-category">{service.category}</span>
           </div>
 
-          <a href="#contact" className="bento-arrow-btn" title="Scope service" aria-label="Scope service">
+          <button 
+            type="button" 
+            onClick={() => openLeadModal(service.title)} 
+            className="bento-arrow-btn" 
+            title={`Scope ${service.title}`} 
+            aria-label={`Scope ${service.title}`}
+          >
             <ArrowUpRight size={18} />
-          </a>
+          </button>
         </div>
 
         {/* Card Title & Description with Fade Reveal */}

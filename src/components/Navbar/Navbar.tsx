@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Cloud, ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { useLeadModal } from '../../context/LeadModalContext';
+import logoImg from '../../assets/logo.png';
 import './Navbar.css';
 
 const NAV_ITEMS = [
@@ -13,6 +15,7 @@ const NAV_ITEMS = [
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { openLeadModal } = useLeadModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,14 +29,8 @@ export const Navbar: React.FC = () => {
     <header className={`navbar-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="navbar-container">
         {/* Brand Logo */}
-        <a href="#hero" className="navbar-brand">
-          <div className="brand-icon-wrapper">
-            <Cloud className="brand-icon" size={20} />
-          </div>
-          <div className="brand-text">
-            <span className="brand-title">Dynova</span>
-            <span className="brand-subtitle">Cloud</span>
-          </div>
+        <a href="#hero" className="navbar-brand" aria-label="Dynova Cloud Home">
+          <img src={logoImg} alt="Dynova Cloud" className="navbar-logo-img" />
         </a>
 
         {/* Desktop Navigation Links */}
@@ -51,10 +48,15 @@ export const Navbar: React.FC = () => {
 
         {/* Action Button */}
         <div className="navbar-actions">
-          <a href="#contact" className="cta-button-primary">
+          <button 
+            type="button" 
+            onClick={() => openLeadModal()} 
+            className="cta-button-primary"
+            aria-label="Open project blueprint modal"
+          >
             <span>Start a Project</span>
             <ArrowUpRight size={16} className="cta-icon" />
-          </a>
+          </button>
 
           {/* Mobile Menu Toggle */}
           <button
@@ -82,10 +84,17 @@ export const Navbar: React.FC = () => {
               </a>
             ))}
             <div className="mobile-cta-wrapper">
-              <a href="#contact" className="cta-button-primary" onClick={() => setMobileMenuOpen(false)}>
+              <button 
+                type="button" 
+                className="cta-button-primary" 
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openLeadModal();
+                }}
+              >
                 <span>Start a Project</span>
                 <ArrowUpRight size={16} />
-              </a>
+              </button>
             </div>
           </nav>
         </div>

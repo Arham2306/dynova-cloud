@@ -3,14 +3,15 @@ import { motion, useMotionValue, useMotionTemplate } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
+import { useLeadModal } from '../../context/LeadModalContext';
 import BlurText from '../BlurText/BlurText';
 
-import imgAetheria from '../../assets/portfolio/aetheria.jpg';
-import imgApex from '../../assets/portfolio/apex.jpg';
-import imgHorizon from '../../assets/portfolio/horizon.jpg';
-import imgNexa from '../../assets/portfolio/nexa.jpg';
-import imgKura from '../../assets/portfolio/kura.jpg';
-import imgOmniscale from '../../assets/portfolio/omniscale.jpg';
+import imgAetheria from '../../assets/portfolio/aetheria.webp';
+import imgApex from '../../assets/portfolio/apex.webp';
+import imgHorizon from '../../assets/portfolio/horizon.webp';
+import imgNexa from '../../assets/portfolio/nexa.webp';
+import imgKura from '../../assets/portfolio/kura.webp';
+import imgOmniscale from '../../assets/portfolio/omniscale.webp';
 
 import './Portfolio.css';
 
@@ -117,6 +118,7 @@ const StackablePortfolioCard: React.FC<{
   index: number;
   setCardRef: (el: HTMLDivElement | null) => void;
 }> = React.memo(({ item, index, setCardRef }) => {
+  const { openLeadModal } = useLeadModal();
   const cardInnerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const mouseX = useMotionValue(-1000);
@@ -212,10 +214,15 @@ const StackablePortfolioCard: React.FC<{
                 ))}
               </div>
 
-              <a href="#contact" className="stack-cta-btn">
+              <button 
+                type="button" 
+                onClick={() => openLeadModal(item.title)} 
+                className="stack-cta-btn"
+                aria-label={`Inquire about ${item.title}`}
+              >
                 <span>View Project</span>
                 <ArrowUpRight size={15} className="stack-cta-arrow" />
-              </a>
+              </button>
             </div>
           </div>
 

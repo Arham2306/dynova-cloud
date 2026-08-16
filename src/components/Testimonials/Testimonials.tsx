@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Marquee } from '@/components/ui/3d-testimonails';
 import { Star, Sparkles, ArrowUpRight } from 'lucide-react';
+import { useLeadModal } from '../../context/LeadModalContext';
 import BlurText from '../BlurText/BlurText';
 import './Testimonials.css';
 
@@ -118,6 +119,7 @@ const TestimonialCard = React.memo(function TestimonialCard({ img, name, role, c
 });
 
 export const Testimonials: React.FC = () => {
+  const { openLeadModal } = useLeadModal();
   return (
     <section id="testimonials" className="testimonials-section">
       {/* Header Container */}
@@ -227,10 +229,15 @@ export const Testimonials: React.FC = () => {
             <Sparkles size={16} className="trust-anchor-sparkle" />
             <span className="trust-anchor-text">Ready to become our next growth benchmark?</span>
           </div>
-          <a href="#contact" className="trust-anchor-btn">
+          <button 
+            type="button" 
+            onClick={() => openLeadModal()} 
+            className="trust-anchor-btn"
+            aria-label="Explore partnership options"
+          >
             <span>Explore Options</span>
             <ArrowUpRight size={15} className="trust-anchor-arrow" />
-          </a>
+          </button>
         </motion.div>
       </div>
     </section>

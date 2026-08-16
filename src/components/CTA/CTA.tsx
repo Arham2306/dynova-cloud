@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useMotionTemplate } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
+import { useLeadModal } from '../../context/LeadModalContext';
 import BlurText from '../BlurText/BlurText';
 import './CTA.css';
 
 export const CTA: React.FC = () => {
+  const { openLeadModal } = useLeadModal();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -112,10 +114,15 @@ export const CTA: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.65, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
               >
-                <a href="#hero" className="cta-primary-btn">
+                <button 
+                  type="button" 
+                  onClick={() => openLeadModal()} 
+                  className="cta-primary-btn"
+                  aria-label="Start a project blueprint"
+                >
                   <span>Start Project</span>
                   <ArrowUpRight size={18} className="cta-arrow-icon" />
-                </a>
+                </button>
               </motion.div>
 
             </div>

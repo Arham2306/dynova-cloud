@@ -6,11 +6,14 @@ import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
 import Services from './components/Services/Services';
-import Portfolio from './components/Portfolio/Portfolio';
 import Process from './components/Process/Process';
+import Portfolio from './components/Portfolio/Portfolio';
 import Testimonials from './components/Testimonials/Testimonials';
 import CTA from './components/CTA/CTA';
-import { Cloud } from 'lucide-react';
+import Contact from './components/Contact/Contact';
+import { LeadModalProvider } from './context/LeadModalContext';
+import LeadModal from './components/LeadForm/LeadModal';
+import logoImg from './assets/logo.png';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -45,30 +48,27 @@ export function App() {
   }, []);
 
   return (
-    <div className="app-layout">
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <Process />
-        <Portfolio />
-        <Testimonials />
-        <CTA />
-      </main>
+    <LeadModalProvider>
+      <div className="app-layout">
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Services />
+          <Process />
+          <Portfolio />
+          <Testimonials />
+          <CTA />
+          <Contact />
+        </main>
+        <LeadModal />
 
       {/* Agency Footer */}
       <footer className="agency-footer">
         <div className="footer-container">
           <div className="footer-brand-column">
             <div className="footer-brand">
-              <div className="brand-icon-wrapper">
-                <Cloud size={18} />
-              </div>
-              <div className="brand-text">
-                <span className="brand-title">Dynova</span>
-                <span className="brand-subtitle">Cloud</span>
-              </div>
+              <img src={logoImg} alt="Dynova Cloud" className="footer-logo-img" />
             </div>
             <p className="footer-tagline">DIGITAL SOLUTIONS. REAL GROWTH.</p>
             <p className="footer-bio">
@@ -109,7 +109,8 @@ export function App() {
         </div>
       </footer>
     </div>
-  );
+  </LeadModalProvider>
+);
 }
 
 export default App;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useLeadModal } from '../../context/LeadModalContext';
 import Scanner from '../Scanner/Scanner';
 import BlurText from '../BlurText/BlurText';
 import architectImg from '../../assets/architect-capsule.jpg';
@@ -8,6 +9,7 @@ import platformImg from '../../assets/platform-capsule.jpg';
 import './Hero.css';
 
 export const Hero: React.FC = () => {
+  const { openLeadModal } = useLeadModal();
   return (
     <section id="hero" className="editorial-hero-section">
       {/* Prominent 3D WebGL Scanner Atmosphere Layer */}
@@ -155,10 +157,16 @@ export const Hero: React.FC = () => {
                 ease: [0.16, 1, 0.3, 1] 
               }}
             >
-              <a href="#contact" className="editorial-cta-link">
+              <button 
+                type="button" 
+                onClick={() => openLeadModal()} 
+                className="editorial-cta-link"
+                style={{ cursor: 'pointer', border: 'none', background: 'none', padding: 0 }}
+                aria-label="Start a project blueprint"
+              >
                 <span>Start a Project</span>
                 <ArrowUpRight size={16} />
-              </a>
+              </button>
             </motion.div>
           </div>
 

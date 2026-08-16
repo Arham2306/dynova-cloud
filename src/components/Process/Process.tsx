@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown, ArrowUpRight, Sparkles } from 'lucide-react';
+import { useLeadModal } from '../../context/LeadModalContext';
 import './Process.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -43,6 +44,7 @@ const PHASES: ProcessPhase[] = [
 ];
 
 export const Process: React.FC = () => {
+  const { openLeadModal } = useLeadModal();
   const containerRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -183,10 +185,15 @@ export const Process: React.FC = () => {
                   {/* Inline CTA Button on Final Phase */}
                   {phase.hasCta && (
                     <div className="process-slide-cta-wrap">
-                      <a href="#contact" className="process-slide-cta-btn">
+                      <button 
+                        type="button" 
+                        onClick={() => openLeadModal()} 
+                        className="process-slide-cta-btn"
+                        aria-label="Initiate Phase 01 blueprint"
+                      >
                         <span>Initiate Phase 01</span>
                         <ArrowUpRight size={16} className="process-cta-arrow" />
-                      </a>
+                      </button>
                     </div>
                   )}
                 </div>
