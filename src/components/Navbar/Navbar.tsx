@@ -30,7 +30,7 @@ export const Navbar: React.FC = () => {
       <div className="navbar-container">
         {/* Brand Logo */}
         <a href="#hero" className="navbar-brand" aria-label="Dynova Cloud Home">
-          <img src={logoImg} alt="Dynova Cloud" className="navbar-logo-img" />
+          <img src={logoImg} alt="Dynova Cloud - Digital Marketing and Engineering Agency" className="navbar-logo-img" />
         </a>
 
         {/* Desktop Navigation Links */}

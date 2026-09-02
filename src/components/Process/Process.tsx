@@ -26,7 +26,7 @@ const PHASES: ProcessPhase[] = [
     num: '02',
     keyword: 'UNIFIED GROWTH ENGINE',
     title: 'Unified Execution, Not Execution Silos',
-    description: 'Most agencies run ads without fixing slow backend code, or build sites without understanding search intent. Dynova.cloud operates as one unified growth engine, combining SEO, paid media, and full-stack development under a single strategy.'
+    description: 'Most agencies run ads without fixing slow backend code, or build sites without understanding search intent. Dynova Cloud operates as one unified growth engine, combining SEO, paid media, and full-stack development under a single strategy.'
   },
   {
     num: '03',

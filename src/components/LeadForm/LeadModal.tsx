@@ -72,7 +72,7 @@ export const LeadModal: React.FC = () => {
                 {/* Modal Top Bar */}
                 <div className="lead-modal-header">
                   <div className="modal-header-brand">
-                    <img src={logoImg} alt="Dynova Cloud" className="modal-logo-img" />
+                    <img src={logoImg} alt="Dynova Cloud official logo" className="modal-logo-img" />
                     <div className="modal-header-titles">
                       <span className="modal-brand-tag">DYNOVA CLOUD // DIRECT INTAKE</span>
                       <h2 id="modal-title" className="modal-title">Initiate Project Blueprint</h2>

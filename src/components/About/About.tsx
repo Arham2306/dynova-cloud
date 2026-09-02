@@ -22,7 +22,7 @@ export const About: React.FC = () => {
           >
             We bridge the gap between performance marketing and full-stack
             code. A brilliant ad campaign fails on a slow website, and a fast
-            site is useless without qualified search traffic. Dynova.cloud
+            site is useless without qualified search traffic. Dynova Cloud
             operates as one integrated growth partner, combining SEO, paid
             performance marketing, full-stack development, and UI/UX design
             into a single revenue strategy.

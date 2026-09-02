@@ -13,6 +13,7 @@ import CTA from './components/CTA/CTA';
 import Contact from './components/Contact/Contact';
 import { LeadModalProvider } from './context/LeadModalContext';
 import LeadModal from './components/LeadForm/LeadModal';
+import SEO from './components/SEO/SEO';
 import logoImg from './assets/logo.png';
 import './App.css';
 
@@ -49,6 +50,10 @@ export function App() {
 
   return (
     <LeadModalProvider>
+      <SEO
+        title="Dynova Cloud | SEO, Paid Media, Shopify Development & Web Design"
+        description="Dynova Cloud unifies SEO, paid media, and full-stack Shopify development into one growth engine, built for measurable revenue results."
+      />
       <div className="app-layout">
         <Navbar />
         <main>
@@ -68,7 +73,7 @@ export function App() {
         <div className="footer-container">
           <div className="footer-brand-column">
             <div className="footer-brand">
-              <img src={logoImg} alt="Dynova Cloud" className="footer-logo-img" />
+              <img src={logoImg} alt="Dynova Cloud - Digital Marketing and Engineering Agency" className="footer-logo-img" />
             </div>
             <p className="footer-tagline">DIGITAL SOLUTIONS. REAL GROWTH.</p>
             <p className="footer-bio">
