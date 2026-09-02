@@ -14,6 +14,7 @@ import Contact from './components/Contact/Contact';
 import { LeadModalProvider } from './context/LeadModalContext';
 import LeadModal from './components/LeadForm/LeadModal';
 import SEO from './components/SEO/SEO';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import logoImg from './assets/logo.png';
 import './App.css';
 
@@ -67,6 +68,7 @@ export function App() {
           <Contact />
         </main>
         <LeadModal />
+        <ScrollToTop />
 
       {/* Agency Footer */}
       <footer className="agency-footer">

@@ -5,10 +5,11 @@ import logoImg from '../../assets/logo.png';
 import './Navbar.css';
 
 const NAV_ITEMS = [
-  { label: 'Solutions', href: '#services' },
-  { label: 'Work', href: '#work' },
-  { label: 'Capabilities', href: '#services' },
   { label: 'About', href: '#about' },
+  { label: 'Services', href: '#services' },
+  { label: 'Process', href: '#process' },
+  { label: 'Portfolio', href: '#work' },
+  { label: 'Testimonials', href: '#testimonials' },
   { label: 'Contact', href: '#contact' },
 ];
 

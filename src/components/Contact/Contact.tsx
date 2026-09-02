@@ -16,7 +16,7 @@ export const Contact: React.FC = () => {
         {/* Left Column: Direct Agency Coordinates & Value Narrative */}
         <div className="contact-info-col">
           {/* Eyebrow */}
-          <motion.div 
+          <motion.div
             className="contact-eyebrow"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -38,19 +38,19 @@ export const Contact: React.FC = () => {
             />
           </h2>
 
-          <motion.p 
+          <motion.p
             className="contact-narrative"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           >
-            Connect directly with our lead cloud architects, performance marketing directors, and design systems engineers. Every partnership starts with a detailed technical discovery and tailored growth roadmap.
+            Connect directly with our SEO strategists, paid media specialists, Shopify developers, and UI/UX designers. Every partnership starts with a comprehensive digital audit and a tailored growth roadmap.
           </motion.p>
 
           {/* Agency Coordinates & Guarantees */}
           <div className="contact-details-grid">
-            <motion.div 
+            <motion.div
               className="contact-detail-card"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -62,13 +62,13 @@ export const Contact: React.FC = () => {
               </div>
               <div className="detail-content">
                 <span className="detail-lbl">DIRECT EMAIL INTAKE</span>
-                <a href="mailto:solutions@dynovacloud.com" className="detail-val link">
-                  solutions@dynovacloud.com
+                <a href="mailto:info@dynova.cloud" className="detail-val link">
+                  info@dynova.cloud
                 </a>
               </div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="contact-detail-card"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -84,7 +84,7 @@ export const Contact: React.FC = () => {
               </div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="contact-detail-card"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -100,7 +100,7 @@ export const Contact: React.FC = () => {
               </div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="contact-detail-card"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -118,7 +118,7 @@ export const Contact: React.FC = () => {
           </div>
 
           {/* Live Availability Badge */}
-          <motion.div 
+          <motion.div
             className="contact-availability-pill"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -131,7 +131,7 @@ export const Contact: React.FC = () => {
         </div>
 
         {/* Right Column: Embedded Lead Form Card */}
-        <motion.div 
+        <motion.div
           className="contact-form-shell"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

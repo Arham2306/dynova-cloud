@@ -49,8 +49,8 @@ export const LeadForm: React.FC<LeadFormProps> = ({
   useEffect(() => {
     if (initialService) {
       // Find closest match or default
-      const match = SERVICES_OPTIONS.find(s => 
-        s.toLowerCase().includes(initialService.toLowerCase()) || 
+      const match = SERVICES_OPTIONS.find(s =>
+        s.toLowerCase().includes(initialService.toLowerCase()) ||
         initialService.toLowerCase().includes(s.toLowerCase())
       );
       if (match) {
@@ -140,8 +140,8 @@ export const LeadForm: React.FC<LeadFormProps> = ({
   }
 
   return (
-    <form 
-      onSubmit={handleSubmit} 
+    <form
+      onSubmit={handleSubmit}
       className={`lead-form-container ${variant === 'modal' ? 'is-modal' : ''}`}
       noValidate
     >
@@ -154,7 +154,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({
           </div>
           <h3 className="lead-form-title">Initiate Your Project Blueprint</h3>
           <p className="lead-form-subtitle">
-            Complete the fields below to schedule an architectural consultation with our engineering and growth directors.
+            Complete the fields below to schedule a strategy consultation with our SEO, paid media, and Shopify development team.
           </p>
         </div>
       )}
@@ -287,11 +287,11 @@ export const LeadForm: React.FC<LeadFormProps> = ({
           {isSubmitting ? (
             <>
               <Loader2 size={18} className="submit-spinner" />
-              <span>Transmitting Blueprint...</span>
+              <span>Submitting...</span>
             </>
           ) : (
             <>
-              <span>Send Project Blueprint</span>
+              <span>Submit</span>
               <Send size={16} className="submit-icon" />
             </>
           )}
