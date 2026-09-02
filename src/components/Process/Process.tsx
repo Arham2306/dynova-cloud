@@ -18,27 +18,27 @@ interface ProcessPhase {
 const PHASES: ProcessPhase[] = [
   {
     num: '01',
-    keyword: 'MARKET INTELLIGENCE',
-    title: 'Discovery & Strategy',
-    description: 'Forensic audit of your digital ecosystem, competitor growth vectors, and user conversion funnels to build a data-driven growth roadmap.'
+    keyword: 'DATA-FIRST STRATEGY',
+    title: 'Discovery & Data-First Strategy',
+    description: 'We base every strategy on real search intent volumes, verified conversion data, and technical site performance metrics. No guesswork, no generic templates.'
   },
   {
     num: '02',
-    keyword: 'CONVERSION UI/UX',
-    title: 'Architecture & Design',
-    description: 'Engineering high-converting design systems, tokenized UI kits, and interactive prototypes built for rapid user engagement.'
+    keyword: 'UNIFIED GROWTH ENGINE',
+    title: 'Unified Execution, Not Execution Silos',
+    description: 'Most agencies run ads without fixing slow backend code, or build sites without understanding search intent. Dynova.cloud operates as one unified growth engine, combining SEO, paid media, and full-stack development under a single strategy.'
   },
   {
     num: '03',
-    keyword: 'PRODUCTION SPEED',
-    title: 'Engineering & Deploy',
-    description: 'Modern Next.js platforms with sub-second page loads, automated CI/CD deployment pipelines, and global edge security standards.'
+    keyword: 'RAPID PAID MEDIA SIGNAL',
+    title: 'Early Signal Within 48–72 Hours',
+    description: 'Paid campaigns across Google Search, Meta, and LinkedIn Ads deliver direct conversion data and lead generation within 48 to 72 hours of launch, giving you immediate performance signal while long-term SEO compounds in the background.'
   },
   {
     num: '04',
-    keyword: 'REVENUE ENGINE',
-    title: 'Hyper-Scale & Growth',
-    description: 'Algorithmic paid media scaling, continuous multi-variant A/B conversion tests, and real-time revenue telemetry to compound ROI.',
+    keyword: 'COMPOUNDING ORGANIC GROWTH',
+    title: 'Compounding Growth Over 4–6 Months',
+    description: 'SEO campaigns build cumulative organic growth, typically delivering initial rank improvements within 30 to 60 days and substantial revenue scaling within 4 to 6 months.',
     hasCta: true
   }
 ];
@@ -114,18 +114,18 @@ export const Process: React.FC = () => {
           },
           `step-${i}`
         )
-        .to(
-          nextSlide,
-          {
-            opacity: 1,
-            y: 0,
-            filter: 'blur(0px)',
-            pointerEvents: 'auto',
-            duration: 1,
-            ease: 'power2.inOut'
-          },
-          `step-${i}`
-        );
+          .to(
+            nextSlide,
+            {
+              opacity: 1,
+              y: 0,
+              filter: 'blur(0px)',
+              pointerEvents: 'auto',
+              duration: 1,
+              ease: 'power2.inOut'
+            },
+            `step-${i}`
+          );
       }
     }, container);
 
@@ -137,7 +137,7 @@ export const Process: React.FC = () => {
       {/* The Pinned Viewport Stage */}
       <div ref={stageRef} className="process-pinned-stage">
         <div className="process-stage-inner">
-          
+
           {/* Top Control & Header Bar */}
           <div className="process-stage-top">
             <div className="process-stage-eyebrow">
@@ -185,9 +185,9 @@ export const Process: React.FC = () => {
                   {/* Inline CTA Button on Final Phase */}
                   {phase.hasCta && (
                     <div className="process-slide-cta-wrap">
-                      <button 
-                        type="button" 
-                        onClick={() => openLeadModal()} 
+                      <button
+                        type="button"
+                        onClick={() => openLeadModal()}
                         className="process-slide-cta-btn"
                         aria-label="Initiate Phase 01 blueprint"
                       >

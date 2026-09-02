@@ -104,7 +104,15 @@ const BlurTextComponent: React.FC<BlurTextProps> = ({
       // @ts-expect-error dynamic polymorphic ref
       ref={ref} 
       className={className} 
-      style={{ display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'inherit', maxWidth: '100%' }}
+      style={{ 
+        display: 'inline-flex', 
+        flexWrap: 'wrap', 
+        alignItems: 'center', 
+        justifyContent: 'inherit', 
+        maxWidth: '100%',
+        columnGap: animateBy === 'words' ? '0.28em' : '0',
+        rowGap: animateBy === 'words' ? '0.12em' : '0'
+      }}
     >
       {elements.map((segment, index) => {
         const spanTransition: Transition = {
@@ -127,7 +135,6 @@ const BlurTextComponent: React.FC<BlurTextProps> = ({
             }}
           >
             {segment === ' ' ? '\u00A0' : segment}
-            {animateBy === 'words' && index < elements.length - 1 && '\u00A0'}
           </motion.span>
         );
       })}

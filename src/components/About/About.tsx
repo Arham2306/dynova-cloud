@@ -16,47 +16,52 @@ export const About: React.FC = () => {
         {/* Editorial Statement with ScrollReveal */}
         <div className="about-text-wrapper">
           <ScrollReveal
-            baseOpacity={0.14}
+            baseOpacity={1.14}
             blurStrength={6}
             textClassName="about-large-text"
           >
-            We engineer high-performance digital systems and cloud architecture built to scale enterprises, outperform competitors, and drive real business growth. We transform complex technical challenges into competitive market advantages.
+            We bridge the gap between performance marketing and full-stack
+            code. A brilliant ad campaign fails on a slow website, and a fast
+            site is useless without qualified search traffic. Dynova.cloud
+            operates as one integrated growth partner, combining SEO, paid
+            performance marketing, full-stack development, and UI/UX design
+            into a single revenue strategy.
           </ScrollReveal>
         </div>
 
         {/* Supporting Minimal Agency Pillars with Fade-Up on Scroll */}
         <div className="about-subtext-grid">
-          <motion.div 
+          <motion.div
             className="about-subtext-item"
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
           >
-            <span className="subtext-num">01 / ARCHITECTURE</span>
-            <p>Engineered with modern stacks, resilience, and zero-compromise security.</p>
+            <span className="subtext-num">01 / DATA-FIRST DECISIONS</span>
+            <p>We base strategies on real search intent volumes, verified conversion data, and technical site performance metrics.</p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="about-subtext-item"
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
           >
-            <span className="subtext-num">02 / VELOCITY</span>
-            <p>From initial blueprint to global cloud deployment with rapid iteration.</p>
+            <span className="subtext-num">02 / CLEAN CODE & SPEED PRIORITY</span>
+            <p>Site performance is non-negotiable. Every build is optimized for fast server responses and high Core Web Vitals performance.</p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="about-subtext-item"
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
           >
-            <span className="subtext-num">03 / OUTCOMES</span>
-            <p>Technology built to scale operations and accelerate measurable revenue.</p>
+            <span className="subtext-num">03 / TOTAL TRANSPARENCY</span>
+            <p>Clear communication, live campaign dashboards, and direct reporting focused on revenue performance rather than vanity metrics.</p>
           </motion.div>
         </div>
       </div>

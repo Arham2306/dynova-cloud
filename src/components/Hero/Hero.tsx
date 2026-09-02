@@ -51,32 +51,32 @@ export const Hero: React.FC = () => {
           {/* Subtitle directly above the main title */}
           <div className="headline-subtitle">
             <span className="subtitle-square" />
-            <BlurText 
-              text="DYNOVA CLOUD — DIGITAL SOLUTIONS & REAL GROWTH" 
-              delay={35} 
-              className="subtitle-text" 
+            <BlurText
+              text="DIGITAL GROWTH & ENGINEERING"
+              delay={35}
+              className="subtitle-text"
               direction="bottom"
             />
           </div>
 
           {/* Line 1 */}
           <div className="headline-line line-1">
-            <BlurText 
-              text="WE ENGINEER" 
-              delay={90} 
-              className="headline-text" 
-              direction="bottom" 
+            <BlurText
+              text="FULL-STACK DIGITAL"
+              delay={90}
+              className="headline-text"
+              direction="bottom"
               stepDuration={0.35}
             />
-            <motion.div 
-              className="inline-media-pill pill-architect" 
+            <motion.div
+              className="inline-media-pill pill-architect"
               title="Lead Cloud Architect"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ 
-                delay: 0.65, 
-                duration: 0.55, 
-                ease: [0.16, 1, 0.3, 1] 
+              transition={{
+                delay: 0.65,
+                duration: 0.55,
+                ease: [0.16, 1, 0.3, 1]
               }}
               whileHover={{ scale: 1.06 }}
             >
@@ -87,40 +87,33 @@ export const Hero: React.FC = () => {
 
           {/* Line 2 */}
           <div className="headline-line line-2">
-            <BlurText 
-              text="DIGITAL SOLUTIONS" 
-              delay={110} 
-              className="headline-text" 
-              direction="bottom" 
+            <BlurText
+              text="MARKETING & ENGINEERING"
+              delay={110}
+              className="headline-text"
+              direction="bottom"
               stepDuration={0.35}
             />
           </div>
 
           {/* Line 3 */}
           <div className="headline-line line-3">
-            <BlurText 
-              text="THAT DRIVE" 
-              delay={130} 
-              className="headline-text" 
-              direction="bottom" 
-              stepDuration={0.35}
-            />
-            <BlurText 
-              text="GROWTH" 
-              delay={170} 
-              className="headline-highlight" 
-              direction="bottom" 
+            <BlurText
+              text="ECOSYSTEM"
+              delay={170}
+              className="headline-highlight"
+              direction="bottom"
               stepDuration={0.4}
             />
-            <motion.div 
-              className="inline-media-pill pill-platform" 
+            <motion.div
+              className="inline-media-pill pill-platform"
               title="Digital Cloud Platform"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ 
-                delay: 0.85, 
-                duration: 0.55, 
-                ease: [0.16, 1, 0.3, 1] 
+              transition={{
+                delay: 0.85,
+                duration: 0.55,
+                ease: [0.16, 1, 0.3, 1]
               }}
               whileHover={{ scale: 1.06 }}
             >
@@ -133,33 +126,31 @@ export const Hero: React.FC = () => {
         {/* Bottom Editorial Narrative & Scroll Indicator (Orchestrated Fade-in) */}
         <div className="hero-bottom-row">
           <div className="bottom-narrative-box">
-            <motion.p 
+            <motion.p
               className="narrative-paragraph"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                delay: 1.1, 
-                duration: 0.65, 
-                ease: [0.16, 1, 0.3, 1] 
+              transition={{
+                delay: 1.1,
+                duration: 0.65,
+                ease: [0.16, 1, 0.3, 1]
               }}
             >
-              We engineer bespoke digital platforms, cloud infrastructure, and intelligent software 
-              for fast-scaling enterprises and modern brands — technology that wins over stakeholders 
-              and accelerates real business growth.
+              Dynova Cloud unifies high-performance digital marketing with enterprise-grade technical engineering. We help growth-focused businesses, modern B2B brands, and scaling e-commerce stores capture market share through search engine optimization (SEO), data-backed media buying, full-stack Shopify development, and conversion-centered brand design.
             </motion.p>
-            <motion.div 
+            <motion.div
               className="bottom-cta-wrap"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                delay: 1.3, 
-                duration: 0.55, 
-                ease: [0.16, 1, 0.3, 1] 
+              transition={{
+                delay: 1.3,
+                duration: 0.55,
+                ease: [0.16, 1, 0.3, 1]
               }}
             >
-              <button 
-                type="button" 
-                onClick={() => openLeadModal()} 
+              <button
+                type="button"
+                onClick={() => openLeadModal()}
                 className="editorial-cta-link"
                 style={{ cursor: 'pointer', border: 'none', background: 'none', padding: 0 }}
                 aria-label="Start a project blueprint"
@@ -170,7 +161,7 @@ export const Hero: React.FC = () => {
             </motion.div>
           </div>
 
-          <motion.div 
+          <motion.div
             className="bottom-scroll-box"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

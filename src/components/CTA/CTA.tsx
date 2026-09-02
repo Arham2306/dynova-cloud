@@ -75,7 +75,7 @@ export const CTA: React.FC = () => {
 
             {/* Header & Content */}
             <div className="cta-content-wrapper">
-              <motion.div 
+              <motion.div
                 className="cta-eyebrow"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -96,27 +96,27 @@ export const CTA: React.FC = () => {
                 />
               </h2>
 
-              <motion.p 
+              <motion.p
                 className="cta-subtitle"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.65, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               >
-                Whether you are launching a new digital platform, scaling paid acquisition channels, or engineering high-speed cloud infrastructure, our team is ready to accelerate your revenue.
+                Ready to scale your organic search presence, launch high-ROI paid ad campaigns, or build a custom Shopify store? Our team is ready to accelerate your revenue.
               </motion.p>
 
               {/* Single Simple 'Start Project' Button */}
-              <motion.div 
+              <motion.div
                 className="cta-actions-row"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.65, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
               >
-                <button 
-                  type="button" 
-                  onClick={() => openLeadModal()} 
+                <button
+                  type="button"
+                  onClick={() => openLeadModal()}
                   className="cta-primary-btn"
                   aria-label="Start a project blueprint"
                 >

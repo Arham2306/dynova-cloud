@@ -126,7 +126,7 @@ export const Testimonials: React.FC = () => {
       <div className="testimonials-header-container">
         <div className="testimonials-header">
           {/* Eyebrow — normal fade in */}
-          <motion.div 
+          <motion.div
             className="testimonials-eyebrow"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -140,7 +140,7 @@ export const Testimonials: React.FC = () => {
           {/* H2 Title — blur text reveal on scroll */}
           <h2 className="testimonials-title-wrapper">
             <BlurText
-              text="Trusted by Industry Leaders & Fast-Scaling Brands"
+              text="Trusted by Brands Scaling SEO, Paid Media & Website Growth"
               delay={80}
               className="testimonials-title"
               direction="bottom"
@@ -149,14 +149,14 @@ export const Testimonials: React.FC = () => {
           </h2>
 
           {/* Subtitle paragraph — delayed fade reveal after blur title finishes */}
-          <motion.p 
+          <motion.p
             className="testimonials-subtitle"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            Explore verified feedback from enterprise leaders, founders, and growth executives who scale with Dynova Cloud.
+            Real feedback from founders and growth leaders who partnered with us to scale organic search visibility, paid media performance, and full-stack Shopify revenue.
           </motion.p>
         </div>
       </div>
@@ -218,7 +218,7 @@ export const Testimonials: React.FC = () => {
 
       {/* Post-Testimonials Trust Anchor Banner */}
       <div className="testimonials-trust-anchor-container">
-        <motion.div 
+        <motion.div
           className="testimonials-trust-anchor"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -229,9 +229,9 @@ export const Testimonials: React.FC = () => {
             <Sparkles size={16} className="trust-anchor-sparkle" />
             <span className="trust-anchor-text">Ready to become our next growth benchmark?</span>
           </div>
-          <button 
-            type="button" 
-            onClick={() => openLeadModal()} 
+          <button
+            type="button"
+            onClick={() => openLeadModal()}
             className="trust-anchor-btn"
             aria-label="Explore partnership options"
           >

@@ -167,11 +167,11 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = Re
             <span className="bento-category">{service.category}</span>
           </div>
 
-          <button 
-            type="button" 
-            onClick={() => openLeadModal(service.title)} 
-            className="bento-arrow-btn" 
-            title={`Scope ${service.title}`} 
+          <button
+            type="button"
+            onClick={() => openLeadModal(service.title)}
+            className="bento-arrow-btn"
+            title={`Scope ${service.title}`}
             aria-label={`Scope ${service.title}`}
           >
             <ArrowUpRight size={18} />
@@ -181,7 +181,7 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = Re
         {/* Card Title & Description with Fade Reveal */}
         <div className="bento-body">
           <h3 className="bento-title">{service.title}</h3>
-          <motion.p 
+          <motion.p
             className="bento-desc"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -196,7 +196,7 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = Re
         <div className="bento-visual-frame">
           <img src={service.image} alt={service.title} className="bento-img" loading="lazy" decoding="async" />
           <div className="bento-visual-overlay" />
-          
+
           {/* Live Metric Badge */}
           <div className="bento-metric-pill">
             <Sparkles size={13} className="metric-sparkle" />
@@ -222,7 +222,7 @@ export const Services: React.FC = () => {
       <div className="services-container">
         {/* Eyebrow Header */}
         <div className="services-header">
-          <motion.div 
+          <motion.div
             className="services-eyebrow"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -230,13 +230,13 @@ export const Services: React.FC = () => {
             transition={{ duration: 0.5 }}
           >
             <span className="services-square" />
-            <span className="services-eyebrow-text">OUR EXPERTISE // CAPABILITIES</span>
+            <span className="services-eyebrow-text">OUR EXPERTISE // CORE CAPABILITIES</span>
           </motion.div>
 
           {/* Section Title with BlurText reveal */}
           <h2 className="services-title-wrapper">
             <BlurText
-              text="Engineered Digital Capabilities"
+              text="Core Digital Growth Capabilities"
               delay={80}
               className="services-title"
               direction="bottom"
@@ -245,14 +245,14 @@ export const Services: React.FC = () => {
           </h2>
 
           {/* Section Subtitle with Fade Reveal */}
-          <motion.p 
+          <motion.p
             className="services-subtitle"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
-            Six high-performance disciplines engineered to accelerate brand authority, cloud infrastructure, and revenue growth.
+            Four integrated growth disciplines built to capture organic search visibility, scale high-ROI paid acquisition, and engineer full-stack digital experiences that convert.
           </motion.p>
         </div>
 

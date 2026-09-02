@@ -113,8 +113,8 @@ const CASE_STUDIES: CaseStudy[] = [
 ];
 
 // Single Stackable Portfolio Card
-const StackablePortfolioCard: React.FC<{ 
-  item: CaseStudy; 
+const StackablePortfolioCard: React.FC<{
+  item: CaseStudy;
   index: number;
   setCardRef: (el: HTMLDivElement | null) => void;
 }> = React.memo(({ item, index, setCardRef }) => {
@@ -147,7 +147,7 @@ const StackablePortfolioCard: React.FC<{
   `;
 
   return (
-    <div 
+    <div
       ref={setCardRef}
       className="portfolio-stack-card-container"
       style={{ zIndex: index + 10 }}
@@ -192,7 +192,7 @@ const StackablePortfolioCard: React.FC<{
             </div>
 
             <h3 className="stack-card-title">{item.title}</h3>
-            
+
             <p className="stack-card-desc">{item.description}</p>
 
             {/* Impact Metric Box */}
@@ -214,9 +214,9 @@ const StackablePortfolioCard: React.FC<{
                 ))}
               </div>
 
-              <button 
-                type="button" 
-                onClick={() => openLeadModal(item.title)} 
+              <button
+                type="button"
+                onClick={() => openLeadModal(item.title)}
                 className="stack-cta-btn"
                 aria-label={`Inquire about ${item.title}`}
               >
@@ -263,7 +263,7 @@ export const Portfolio: React.FC = () => {
         if (index < totalCards - 1) {
           const topOffset = 110 + index * 16; // Stepped top offset
           const cardEl = cardContainer.querySelector('.portfolio-stack-card') as HTMLElement | null;
-          
+
           ScrollTrigger.create({
             trigger: cardContainer,
             start: `top ${topOffset}px`,
@@ -296,10 +296,10 @@ export const Portfolio: React.FC = () => {
   return (
     <section ref={sectionRef} id="work" className="portfolio-stack-section">
       <div className="portfolio-stack-container">
-        
+
         {/* Section Header */}
         <div className="portfolio-stack-header">
-          <motion.div 
+          <motion.div
             className="portfolio-eyebrow"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -307,12 +307,12 @@ export const Portfolio: React.FC = () => {
             transition={{ duration: 0.5 }}
           >
             <span className="portfolio-square" />
-            <span className="portfolio-eyebrow-text">SELECTED WORK // THE ARCHIVE</span>
+            <span className="portfolio-eyebrow-text">SELECTED WORK // CLIENT RESULTS</span>
           </motion.div>
 
           <h2 className="portfolio-title-wrapper">
             <BlurText
-              text="Proven Outcomes for Ambitious Brands."
+              text="Real Results in SEO, Paid Media, Shopify & Branding"
               delay={65}
               className="portfolio-title"
               direction="bottom"
@@ -320,23 +320,23 @@ export const Portfolio: React.FC = () => {
             />
           </h2>
 
-          <motion.p 
+          <motion.p
             className="portfolio-subtitle"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.65, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            A curated portfolio of modern web platforms, headless commerce storefronts, and performance marketing systems engineered for global scale.
+            A curated look at how we turn search visibility, paid acquisition, full-stack Shopify development, and brand design into measurable revenue growth for our clients.
           </motion.p>
         </div>
 
         {/* Stackable Cards Deck */}
         <div ref={deckRef} className="portfolio-stack-deck">
           {CASE_STUDIES.map((item, index) => (
-            <StackablePortfolioCard 
-              key={item.id} 
-              item={item} 
+            <StackablePortfolioCard
+              key={item.id}
+              item={item}
               index={index}
               setCardRef={(el) => { cardContainersRef.current[index] = el; }}
             />
