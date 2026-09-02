@@ -15,6 +15,7 @@ export type BlurTextProps = {
   onAnimationComplete?: () => void;
   stepDuration?: number;
   as?: 'p' | 'span' | 'h1' | 'h2' | 'div';
+  style?: React.CSSProperties;
 };
 
 const buildKeyframes = (
@@ -43,7 +44,8 @@ const BlurTextComponent: React.FC<BlurTextProps> = ({
   easing = (t: number) => t,
   onAnimationComplete,
   stepDuration = 0.3,
-  as: Component = 'span'
+  as: Component = 'span',
+  style
 }) => {
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
@@ -111,7 +113,8 @@ const BlurTextComponent: React.FC<BlurTextProps> = ({
         justifyContent: 'inherit', 
         maxWidth: '100%',
         columnGap: animateBy === 'words' ? '0.28em' : '0',
-        rowGap: animateBy === 'words' ? '0.12em' : '0'
+        rowGap: animateBy === 'words' ? '0.12em' : '0',
+        ...style
       }}
     >
       {elements.map((segment, index) => {

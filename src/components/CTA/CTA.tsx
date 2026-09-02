@@ -93,6 +93,7 @@ export const CTA: React.FC = () => {
                   className="cta-title"
                   direction="bottom"
                   stepDuration={0.35}
+                  style={{ display: 'flex', justifyContent: 'center', width: '100%', textAlign: 'center' }}
                 />
               </h2>
 
