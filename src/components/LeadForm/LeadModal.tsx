@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
 import { useLeadModal } from '../../context/LeadModalContext';
-import logoImg from '../../assets/logo.png';
+import logoImg from '../../assets/logo-png.png';
 import LeadForm from './LeadForm';
 import './LeadModal.css';
 

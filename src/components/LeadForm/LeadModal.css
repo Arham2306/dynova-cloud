@@ -110,9 +110,9 @@
 }
 
 .modal-logo-img {
-  height: 54px;
+  height: 86px;
   width: auto;
-  max-width: 200px;
+  max-width: 220px;
   object-fit: contain;
   display: block;
 }
@@ -177,6 +177,9 @@
   .lead-modal-inner {
     padding: 24px 18px;
     border-radius: 20px;
+  }
+  .modal-logo-img {
+    height: 72px;
   }
   .modal-title {
     font-size: 1.1rem;

@@ -4,12 +4,12 @@
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 20px 32px;
+  padding: 10px 32px;
   transition: all var(--transition-smooth);
 }
 
 .navbar-header.is-scrolled {
-  padding: 14px 32px;
+  padding: 6px 32px;
   background: rgba(0, 8, 20, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -40,16 +40,16 @@
 }
 
 .navbar-logo-img {
-  height: 72px;
+  height: 110px;
   width: auto;
-  max-width: 280px;
+  max-width: 320px;
   object-fit: contain;
   display: block;
   transition: height var(--transition-smooth);
 }
 
 .navbar-header.is-scrolled .navbar-logo-img {
-  height: 60px;
+  height: 90px;
 }
 
 /* Desktop Nav Links */
@@ -174,9 +174,9 @@
     display: flex;
   }
   .navbar-logo-img {
-    height: 56px;
+    height: 84px;
   }
   .navbar-header.is-scrolled .navbar-logo-img {
-    height: 50px;
+    height: 72px;
   }
 }

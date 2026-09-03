@@ -16,8 +16,10 @@ export const About: React.FC = () => {
         {/* Editorial Statement with ScrollReveal */}
         <div className="about-text-wrapper">
           <ScrollReveal
-            baseOpacity={1.14}
-            blurStrength={6}
+            baseOpacity={1}
+            blurStrength={3.5}
+            wordAnimationStart="top 92%"
+            wordAnimationEnd="center 55%"
             textClassName="about-large-text"
           >
             We bridge the gap between performance marketing and full-stack

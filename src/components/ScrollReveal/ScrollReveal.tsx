@@ -15,6 +15,7 @@ export interface ScrollRevealProps {
   containerClassName?: string;
   textClassName?: string;
   rotationEnd?: string;
+  wordAnimationStart?: string;
   wordAnimationEnd?: string;
 }
 
@@ -24,11 +25,12 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   enableBlur = true,
   baseOpacity = 0.12,
   baseRotation = 1.5,
-  blurStrength = 6,
+  blurStrength = 4,
   containerClassName = '',
   textClassName = '',
   rotationEnd = 'bottom 80%',
-  wordAnimationEnd = 'bottom 75%'
+  wordAnimationStart = 'top 90%',
+  wordAnimationEnd = 'center 55%'
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -79,7 +81,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
           scrollTrigger: {
             trigger: el,
             scroller,
-            start: 'top 85%',
+            start: wordAnimationStart,
             end: wordAnimationEnd,
             scrub: true
           }
@@ -97,7 +99,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
             scrollTrigger: {
               trigger: el,
               scroller,
-              start: 'top 85%',
+              start: wordAnimationStart,
               end: wordAnimationEnd,
               scrub: true
             }
@@ -109,7 +111,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
     return () => {
       ctx.revert();
     };
-  }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
+  }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationStart, wordAnimationEnd, blurStrength]);
 
   return (
     <div ref={containerRef} className={`scroll-reveal-container ${containerClassName}`}>

@@ -15,7 +15,7 @@ import { LeadModalProvider } from './context/LeadModalContext';
 import LeadModal from './components/LeadForm/LeadModal';
 import SEO from './components/SEO/SEO';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
-import logoImg from './assets/logo.png';
+import logoImg from './assets/logo-png.png';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);

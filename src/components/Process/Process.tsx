@@ -168,7 +168,7 @@ export const Process: React.FC = () => {
                 <div className="process-slide-content">
                   {/* Pillar Keyword Badge */}
                   <div className="process-keyword-badge">
-                    <Sparkles size={13} className="text-[#003566]" />
+                    <Sparkles size={13} className="process-badge-sparkle" />
                     <span>{phase.keyword}</span>
                   </div>
 

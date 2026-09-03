@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { useLeadModal } from '../../context/LeadModalContext';
-import logoImg from '../../assets/logo.png';
+import logoImg from '../../assets/logo-png.png';
 import './Navbar.css';
 
 const NAV_ITEMS = [
