@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useMemo, type ReactNode, type RefObject } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { usePrefersReducedMotion } from '../../lib/usePrefersReducedMotion';
 import './ScrollReveal.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -33,6 +34,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   wordAnimationEnd = 'center 55%'
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const splitText = useMemo(() => {
     const text = typeof children === 'string' ? children : '';
@@ -47,6 +49,10 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   }, [children]);
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      return;
+    }
+
     const el = containerRef.current;
     if (!el) return;
 
@@ -111,7 +117,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
     return () => {
       ctx.revert();
     };
-  }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationStart, wordAnimationEnd, blurStrength]);
+  }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationStart, wordAnimationEnd, blurStrength, prefersReducedMotion]);
 
   return (
     <div ref={containerRef} className={`scroll-reveal-container ${containerClassName}`}>

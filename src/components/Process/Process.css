@@ -321,6 +321,51 @@
   50% { transform: translateY(4px); }
 }
 
+.process-pinned-container.is-reduced-motion .process-pinned-stage {
+  height: auto;
+  min-height: auto;
+  overflow: visible;
+}
+
+.process-pinned-container.is-reduced-motion .process-stage-inner {
+  height: auto;
+  min-height: auto;
+  padding: 100px 56px 80px;
+  gap: 48px;
+}
+
+.process-pinned-container.is-reduced-motion .process-slides-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 48px;
+  overflow: visible;
+  position: static;
+}
+
+.process-pinned-container.is-reduced-motion .process-slide {
+  position: relative;
+  inset: auto;
+  height: auto;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  pointer-events: auto !important;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.process-pinned-container.is-reduced-motion .process-slide:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.process-pinned-container.is-reduced-motion .process-stage-progress-wrap,
+.process-pinned-container.is-reduced-motion .process-stage-bottom {
+  display: none;
+}
+
 /* ── Responsive Breakpoints ── */
 @media (max-width: 1024px) {
   .process-stage-inner {

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
+import { usePrefersReducedMotion } from '../../lib/usePrefersReducedMotion';
 import './Scanner.css';
 
 export interface ScannerProps {
@@ -208,6 +209,7 @@ export const Scanner: React.FC<ScannerProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mouseEnabledRef = useRef(mouseInteraction);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -289,6 +291,19 @@ export const Scanner: React.FC<ScannerProps> = ({
     const ro = new ResizeObserver(setSize);
     ro.observe(container);
     setSize();
+
+    if (prefersReducedMotion) {
+      return () => {
+        ro.disconnect();
+        ctxMap.delete(container);
+        try {
+          if (container.contains(canvas)) {
+            container.removeChild(canvas);
+          }
+        } catch {}
+        gl.getExtension('WEBGL_lose_context')?.loseContext();
+      };
+    }
 
     let currentMouse = [0.5, 0.5];
     let targetMouse = [0.5, 0.5];
@@ -378,14 +393,14 @@ export const Scanner: React.FC<ScannerProps> = ({
       } catch {}
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
     const ctx = ctxMap.get(container);
     if (!ctx) return;
-    const { program } = ctx;
+    const { renderer, program, mesh } = ctx;
     const u = program.uniforms;
 
     u.uSpeed.value = speed;
@@ -430,6 +445,7 @@ export const Scanner: React.FC<ScannerProps> = ({
     u3[2] = c3[2];
 
     mouseEnabledRef.current = mouseInteraction;
+    renderer.render({ scene: mesh });
   }, [
     speed,
     sweepSpeed,

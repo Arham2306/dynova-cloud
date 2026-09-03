@@ -175,3 +175,30 @@ button {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--yellow-primary);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Stop infinite marquee motion cleanly without jumping off-screen */
+  .animate-marquee,
+  .animate-marquee-vertical {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* Disable spinning conic border glows */
+  .bento-conic-border-spinner,
+  .stack-conic-border-spinner {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}

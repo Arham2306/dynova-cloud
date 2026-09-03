@@ -37,7 +37,7 @@ export const CTA: React.FC = () => {
   `;
 
   return (
-    <section id="contact" className="cta-section">
+    <section id="cta" className="cta-section">
       {/* Background Ambient Glow Orbs */}
       <div className="cta-ambient-glow" />
       <div className="cta-ambient-glow-secondary" />

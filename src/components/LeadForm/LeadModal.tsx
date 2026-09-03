@@ -6,21 +6,81 @@ import logoImg from '../../assets/logo-png.png';
 import LeadForm from './LeadForm';
 import './LeadModal.css';
 
+const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'textarea:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])'
+].join(',');
+
 export const LeadModal: React.FC = () => {
   const { isOpen, preselectedService, closeLeadModal } = useLeadModal();
   const modalRef = useRef<HTMLDivElement>(null);
+  const previousActiveElementRef = useRef<HTMLElement | null>(null);
 
-  // Close on Escape key & manage body scroll lock
+  // Close on Escape, trap keyboard focus, and manage body scroll lock.
   useEffect(() => {
     if (!isOpen) return;
+
+    previousActiveElementRef.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+
+    const getFocusableElements = () => {
+      if (!modalRef.current) return [];
+      return Array.from(modalRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
+    };
+
+    const focusFirstElement = () => {
+      const [firstFocusable] = getFocusableElements();
+      const elementToFocus = firstFocusable ?? modalRef.current;
+      elementToFocus?.focus({ preventScroll: true });
+    };
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         closeLeadModal();
+        return;
+      }
+
+      if (e.key !== 'Tab') {
+        return;
+      }
+
+      const focusableElements = getFocusableElements();
+
+      if (focusableElements.length === 0) {
+        e.preventDefault();
+        modalRef.current?.focus({ preventScroll: true });
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+
+      if (!modalRef.current?.contains(activeElement)) {
+        e.preventDefault();
+        firstElement.focus({ preventScroll: true });
+        return;
+      }
+
+      if (e.shiftKey && activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus({ preventScroll: true });
+        return;
+      }
+
+      if (!e.shiftKey && activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus({ preventScroll: true });
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
+    const focusFrame = window.requestAnimationFrame(focusFirstElement);
 
     // Save previous overflow and prevent background scroll
     const originalOverflow = document.body.style.overflow;
@@ -28,7 +88,10 @@ export const LeadModal: React.FC = () => {
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
+      window.cancelAnimationFrame(focusFrame);
       document.body.style.overflow = originalOverflow;
+      previousActiveElementRef.current?.focus({ preventScroll: true });
+      previousActiveElementRef.current = null;
     };
   }, [isOpen, closeLeadModal]);
 
@@ -57,6 +120,7 @@ export const LeadModal: React.FC = () => {
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-title"
+              tabIndex={-1}
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}

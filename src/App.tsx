@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
+import { MotionConfig } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from './components/Navbar/Navbar';
@@ -16,12 +17,20 @@ import LeadModal from './components/LeadForm/LeadModal';
 import SEO from './components/SEO/SEO';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import logoImg from './assets/logo-png.png';
+import { usePrefersReducedMotion } from './lib/usePrefersReducedMotion';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function App() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   useEffect(() => {
+    if (prefersReducedMotion) {
+      ScrollTrigger.refresh();
+      return;
+    }
+
     // Initialize Lenis Smooth Scrolling
     const lenis = new Lenis({
       duration: 1.2,
@@ -47,10 +56,11 @@ export function App() {
       gsap.ticker.remove(updateRaf);
       lenis.destroy();
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
-    <LeadModalProvider>
+    <MotionConfig reducedMotion="user">
+      <LeadModalProvider>
       <SEO
         title="Dynova Cloud | SEO, Paid Media, Shopify Development & Web Design"
         description="Dynova Cloud unifies SEO, paid media, and full-stack Shopify development into one growth engine, built for measurable revenue results."
@@ -117,6 +127,7 @@ export function App() {
       </footer>
     </div>
   </LeadModalProvider>
+</MotionConfig>
 );
 }
 

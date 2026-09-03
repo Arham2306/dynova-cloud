@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, type Transition } from 'motion/react';
+import { usePrefersReducedMotion } from '../../lib/usePrefersReducedMotion';
 
 export type BlurTextProps = {
   text?: string;
@@ -47,11 +48,17 @@ const BlurTextComponent: React.FC<BlurTextProps> = ({
   as: Component = 'span',
   style
 }) => {
+  const prefersReducedMotion = usePrefersReducedMotion();
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setInView(true);
+      return;
+    }
+
     if (!ref.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -64,7 +71,7 @@ const BlurTextComponent: React.FC<BlurTextProps> = ({
     );
     observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [threshold, rootMargin]);
+  }, [threshold, rootMargin, prefersReducedMotion]);
 
   const defaultFrom = useMemo(
     () =>
@@ -100,6 +107,10 @@ const BlurTextComponent: React.FC<BlurTextProps> = ({
     () => buildKeyframes(fromSnapshot, toSnapshots),
     [fromSnapshot, toSnapshots]
   );
+  const reducedMotionVisibleState = useMemo(
+    () => ({ filter: 'blur(0px)', opacity: 1, y: 0 }),
+    []
+  );
 
   return (
     <Component 
@@ -128,9 +139,9 @@ const BlurTextComponent: React.FC<BlurTextProps> = ({
         return (
           <motion.span
             key={index}
-            initial={fromSnapshot}
-            animate={inView ? animateKeyframes : fromSnapshot}
-            transition={spanTransition}
+            initial={prefersReducedMotion ? reducedMotionVisibleState : fromSnapshot}
+            animate={prefersReducedMotion ? reducedMotionVisibleState : inView ? animateKeyframes : fromSnapshot}
+            transition={prefersReducedMotion ? { duration: 0 } : spanTransition}
             onAnimationComplete={index === elements.length - 1 ? onAnimationComplete : undefined}
             style={{
               display: 'inline-block',

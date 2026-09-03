@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown, ArrowUpRight, Sparkles } from 'lucide-react';
 import { useLeadModal } from '../../context/LeadModalContext';
+import { usePrefersReducedMotion } from '../../lib/usePrefersReducedMotion';
 import './Process.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -45,6 +46,7 @@ const PHASES: ProcessPhase[] = [
 
 export const Process: React.FC = () => {
   const { openLeadModal } = useLeadModal();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -53,6 +55,14 @@ export const Process: React.FC = () => {
   const lastStepRef = useRef(0);
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setActiveStep(0);
+      if (progressBarRef.current) {
+        gsap.set(progressBarRef.current, { scaleX: 1 });
+      }
+      return;
+    }
+
     const container = containerRef.current;
     const stage = stageRef.current;
     if (!container || !stage) return;
@@ -130,10 +140,10 @@ export const Process: React.FC = () => {
     }, container);
 
     return () => ctx.revert();
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
-    <section ref={containerRef} id="process" className="process-pinned-container">
+    <section ref={containerRef} id="process" className={`process-pinned-container ${prefersReducedMotion ? 'is-reduced-motion' : ''}`}>
       {/* The Pinned Viewport Stage */}
       <div ref={stageRef} className="process-pinned-stage">
         <div className="process-stage-inner">

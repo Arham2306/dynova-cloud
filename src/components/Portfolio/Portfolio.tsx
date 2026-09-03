@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import { useLeadModal } from '../../context/LeadModalContext';
+import { usePrefersReducedMotion } from '../../lib/usePrefersReducedMotion';
 import BlurText from '../BlurText/BlurText';
 
 import imgAetheria from '../../assets/portfolio/aetheria.webp';
@@ -241,11 +242,16 @@ const StackablePortfolioCard: React.FC<{
 });
 
 export const Portfolio: React.FC = () => {
+  const prefersReducedMotion = usePrefersReducedMotion();
   const sectionRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<HTMLDivElement>(null);
   const cardContainersRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      return;
+    }
+
     const section = sectionRef.current;
     const deck = deckRef.current;
     if (!section || !deck) return;
@@ -291,7 +297,7 @@ export const Portfolio: React.FC = () => {
     });
 
     return () => mm.revert();
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <section ref={sectionRef} id="work" className="portfolio-stack-section">
