@@ -1,47 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLeadModal } from '../../context/LeadModalContext';
-import Scanner from '../Scanner/Scanner';
 import BlurText from '../BlurText/BlurText';
 import architectImg from '../../assets/architect-capsule.webp';
 import platformImg from '../../assets/platform-capsule.webp';
 import './Hero.css';
 
+const Scanner = lazy(() => import('../Scanner/Scanner'));
+
 export const Hero: React.FC = () => {
   const { openLeadModal } = useLeadModal();
+  const [mountScanner, setMountScanner] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(() => setMountScanner(true));
+      } else {
+        setMountScanner(true);
+      }
+    }, 120);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section id="hero" className="editorial-hero-section">
       {/* Prominent 3D WebGL Scanner Atmosphere Layer */}
       <div className="hero-scanner-layer">
-        <Scanner
-          color1="#000814"
-          color2="#FFC300"
-          color3="#003566"
-          speed={0.45}
-          sweepSpeed={0.24}
-          sweepWidth={1.8}
-          sweepFalloff={5.2}
-          scale={1.4}
-          frequency={2.2}
-          ripple={0.22}
-          bandDensity={12}
-          lineSharpness={5.0}
-          glow={0.45}
-          scanDirection="diagonal"
-          colorSpread={0.65}
-          brightness={1.25}
-          contrast={1.35}
-          softness={1.3}
-          vignette={0.4}
-          scanline={true}
-          grain={true}
-          grainIntensity={0.03}
-          opacity={0.88}
-          mouseInteraction={true}
-          mouseRadius={0.45}
-          mouseStrength={0.55}
-        />
+        {mountScanner && (
+          <Suspense fallback={null}>
+            <Scanner
+              color1="#000814"
+              color2="#FFC300"
+              color3="#003566"
+              speed={0.45}
+              sweepSpeed={0.24}
+              sweepWidth={1.8}
+              sweepFalloff={5.2}
+              scale={1.4}
+              frequency={2.2}
+              ripple={0.22}
+              bandDensity={12}
+              lineSharpness={5.0}
+              glow={0.45}
+              scanDirection="diagonal"
+              colorSpread={0.65}
+              brightness={1.25}
+              contrast={1.35}
+              softness={1.3}
+              vignette={0.4}
+              scanline={true}
+              grain={true}
+              grainIntensity={0.03}
+              opacity={0.88}
+              mouseInteraction={true}
+              mouseRadius={0.45}
+              mouseStrength={0.55}
+            />
+          </Suspense>
+        )}
         <div className="hero-dark-vignette" />
       </div>
 
