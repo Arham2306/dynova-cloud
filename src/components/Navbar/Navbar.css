@@ -3,18 +3,41 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 1000;
   padding: 10px 32px;
-  transition: all var(--transition-smooth);
+  background: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  transition: padding 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              backdrop-filter 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              -webkit-backdrop-filter 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .navbar-header.is-scrolled {
   padding: 6px 32px;
-  background: rgba(0, 8, 20, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(0, 8, 20, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 10px 30px rgba(0, 8, 20, 0.6);
+}
+
+/* Eliminate nested backdrop-filter conflict in Chromium when header is blurred */
+.navbar-header.is-scrolled .navbar-nav {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(0, 29, 61, 0.55);
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(20px)) {
+  .navbar-header.is-scrolled {
+    background: rgba(0, 8, 20, 0.95);
+  }
 }
 
 .navbar-container {
@@ -120,7 +143,7 @@
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
-  z-index: 200;
+  z-index: 1100;
 }
 
 /* Invisible hover bridge between trigger and menu */

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowUpRight, Menu, X, ChevronDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useLeadModal } from '../../context/LeadModalContext';
 import logoImg from '../../assets/logo-png.png';
 import './Navbar.css';
@@ -34,14 +34,53 @@ export const Navbar: React.FC = () => {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const dropdownTimerRef = useRef<number | null>(null);
   const { openLeadModal } = useLeadModal();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const lenis = (window as any).__lenis;
+      const currentScroll = (lenis && typeof lenis.scroll === 'number')
+        ? lenis.scroll
+        : (window.scrollY || document.documentElement.scrollTop || 0);
+      setScrolled(currentScroll > 10);
     };
+
+    // Immediate check on mount and whenever location/route changes
+    handleScroll();
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    // Connect to Lenis smooth scroll instance if available
+    const lenis = (window as any).__lenis;
+    if (lenis && typeof lenis.on === 'function') {
+      lenis.on('scroll', handleScroll);
+    }
+
+    // Polling fallback to attach to Lenis if initialized slightly after Navbar mounts
+    const interval = setInterval(() => {
+      const currentLenis = (window as any).__lenis;
+      if (currentLenis && typeof currentLenis.on === 'function') {
+        currentLenis.on('scroll', handleScroll);
+        clearInterval(interval);
+      }
+      handleScroll();
+    }, 50);
+
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+      handleScroll();
+    }, 1200);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+      window.removeEventListener('scroll', handleScroll);
+      const activeLenis = (window as any).__lenis;
+      if (activeLenis && typeof activeLenis.off === 'function') {
+        activeLenis.off('scroll', handleScroll);
+      }
+    };
+  }, [location]);
 
   const handleMouseEnter = () => {
     if (dropdownTimerRef.current) {
