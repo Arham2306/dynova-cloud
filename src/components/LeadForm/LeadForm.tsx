@@ -121,7 +121,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({
     const timeoutId = setTimeout(() => controller.abort(), 12000);
 
     try {
-      const response = await fetch('/api/contact.php', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
