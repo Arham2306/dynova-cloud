@@ -1,0 +1,8 @@
+{
+  "name": "dynova/contact-api",
+  "description": "Hostinger SMTP Mail Dispatcher for Dynova Cloud",
+  "type": "project",
+  "require": {
+    "phpmailer/phpmailer": "^6.9"
+  }
+}

@@ -393,6 +393,84 @@
   color: var(--yellow-primary);
 }
 
+/* Error Banner & Direct Fallback */
+.form-error-banner {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-error-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f87171;
+  font-family: var(--font-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.form-error-icon {
+  flex-shrink: 0;
+}
+
+.form-error-text {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.form-error-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.form-error-mailto-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--yellow-primary);
+  color: #000814;
+  font-family: var(--font-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.form-error-mailto-btn:hover {
+  background: var(--yellow-highlight);
+  transform: translateY(-1px);
+}
+
+.form-error-dismiss-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-muted);
+  font-family: var(--font-primary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.form-error-dismiss-btn:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .lead-form-grid {

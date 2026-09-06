@@ -1,0 +1,34 @@
+# ==============================================================================
+# Dynova Cloud - Hostinger Apache / LiteSpeed Configuration
+# ==============================================================================
+
+# 1. Block direct public access to sensitive files (config, composer, env)
+<FilesMatch "^(contact\.config.*\.php|composer\.(json|lock)|\.env.*)$">
+  Require all denied
+</FilesMatch>
+
+# 2. URL Rewriting for API & React SPA
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Block direct web access to vendor directory
+  RewriteRule ^api/vendor(/.*)?$ - [F,L]
+
+  # Allow existing physical files and directories to resolve normally
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # SPA Fallback: Rewrite all remaining client routes to index.html
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Prevent directory browsing
+Options -Indexes
+
+# Basic security headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>

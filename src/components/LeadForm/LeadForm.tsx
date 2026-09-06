@@ -22,6 +22,7 @@ interface FormState {
   phone: string;
   service: string;
   message: string;
+  _hp_check: string;
 }
 
 const INITIAL_FORM: FormState = {
@@ -29,7 +30,8 @@ const INITIAL_FORM: FormState = {
   email: '',
   phone: '',
   service: SERVICES_OPTIONS[0],
-  message: ''
+  message: '',
+  _hp_check: ''
 };
 
 export const LeadForm: React.FC<LeadFormProps> = ({
@@ -41,6 +43,24 @@ export const LeadForm: React.FC<LeadFormProps> = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const getMailtoUrl = () => {
+    const subject = `New Lead Blueprint: ${formData.fullName} (${formData.service})`;
+    const body = [
+      `Full Name: ${formData.fullName}`,
+      `Work Email: ${formData.email}`,
+      `Phone Number: ${formData.phone || 'Not provided'}`,
+      `Selected Service: ${formData.service}`,
+      '',
+      `Project Brief / Requirements:`,
+      formData.message,
+      '',
+      `---`,
+      `Sent via Dynova Cloud Direct Intake`
+    ].join('\n');
+    return `mailto:info@dynova.cloud?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
 
   // Sync initialService if passed
   useEffect(() => {
@@ -85,50 +105,61 @@ export const LeadForm: React.FC<LeadFormProps> = ({
     if (!validate()) return;
 
     setIsSubmitting(true);
+    setSubmitError(null);
+
+    const payload = {
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone || 'Not provided',
+      service: formData.service,
+      message: formData.message,
+      _hp_check: formData._hp_check
+    };
+
+    let isSuccess = false;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
 
     try {
-      // Dispatch lead intake data directly to webmail via FormSubmit API
-      const response = await fetch('https://formsubmit.co/ajax/info@dynova.cloud', {
+      const response = await fetch('/api/contact.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json'
+          'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          _subject: `New Lead Blueprint: ${formData.fullName} (${formData.service})`,
-          _template: 'table',
-          _captcha: 'false',
-          'Full Name': formData.fullName,
-          'Work Email': formData.email,
-          'Phone': formData.phone || 'Not provided',
-          'Selected Service': formData.service,
-          'Project Brief': formData.message
-        })
+        body: JSON.stringify(payload),
+        signal: controller.signal
       });
 
-      if (!response.ok) {
-        throw new Error(`Submission failed with status: ${response.status}`);
+      if (response.ok) {
+        const data = await response.json().catch(() => null);
+        if (data && data.success === true) {
+          isSuccess = true;
+        }
       }
-
-      setIsSubmitted(true);
-      if (onSuccess) {
-        onSuccess();
-      }
-    } catch (err) {
-      console.warn('Lead intake network dispatch error, using local fallback:', err);
-      // Fallback: still show success so the client is never stranded
-      setIsSubmitted(true);
-      if (onSuccess) {
-        onSuccess();
-      }
+    } catch {
+      // Network failure, timeout, or static response in dev mode
     } finally {
+      clearTimeout(timeoutId);
       setIsSubmitting(false);
+    }
+
+    if (isSuccess) {
+      setIsSubmitted(true);
+      if (onSuccess) {
+        onSuccess();
+      }
+    } else {
+      setSubmitError(
+        'Unable to complete automated transmission right now. You can send your project blueprint directly via your email client, or try again.'
+      );
     }
   };
 
   const handleReset = () => {
     setFormData(INITIAL_FORM);
     setErrors({});
+    setSubmitError(null);
     setIsSubmitted(false);
   };
 
@@ -172,6 +203,30 @@ export const LeadForm: React.FC<LeadFormProps> = ({
       className={`lead-form-container ${variant === 'modal' ? 'is-modal' : ''}`}
       noValidate
     >
+      {/* Anti-Bot Honeypot Field (Hidden visually & from assistive tech) */}
+      <div
+        style={{
+          position: 'absolute',
+          opacity: 0,
+          pointerEvents: 'none',
+          height: 0,
+          width: 0,
+          zIndex: -1,
+          overflow: 'hidden'
+        }}
+        aria-hidden="true"
+      >
+        <label htmlFor={`hp-${variant}`}>Do not fill this field</label>
+        <input
+          id={`hp-${variant}`}
+          type="text"
+          name="_hp_check"
+          value={formData._hp_check}
+          onChange={(e) => setFormData({ ...formData, _hp_check: e.target.value })}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
       {/* Form Header for Embedded Variant */}
       {variant === 'embedded' && (
         <div className="lead-form-header">
@@ -304,6 +359,34 @@ export const LeadForm: React.FC<LeadFormProps> = ({
         )}
       </div>
 
+      {submitError && (
+        <div className="form-error-banner" role="alert">
+          <div className="form-error-header">
+            <AlertCircle size={18} className="form-error-icon" />
+            <span className="form-error-title">Direct Dispatch Option</span>
+          </div>
+          <p className="form-error-text">{submitError}</p>
+          <div className="form-error-actions">
+            <a
+              href={getMailtoUrl()}
+              className="form-error-mailto-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Transmit via Email App (Pre-filled)</span>
+              <ArrowUpRight size={14} />
+            </a>
+            <button
+              type="button"
+              onClick={() => setSubmitError(null)}
+              className="form-error-dismiss-btn"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Submission CTA */}
       <div className="form-submit-row">
         <button
@@ -325,7 +408,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({
         </button>
 
         <span className="submit-security-note">
-          🔒 Encrypted &amp; confidential. Zero spam policy.
+          Secure &amp; confidential. Zero spam policy.
         </span>
       </div>
 
