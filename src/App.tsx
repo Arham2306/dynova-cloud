@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import Lenis from 'lenis';
 import { MotionConfig } from 'motion/react';
 import { gsap } from 'gsap';
@@ -6,14 +6,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import HomePage from './pages/HomePage';
-import ServiceDetailPage from './pages/ServiceDetailPage';
 import { LeadModalProvider } from './context/LeadModalContext';
-import LeadModal from './components/LeadForm/LeadModal';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import ScrollManager from './components/ScrollManager/ScrollManager';
 import logoImg from './assets/logo-png.png';
 import { usePrefersReducedMotion } from './lib/usePrefersReducedMotion';
 import './App.css';
+
+const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
+const LeadModal = lazy(() => import('./components/LeadForm/LeadModal'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -64,12 +65,16 @@ export function App() {
         <LeadModalProvider>
           <div className="app-layout">
             <Navbar />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/services/:slug" element={<ServiceDetailPage />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-            <LeadModal />
+            <Suspense fallback={<div style={{ minHeight: '100vh', background: '#000814' }} />}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/services/:slug" element={<ServiceDetailPage />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+            <Suspense fallback={null}>
+              <LeadModal />
+            </Suspense>
             <ScrollToTop />
 
             {/* Agency Footer */}

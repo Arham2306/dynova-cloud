@@ -4,8 +4,8 @@ import { motion } from 'motion/react';
 import { useLeadModal } from '../../context/LeadModalContext';
 import Scanner from '../Scanner/Scanner';
 import BlurText from '../BlurText/BlurText';
-import architectImg from '../../assets/architect-capsule.jpg';
-import platformImg from '../../assets/platform-capsule.jpg';
+import architectImg from '../../assets/architect-capsule.webp';
+import platformImg from '../../assets/platform-capsule.webp';
 import './Hero.css';
 
 export const Hero: React.FC = () => {
@@ -80,7 +80,7 @@ export const Hero: React.FC = () => {
               }}
               whileHover={{ scale: 1.06 }}
             >
-              <img src={architectImg} alt="Dynova Cloud strategist reviewing digital growth performance" className="pill-img" decoding="async" fetchPriority="high" />
+              <img src={architectImg} alt="Dynova Cloud strategist reviewing digital growth performance" className="pill-img" decoding="async" loading="lazy" width={140} height={60} />
               <div className="pill-gloss" />
             </motion.div>
           </div>
@@ -117,7 +117,7 @@ export const Hero: React.FC = () => {
               }}
               whileHover={{ scale: 1.06 }}
             >
-              <img src={platformImg} alt="Dashboard showing SEO and paid media performance metrics" className="pill-img" decoding="async" fetchPriority="high" />
+              <img src={platformImg} alt="Dashboard showing SEO and paid media performance metrics" className="pill-img" decoding="async" loading="lazy" width={140} height={60} />
               <div className="pill-gloss" />
             </motion.div>
           </div>
