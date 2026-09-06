@@ -311,13 +311,51 @@
 
 
 
+.bento-title-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+.bento-title-link:hover .bento-title {
+  color: var(--yellow-primary, #FFC300);
+}
+
+.bento-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.bento-explore-blueprint-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-primary, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--yellow-primary, #FFC300);
+  text-decoration: none;
+  transition: all 0.25s ease;
+  margin-left: auto;
+}
+
+.bento-explore-blueprint-link:hover {
+  color: #FFD60A;
+  transform: translateX(2px);
+}
+
 /* Tags Matrix Footer */
 .bento-tags-footer {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: auto;
 }
 
 .bento-tag-pill {

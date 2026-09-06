@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useMotionTemplate } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLeadModal } from '../../context/LeadModalContext';
 import BlurText from '../BlurText/BlurText';
 
@@ -156,7 +157,9 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = Re
 
         {/* Card Title & Description with Fade Reveal */}
         <div className="bento-body">
-          <h3 className="bento-title">{service.title}</h3>
+          <Link to={`/services/${service.id}`} className="bento-title-link">
+            <h3 className="bento-title">{service.title}</h3>
+          </Link>
           <motion.p
             className="bento-desc"
             initial={{ opacity: 0 }}
@@ -169,15 +172,21 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = Re
         </div>
 
         {/* Visual Showcase Stage */}
-        <div className="bento-visual-frame">
+        <Link to={`/services/${service.id}`} className="bento-visual-frame" aria-label={`View ${service.title} service blueprint`}>
           <img src={service.image} alt={service.title} className="bento-img" loading="lazy" decoding="async" />
-        </div>
+        </Link>
 
-        {/* Tags Matrix */}
-        <div className="bento-tags-footer">
-          {service.tags.map((tag) => (
-            <span key={tag} className="bento-tag-pill">{tag}</span>
-          ))}
+        {/* Tags Matrix & Blueprint Link */}
+        <div className="bento-footer-row">
+          <div className="bento-tags-footer">
+            {service.tags.map((tag) => (
+              <span key={tag} className="bento-tag-pill">{tag}</span>
+            ))}
+          </div>
+          <Link to={`/services/${service.id}`} className="bento-explore-blueprint-link">
+            <span>Explore Blueprint</span>
+            <ArrowUpRight size={13} />
+          </Link>
         </div>
       </div>
     </motion.div>

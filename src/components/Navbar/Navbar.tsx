@@ -1,21 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowUpRight, Menu, X, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLeadModal } from '../../context/LeadModalContext';
 import logoImg from '../../assets/logo-png.png';
 import './Navbar.css';
 
-const NAV_ITEMS = [
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Process', href: '#process' },
-  { label: 'Portfolio', href: '#work' },
-  { label: 'Testimonials', href: '#testimonials' },
-  { label: 'Contact', href: '#contact' },
+const SERVICES_DROPDOWN_DATA = [
+  { title: 'Website Development', path: '/services/website-development' },
+  { title: 'E-Commerce', path: '/services/ecommerce' },
+  { title: 'Logo Designing', path: '/services/logo-designing' },
+  { title: 'Digital Marketing', path: '/services/digital-marketing' },
+];
+
+interface NavLinkItem {
+  label: string;
+  href: string;
+  isDropdown?: boolean;
+}
+
+const NAV_ITEMS: NavLinkItem[] = [
+  { label: 'About', href: '/#about' },
+  { label: 'Services', href: '/#services', isDropdown: true },
+  { label: 'Process', href: '/#process' },
+  { label: 'Portfolio', href: '/#work' },
+  { label: 'Testimonials', href: '/#testimonials' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const dropdownTimerRef = useRef<number | null>(null);
   const { openLeadModal } = useLeadModal();
 
   useEffect(() => {
@@ -26,25 +43,79 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleMouseEnter = () => {
+    if (dropdownTimerRef.current) {
+      window.clearTimeout(dropdownTimerRef.current);
+      dropdownTimerRef.current = null;
+    }
+    setServicesDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimerRef.current = window.setTimeout(() => {
+      setServicesDropdownOpen(false);
+    }, 150);
+  };
+
   return (
     <header className={`navbar-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="navbar-container">
-        {/* Brand Logo */}
-        <a href="#hero" className="navbar-brand" aria-label="Dynova Cloud Home">
+        {/* Brand Logo - Links to Root Site URL */}
+        <Link to="/" className="navbar-brand" aria-label="Dynova Cloud Home">
           <img src={logoImg} alt="Dynova Cloud - Digital Marketing and Engineering Agency" className="navbar-logo-img" />
-        </a>
+        </Link>
 
         {/* Desktop Navigation Links */}
         <nav className="navbar-nav">
-          {NAV_ITEMS.map((item) => (
-            <a 
-              key={item.label} 
-              href={item.href} 
-              className="nav-link"
-            >
-              {item.label}
-            </a>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            if (item.isDropdown) {
+              return (
+                <div
+                  key={item.label}
+                  className={`nav-dropdown-wrapper ${servicesDropdownOpen ? 'is-open' : ''}`}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <a 
+                    href={item.href} 
+                    className={`nav-link nav-dropdown-trigger ${servicesDropdownOpen ? 'is-active' : ''}`}
+                    onClick={() => setServicesDropdownOpen(false)}
+                    aria-expanded={servicesDropdownOpen}
+                    aria-haspopup="true"
+                  >
+                    <span>{item.label}</span>
+                    <ChevronDown size={14} className={`dropdown-chevron ${servicesDropdownOpen ? 'rotate-180' : ''}`} />
+                  </a>
+
+                  {/* Minimalist Glassmorphic Dropdown Menu */}
+                  <div className={`nav-dropdown-menu ${servicesDropdownOpen ? 'is-visible' : ''}`}>
+                    <div className="nav-dropdown-menu-inner">
+                      {SERVICES_DROPDOWN_DATA.map((service) => (
+                        <Link
+                          key={service.path}
+                          to={service.path}
+                          className="dropdown-item-link"
+                          onClick={() => setServicesDropdownOpen(false)}
+                        >
+                          <span>{service.title}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <a 
+                key={item.label} 
+                href={item.href} 
+                className="nav-link"
+              >
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Action Button */}
@@ -75,15 +146,62 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="mobile-drawer glass-panel">
           <nav className="mobile-nav">
-            {NAV_ITEMS.map((item) => (
-              <a 
-                key={item.label} 
-                href={item.href} 
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.label}
-              </a>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              if (item.isDropdown) {
+                return (
+                  <div key={item.label} className="mobile-dropdown-group">
+                    <div className="mobile-dropdown-header-row">
+                      <a 
+                        href={item.href} 
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="mobile-nav-link"
+                      >
+                        {item.label}
+                      </a>
+                      <button
+                        type="button"
+                        className="mobile-dropdown-toggle-btn"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setMobileServicesOpen(!mobileServicesOpen);
+                        }}
+                        aria-label="Toggle Services submenu"
+                      >
+                        <ChevronDown size={18} className={`mobile-chevron ${mobileServicesOpen ? 'rotate-180' : ''}`} />
+                      </button>
+                    </div>
+
+                    {mobileServicesOpen && (
+                      <div className="mobile-submenu-list">
+                        {SERVICES_DROPDOWN_DATA.map((service) => (
+                          <Link
+                            key={service.path}
+                            to={service.path}
+                            className="mobile-submenu-link"
+                            onClick={() => {
+                              setMobileMenuOpen(false);
+                              setMobileServicesOpen(false);
+                            }}
+                          >
+                            {service.title}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <a 
+                  key={item.label} 
+                  href={item.href} 
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
             <div className="mobile-cta-wrapper">
               <button 
                 type="button" 
