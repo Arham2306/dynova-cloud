@@ -1,4 +1,5 @@
 import express from 'express';
+import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import nodemailer from 'nodemailer';
 import path from 'node:path';
@@ -232,8 +233,25 @@ app.all('/api/contact', (_req, res) => {
   res.status(405).json({ success: false, message: 'Method Not Allowed' });
 });
 
-// Serve built static assets from dist
-app.use(express.static(distPath));
+// Gzip/deflate compression for all text responses (JS, CSS, HTML, JSON, SVG)
+app.use(compression());
+
+// Serve hashed assets with immutable long-term cache (1 year)
+app.use('/assets', express.static(path.join(distPath, 'assets'), {
+  maxAge: '1y',
+  immutable: true,
+}));
+
+// Serve remaining static files (index.html, favicon, logo) with short cache
+app.use(express.static(distPath, {
+  maxAge: '1h',
+  setHeaders(res, filePath) {
+    // index.html must never be cached so deployments take effect immediately
+    if (filePath.endsWith('index.html')) {
+      res.setHeader('Cache-Control', 'no-cache');
+    }
+  },
+}));
 
 // Safe SPA Fallback for non-API GET requests (avoids Express 5 wildcard regex issues)
 app.use((req, res, next) => {
