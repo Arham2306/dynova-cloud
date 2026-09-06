@@ -239,6 +239,31 @@
   font-weight: 400;
 }
 
+.form-direct-intake {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-primary);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding-top: 6px;
+  text-align: center;
+}
+
+.form-direct-link {
+  color: var(--yellow-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition-fast), text-shadow var(--transition-fast);
+}
+
+.form-direct-link:hover {
+  color: var(--yellow-highlight);
+  text-decoration: underline;
+  text-shadow: 0 0 8px var(--yellow-glow);
+}
+
 /* ── Success Card View ── */
 .lead-form-success-card {
   display: flex;
