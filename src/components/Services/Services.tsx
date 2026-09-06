@@ -1,15 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useMotionTemplate } from 'motion/react';
-import { ArrowUpRight, Sparkles } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useLeadModal } from '../../context/LeadModalContext';
 import BlurText from '../BlurText/BlurText';
 
-import imgDigitalMarketing from '../../assets/services/digital-marketing.jpg';
-import imgSocialMedia from '../../assets/services/social-media.jpg';
-import imgMetaAds from '../../assets/services/meta-ads.jpg';
-import imgWebDev from '../../assets/services/web-development.jpg';
-import imgAnalytics from '../../assets/services/analytics-reporting.jpg';
-import imgEcommerce from '../../assets/services/ecommerce-solutions.jpg';
+import imgWebDev from '../../assets/services/Web Development.jpg';
+import imgEcommerce from '../../assets/services/E-Commerce.jpg';
+import imgLogoDesigning from '../../assets/services/Logo Designing.jpg';
+import imgDigitalMarketing from '../../assets/services/Digital Marketing.jpg';
 
 import './Services.css';
 
@@ -27,70 +25,48 @@ interface ServiceItem {
 
 const SERVICES_DATA: ServiceItem[] = [
   {
-    id: 'digital-marketing',
+    id: 'website-development',
     num: '01',
-    title: 'Digital Marketing',
-    category: 'Growth & Acquisition',
-    description: 'Data-driven omnichannel acquisition funnels, technical SEO architectures, and full-funnel conversion engines.',
-    tags: ['Omnichannel Growth', 'Technical SEO', 'Conversion Optimization'],
-    metricLabel: 'Acquisition Surge',
-    metricValue: '+185%',
-    image: imgDigitalMarketing
-  },
-  {
-    id: 'social-media',
-    num: '02',
-    title: 'Social Media Management',
-    category: 'Brand & Distribution',
-    description: 'Authoritative brand ecosystems, high-engagement content production, and community scaling across global channels.',
-    tags: ['Content Strategy', 'Community Scaling', 'Viral Reach'],
-    metricLabel: 'Monthly Reach',
-    metricValue: '2.4M+',
-    image: imgSocialMedia
-  },
-  {
-    id: 'meta-ads',
-    num: '03',
-    title: 'Meta Ads',
-    category: 'Paid Media & ROAS',
-    description: 'Algorithmic advertising architectures across Meta engineered with creative testing matrices and maximized ROAS.',
-    tags: ['Algorithmic Retargeting', 'Creative Testing', 'Target ROAS'],
-    metricLabel: 'Target ROAS',
-    metricValue: '3.99x',
-    image: imgMetaAds
-  },
-  {
-    id: 'web-development',
-    num: '04',
-    title: 'Web Development',
-    category: 'Engineering & Systems',
-    description: 'Bespoke web platforms, scalable React/Next.js architectures, and ultra-fast digital experiences built for speed.',
+    title: 'Website Development',
+    category: 'Engineering & Architecture',
+    description: 'Bespoke web platforms, scalable React/Next.js architectures, and ultra-fast digital experiences engineered for peak speed and conversion.',
     tags: ['React & Next.js', 'Sub-second TTFB', 'Clean Architecture'],
     metricLabel: 'Core Web Vitals',
     metricValue: '99.8%',
     image: imgWebDev
   },
   {
-    id: 'analytics-reporting',
-    num: '05',
-    title: 'Analytics & Reporting',
-    category: 'Data & Telemetry',
-    description: 'Enterprise business intelligence dashboards, real-time telemetry, and multi-touch attribution for complete clarity.',
-    tags: ['BI Telemetry', 'Attribution Modeling', 'Live Dashboards'],
-    metricLabel: 'Data SLA',
-    metricValue: '99.9%',
-    image: imgAnalytics
-  },
-  {
-    id: 'ecommerce-solutions',
-    num: '06',
-    title: 'E-Commerce Solutions',
-    category: 'Commerce Architecture',
-    description: 'Headless storefronts, instant 1-click checkout flows, and high-volume commerce architectures that maximize revenue.',
-    tags: ['Headless Stores', 'Instant Checkout', 'Conversion Rate'],
+    id: 'ecommerce',
+    num: '02',
+    title: 'E-Commerce',
+    category: 'Storefronts & Conversions',
+    description: 'High-conversion Shopify & headless commerce architectures, frictionless 1-click checkout funnels, and enterprise scalability.',
+    tags: ['Shopify Plus', 'Headless Stores', 'Frictionless Checkout'],
     metricLabel: 'Checkout Speed',
     metricValue: '< 1.2s',
     image: imgEcommerce
+  },
+  {
+    id: 'logo-designing',
+    num: '03',
+    title: 'Logo Designing',
+    category: 'Brand Identity & Aesthetics',
+    description: 'Distinctive brand identities, iconic vector marks, comprehensive design systems, and visual guidelines that command authority.',
+    tags: ['Brand Identity', 'Vector Systems', 'Visual Guidelines'],
+    metricLabel: 'Brand Recall',
+    metricValue: '96.4%',
+    image: imgLogoDesigning
+  },
+  {
+    id: 'digital-marketing',
+    num: '04',
+    title: 'Digital Marketing',
+    category: 'Growth & Acquisition',
+    description: 'Data-driven omnichannel acquisition funnels, technical SEO dominance, and high-ROAS paid media campaigns built for revenue.',
+    tags: ['Technical SEO', 'Paid Media & ROAS', 'Omnichannel Funnels'],
+    metricLabel: 'Acquisition Surge',
+    metricValue: '+185%',
+    image: imgDigitalMarketing
   }
 ];
 
@@ -195,14 +171,6 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = Re
         {/* Visual Showcase Stage */}
         <div className="bento-visual-frame">
           <img src={service.image} alt={service.title} className="bento-img" loading="lazy" decoding="async" />
-          <div className="bento-visual-overlay" />
-
-          {/* Live Metric Badge */}
-          <div className="bento-metric-pill">
-            <Sparkles size={13} className="metric-sparkle" />
-            <span className="bento-metric-val">{service.metricValue}</span>
-            <span className="bento-metric-lbl">{service.metricLabel}</span>
-          </div>
         </div>
 
         {/* Tags Matrix */}

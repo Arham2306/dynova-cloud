@@ -62,8 +62,8 @@ export function App() {
     <MotionConfig reducedMotion="user">
       <LeadModalProvider>
       <SEO
-        title="Dynova Cloud | SEO, Paid Media, Shopify Development & Web Design"
-        description="Dynova Cloud unifies SEO, paid media, and full-stack Shopify development into one growth engine, built for measurable revenue results."
+        title="Dynova Cloud | Website Development, E-Commerce, Logo Designing & Digital Marketing"
+        description="Dynova Cloud unifies custom website development, high-converting e-commerce, iconic logo designing, and data-driven digital marketing into one scalable growth engine."
       />
       <div className="app-layout">
         <Navbar />
@@ -96,12 +96,10 @@ export function App() {
           <div className="footer-links-group">
             <div className="footer-col">
               <h4>Solutions</h4>
+              <a href="#services">Website Development</a>
+              <a href="#services">E-Commerce</a>
+              <a href="#services">Logo Designing</a>
               <a href="#services">Digital Marketing</a>
-              <a href="#services">Social Media Management</a>
-              <a href="#services">Meta Ads</a>
-              <a href="#services">Web Development</a>
-              <a href="#services">Analytics & Reporting</a>
-              <a href="#services">E-Commerce Solutions</a>
             </div>
 
             <div className="footer-col">

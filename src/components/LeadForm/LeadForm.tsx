@@ -3,14 +3,11 @@ import { Sparkles, CheckCircle2, ArrowUpRight, Send, AlertCircle, Loader2 } from
 import './LeadForm.css';
 
 const SERVICES_OPTIONS = [
-  'Digital Marketing & SEO',
-  'Social Media Management',
-  'Meta Ads & Paid Media',
-  'Web & Cloud Development',
-  'Analytics & BI Reporting',
-  'E-Commerce Solutions',
-  'Full-Suite Digital Transformation',
-  'Custom Architecture / Consultation'
+  'Website Development',
+  'E-Commerce',
+  'Logo Designing',
+  'Digital Marketing',
+  'Custom Consultation / Full-Suite'
 ];
 
 interface LeadFormProps {
