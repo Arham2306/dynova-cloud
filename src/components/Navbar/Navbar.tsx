@@ -37,9 +37,11 @@ export const Navbar: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (e?: any) => {
       const lenis = (window as any).__lenis;
-      const currentScroll = (lenis && typeof lenis.scroll === 'number')
+      const currentScroll = (typeof e?.scroll === 'number')
+        ? e.scroll
+        : (lenis && typeof lenis.scroll === 'number')
         ? lenis.scroll
         : (window.scrollY || document.documentElement.scrollTop || 0);
       setScrolled(currentScroll > 10);

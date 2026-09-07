@@ -13,7 +13,10 @@ import logoImg from './assets/logo-png.png';
 import { usePrefersReducedMotion } from './lib/usePrefersReducedMotion';
 import './App.css';
 
-const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
+const WebsiteDevelopmentPage = lazy(() => import('./pages/services/WebsiteDevelopmentPage'));
+const EcommercePage = lazy(() => import('./pages/services/EcommercePage'));
+const LogoDesigningPage = lazy(() => import('./pages/services/LogoDesigningPage'));
+const DigitalMarketingPage = lazy(() => import('./pages/services/DigitalMarketingPage'));
 const LeadModal = lazy(() => import('./components/LeadForm/LeadModal'));
 
 gsap.registerPlugin(ScrollTrigger);
@@ -89,7 +92,10 @@ export function App() {
             <Suspense fallback={<div style={{ minHeight: '100vh', background: '#000814' }} />}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/services/:slug" element={<ServiceDetailPage />} />
+                <Route path="/services/website-development" element={<WebsiteDevelopmentPage />} />
+                <Route path="/services/ecommerce" element={<EcommercePage />} />
+                <Route path="/services/logo-designing" element={<LogoDesigningPage />} />
+                <Route path="/services/digital-marketing" element={<DigitalMarketingPage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
