@@ -27,35 +27,56 @@ export function App() {
       return;
     }
 
-    // Initialize Lenis Smooth Scrolling
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
-    });
+    let lenis: Lenis | null = null;
+    let updateRaf: ((time: number) => void) | null = null;
+    let isCleanedUp = false;
 
-    // Attach to window so ScrollManager and modals can coordinate smooth scrolling
-    (window as any).__lenis = lenis;
+    // Initialize Lenis Smooth Scrolling on idle so it does not block initial hydration
+    const initSmoothScroll = () => {
+      if (isCleanedUp) return;
 
-    // Synchronize Lenis scroll updates with GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 1.5,
+      });
 
-    // Drive Lenis RAF from GSAP ticker for perfect 60-120fps frame sync
-    const updateRaf = (time: number) => {
-      lenis.raf(time * 1000);
+      // Attach to window so ScrollManager and modals can coordinate smooth scrolling
+      (window as any).__lenis = lenis;
+
+      // Synchronize Lenis scroll updates with GSAP ScrollTrigger
+      lenis.on('scroll', ScrollTrigger.update);
+
+      // Drive Lenis RAF from GSAP ticker for perfect frame sync
+      updateRaf = (time: number) => {
+        lenis?.raf(time * 1000);
+      };
+      gsap.ticker.add(updateRaf);
     };
-    gsap.ticker.add(updateRaf);
-    gsap.ticker.lagSmoothing(0);
 
-    return () => {
-      gsap.ticker.remove(updateRaf);
-      lenis.destroy();
-      delete (window as any).__lenis;
-    };
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const handle = (window as any).requestIdleCallback(initSmoothScroll);
+      return () => {
+        isCleanedUp = true;
+        (window as any).cancelIdleCallback(handle);
+        if (updateRaf) gsap.ticker.remove(updateRaf);
+        lenis?.destroy();
+        delete (window as any).__lenis;
+      };
+    } else {
+      const timer = setTimeout(initSmoothScroll, 150);
+      return () => {
+        isCleanedUp = true;
+        clearTimeout(timer);
+        if (updateRaf) gsap.ticker.remove(updateRaf);
+        lenis?.destroy();
+        delete (window as any).__lenis;
+      };
+    }
   }, [prefersReducedMotion]);
 
   return (

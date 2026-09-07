@@ -145,7 +145,7 @@ const BlurTextComponent: React.FC<BlurTextProps> = ({
             onAnimationComplete={index === elements.length - 1 ? onAnimationComplete : undefined}
             style={{
               display: 'inline-block',
-              willChange: 'transform, filter, opacity'
+              willChange: 'transform, opacity'
             }}
           >
             {segment === ' ' ? '\u00A0' : segment}
