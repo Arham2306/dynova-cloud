@@ -17,6 +17,8 @@ const WebsiteDevelopmentPage = lazy(() => import('./pages/services/WebsiteDevelo
 const EcommercePage = lazy(() => import('./pages/services/EcommercePage'));
 const LogoDesigningPage = lazy(() => import('./pages/services/LogoDesigningPage'));
 const DigitalMarketingPage = lazy(() => import('./pages/services/DigitalMarketingPage'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
+const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'));
 const LeadModal = lazy(() => import('./components/LeadForm/LeadModal'));
 
 gsap.registerPlugin(ScrollTrigger);
@@ -96,6 +98,9 @@ export function App() {
                 <Route path="/services/ecommerce" element={<EcommercePage />} />
                 <Route path="/services/logo-designing" element={<LogoDesigningPage />} />
                 <Route path="/services/digital-marketing" element={<DigitalMarketingPage />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+                <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+                <Route path="/terms" element={<TermsOfServicePage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
@@ -139,9 +144,9 @@ export function App() {
               <div className="footer-bottom-bar">
                 <p>© {new Date().getFullYear()} Dynova Cloud. All rights reserved.</p>
                 <div className="footer-legal-links">
-                  <a href="/#hero">Privacy Policy</a>
+                  <Link to="/privacy-policy">Privacy Policy</Link>
                   <span>•</span>
-                  <a href="/#hero">Terms of Service</a>
+                  <Link to="/terms-of-service">Terms of Service</Link>
                   <span>•</span>
                   <a href="/#hero">Security &amp; SLA</a>
                 </div>

@@ -117,17 +117,7 @@ export const Contact: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Live Availability Badge */}
-          <motion.div
-            className="contact-availability-pill"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.65 }}
-          >
-            <span className="live-dot" />
-            <span>Currently onboarding Q3/Q4 enterprise partnerships</span>
-          </motion.div>
+
         </div>
 
         {/* Right Column: Embedded Lead Form Card */}
