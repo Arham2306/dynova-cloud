@@ -139,7 +139,7 @@ export const LeadModal: React.FC = () => {
                     <img src={logoImg} alt="Dynova Cloud official logo" className="modal-logo-img" />
                     <div className="modal-header-titles">
                       <span className="modal-brand-tag">DYNOVA CLOUD // DIRECT INTAKE</span>
-                      <h2 id="modal-title" className="modal-title">Initiate Project Blueprint</h2>
+                      <h2 id="modal-title" className="modal-title">Start Your Project</h2>
                     </div>
                   </div>
 
@@ -147,7 +147,7 @@ export const LeadModal: React.FC = () => {
                     type="button"
                     className="modal-close-btn"
                     onClick={closeLeadModal}
-                    aria-label="Close project blueprint modal"
+                    aria-label="Close project modal"
                   >
                     <X size={18} />
                   </button>

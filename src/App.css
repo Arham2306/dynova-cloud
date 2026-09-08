@@ -115,12 +115,22 @@ main {
 .footer-legal-links {
   display: flex;
   align-items: center;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.72rem;
 }
 
 .footer-legal-links a {
   color: var(--text-dim);
+  font-size: 0.72rem;
+  white-space: nowrap;
   transition: color var(--transition-fast);
+}
+
+.footer-legal-links span {
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 0.6rem;
+  user-select: none;
 }
 
 .footer-legal-links a:hover {
@@ -138,5 +148,13 @@ main {
   .footer-bottom-bar {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
+  }
+  .footer-legal-links {
+    gap: 8px;
+    font-size: 0.7rem;
+  }
+  .footer-legal-links a {
+    font-size: 0.7rem;
   }
 }

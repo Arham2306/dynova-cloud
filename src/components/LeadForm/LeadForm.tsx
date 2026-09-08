@@ -234,7 +234,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({
             <Sparkles size={13} className="text-[#FFC300]" />
             <span>PROJECT SCOPING // DIRECT INTAKE</span>
           </div>
-          <h3 className="lead-form-title">Initiate Your Project Blueprint</h3>
+          <h3 className="lead-form-title">Start Your Project</h3>
           <p className="lead-form-subtitle">
             Complete the fields below to schedule a strategy consultation with our SEO, paid media, and Shopify development team.
           </p>
