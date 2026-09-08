@@ -147,8 +147,6 @@ export function App() {
                   <Link to="/privacy-policy">Privacy Policy</Link>
                   <span>•</span>
                   <Link to="/terms-of-service">Terms of Service</Link>
-                  <span>•</span>
-                  <a href="/#hero">Security &amp; SLA</a>
                 </div>
               </div>
             </footer>
