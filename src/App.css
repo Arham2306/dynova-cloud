@@ -70,6 +70,43 @@
   color: var(--text-muted);
 }
 
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(245, 247, 250, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.footer-social-link:hover {
+  color: var(--yellow-primary);
+  border-color: var(--border-yellow);
+  background: rgba(255, 195, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.footer-social-link svg {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.footer-social-link:hover svg {
+  transform: scale(1.08);
+}
+
 .footer-links-group {
   display: flex;
   gap: 60px;
