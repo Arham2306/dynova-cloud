@@ -27,6 +27,7 @@ gsap.registerPlugin(ScrollTrigger);
 export function App() {
   const prefersReducedMotion = usePrefersReducedMotion();
 
+
   useEffect(() => {
     if (prefersReducedMotion) {
       ScrollTrigger.refresh();
