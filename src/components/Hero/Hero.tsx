@@ -14,8 +14,6 @@ export const Hero: React.FC = () => {
   const [mountScanner, setMountScanner] = useState(false);
 
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | null = null;
-    let idleHandle: number | null = null;
     let hasTriggered = false;
 
     const activateScanner = () => {
@@ -26,33 +24,17 @@ export const Hero: React.FC = () => {
     };
 
     const cleanup = () => {
-      if (timer) clearTimeout(timer);
-      if (idleHandle && typeof window !== 'undefined' && 'cancelIdleCallback' in window) {
-        (window as any).cancelIdleCallback(idleHandle);
-      }
       window.removeEventListener('scroll', activateScanner);
       window.removeEventListener('pointerdown', activateScanner);
       window.removeEventListener('touchstart', activateScanner);
       window.removeEventListener('keydown', activateScanner);
     };
 
-    // User interaction activates the 3D atmosphere immediately
+    // Mount Scanner strictly upon genuine user interaction with the page
     window.addEventListener('scroll', activateScanner, { passive: true, once: true });
     window.addEventListener('pointerdown', activateScanner, { passive: true, once: true });
     window.addEventListener('touchstart', activateScanner, { passive: true, once: true });
     window.addEventListener('keydown', activateScanner, { passive: true, once: true });
-
-    // Idle fallback: wait until initial paint and thread activity have cleared
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      idleHandle = (window as any).requestIdleCallback(
-        () => {
-          timer = setTimeout(activateScanner, 1800);
-        },
-        { timeout: 3500 }
-      );
-    } else {
-      timer = setTimeout(activateScanner, 2500);
-    }
 
     return cleanup;
   }, []);
