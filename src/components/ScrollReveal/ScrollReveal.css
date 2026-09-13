@@ -18,3 +18,9 @@
   display: inline-block;
   white-space: pre;
 }
+
+@media (max-width: 768px) {
+  .scroll-reveal-word {
+    filter: none !important;
+  }
+}

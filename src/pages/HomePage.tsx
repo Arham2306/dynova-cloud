@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect } from 'react';
+import React, { Suspense, lazy, useState, useEffect, useRef } from 'react';
 import Hero from '../components/Hero/Hero';
 import SEO from '../components/SEO/SEO';
 
@@ -10,26 +10,81 @@ const Testimonials = lazy(() => import('../components/Testimonials/Testimonials'
 const CTA = lazy(() => import('../components/CTA/CTA'));
 const Contact = lazy(() => import('../components/Contact/Contact'));
 
-export const HomePage: React.FC = () => {
+interface LazySectionProps {
+  id: string;
+  minHeight: string;
+  rootMargin?: string;
+  children: React.ReactNode;
+}
+
+/**
+ * Viewport-gated section: only fetches and mounts heavy below-the-fold
+ * components when the user approaches within rootMargin (default 500px)
+ * or if directly navigated to via anchor hash.
+ */
+const LazySection: React.FC<LazySectionProps> = ({
+  id,
+  minHeight,
+  rootMargin = '500px 0px',
+  children,
+}) => {
+  const [isNearViewport, setIsNearViewport] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    if (!('IntersectionObserver' in window)) return true;
+    return window.location.hash === `#${id}`;
+  });
+  const placeholderRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // Preload all below-the-fold chunks right after initial paint during idle time
-    const preload = () => {
-      import('../components/About/About');
-      import('../components/Services/Services');
-      import('../components/Process/Process');
-      import('../components/Portfolio/Portfolio');
-      import('../components/Testimonials/Testimonials');
-      import('../components/CTA/CTA');
-      import('../components/Contact/Contact');
+    if (isNearViewport) return;
+    const el = placeholderRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsNearViewport(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isNearViewport, rootMargin]);
+
+  // Support direct in-page hash navigation (e.g. clicking navbar link to off-screen section)
+  useEffect(() => {
+    if (isNearViewport) return;
+    const onHashChange = () => {
+      if (window.location.hash === `#${id}`) {
+        setIsNearViewport(true);
+      }
     };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, [isNearViewport, id]);
 
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(preload);
-    } else {
-      setTimeout(preload, 100);
-    }
-  }, []);
+  if (!isNearViewport) {
+    return (
+      <div
+        ref={placeholderRef}
+        id={id}
+        style={{ minHeight }}
+        aria-hidden="true"
+      />
+    );
+  }
 
+  return (
+    <Suspense fallback={<div style={{ minHeight }} />}>
+      {children}
+    </Suspense>
+  );
+};
+
+export const HomePage: React.FC = () => {
   return (
     <>
       <SEO
@@ -38,27 +93,27 @@ export const HomePage: React.FC = () => {
       />
       <main>
         <Hero />
-        <Suspense fallback={<div style={{ minHeight: '500px' }} />}>
+        <LazySection id="about" minHeight="500px">
           <About />
-        </Suspense>
-        <Suspense fallback={<div style={{ minHeight: '600px' }} />}>
+        </LazySection>
+        <LazySection id="services" minHeight="600px">
           <Services />
-        </Suspense>
-        <Suspense fallback={<div style={{ minHeight: '600px' }} />}>
+        </LazySection>
+        <LazySection id="process" minHeight="600px">
           <Process />
-        </Suspense>
-        <Suspense fallback={<div style={{ minHeight: '800px' }} />}>
+        </LazySection>
+        <LazySection id="work" minHeight="800px">
           <Portfolio />
-        </Suspense>
-        <Suspense fallback={<div style={{ minHeight: '500px' }} />}>
+        </LazySection>
+        <LazySection id="testimonials" minHeight="500px">
           <Testimonials />
-        </Suspense>
-        <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+        </LazySection>
+        <LazySection id="cta" minHeight="400px">
           <CTA />
-        </Suspense>
-        <Suspense fallback={<div style={{ minHeight: '600px' }} />}>
+        </LazySection>
+        <LazySection id="contact" minHeight="600px">
           <Contact />
-        </Suspense>
+        </LazySection>
       </main>
     </>
   );

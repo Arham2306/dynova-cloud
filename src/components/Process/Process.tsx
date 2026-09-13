@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown, ArrowUpRight, Sparkles } from 'lucide-react';
@@ -44,7 +44,110 @@ const PHASES: ProcessPhase[] = [
   }
 ];
 
-export const Process: React.FC = () => {
+const MOBILE_BREAKPOINT = 768;
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth <= MOBILE_BREAKPOINT : false
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener('change', handler);
+    setIsMobile(mql.matches);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
+
+  return isMobile;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE: Simple stacked layout — zero pinning, zero blur, zero scrub
+   ═══════════════════════════════════════════════════════════════ */
+const ProcessMobile: React.FC = () => {
+  const { openLeadModal } = useLeadModal();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const cards = container.querySelectorAll<HTMLElement>('.process-mobile-card');
+
+    const ctx = gsap.context(() => {
+      cards.forEach((card) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 90%',
+              toggleActions: 'play none none none',
+              once: true
+            }
+          }
+        );
+      });
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={containerRef} id="process" className="process-mobile-container">
+      <div className="process-mobile-inner">
+        {/* Section Header */}
+        <div className="process-mobile-header">
+          <span className="process-stage-square" />
+          <span className="process-stage-eyebrow-text">OUR METHODOLOGY // HOW WE BUILD</span>
+        </div>
+
+        {/* Stacked Cards */}
+        {PHASES.map((phase) => (
+          <div key={phase.num} className="process-mobile-card">
+            <div className="process-keyword-badge">
+              <Sparkles size={13} className="process-badge-sparkle" />
+              <span>{phase.keyword}</span>
+            </div>
+
+            <h2 className="process-giant-title">
+              <span className="process-title-num">{phase.num}.</span> {phase.title}
+            </h2>
+
+            <p className="process-slide-desc">
+              {phase.description}
+            </p>
+
+            {phase.hasCta && (
+              <div className="process-slide-cta-wrap">
+                <button
+                  type="button"
+                  onClick={() => openLeadModal()}
+                  className="process-slide-cta-btn"
+                  aria-label="Initiate Phase 01 blueprint"
+                >
+                  <span>Initiate Phase 01</span>
+                  <ArrowUpRight size={16} className="process-cta-arrow" />
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   DESKTOP: Full pinned kinetic scroll experience (unchanged)
+   ═══════════════════════════════════════════════════════════════ */
+const ProcessDesktop: React.FC = () => {
   const { openLeadModal } = useLeadModal();
   const prefersReducedMotion = usePrefersReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -53,6 +156,10 @@ export const Process: React.FC = () => {
   const progressBarRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
   const lastStepRef = useRef(0);
+
+  const setSlidesRef = useCallback((el: HTMLDivElement | null, index: number) => {
+    slidesRef.current[index] = el;
+  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -90,11 +197,9 @@ export const Process: React.FC = () => {
           scrub: 0.8,
           anticipatePin: 1,
           onUpdate: (self) => {
-            // Update progress bar directly in DOM without React re-render
             if (progressBarRef.current) {
               gsap.set(progressBarRef.current, { scaleX: self.progress });
             }
-            // Update active step indicator only when phase actually changes (4 times total vs 100s of times)
             const step = Math.min(
               Math.floor(self.progress * PHASES.length),
               PHASES.length - 1
@@ -144,7 +249,6 @@ export const Process: React.FC = () => {
 
   return (
     <section ref={containerRef} id="process" className={`process-pinned-container ${prefersReducedMotion ? 'is-reduced-motion' : ''}`}>
-      {/* The Pinned Viewport Stage */}
       <div ref={stageRef} className="process-pinned-stage">
         <div className="process-stage-inner">
 
@@ -172,27 +276,23 @@ export const Process: React.FC = () => {
             {PHASES.map((phase, index) => (
               <div
                 key={phase.num}
-                ref={(el) => { slidesRef.current[index] = el; }}
+                ref={(el) => { setSlidesRef(el, index); }}
                 className="process-slide"
               >
                 <div className="process-slide-content">
-                  {/* Pillar Keyword Badge */}
                   <div className="process-keyword-badge">
                     <Sparkles size={13} className="process-badge-sparkle" />
                     <span>{phase.keyword}</span>
                   </div>
 
-                  {/* Giant Bold Statement Title */}
                   <h2 className="process-giant-title">
                     <span className="process-title-num">{phase.num}.</span> {phase.title}
                   </h2>
 
-                  {/* Clean 2-line Statement Narrative */}
                   <p className="process-slide-desc">
                     {phase.description}
                   </p>
 
-                  {/* Inline CTA Button on Final Phase */}
                   {phase.hasCta && (
                     <div className="process-slide-cta-wrap">
                       <button
@@ -235,6 +335,14 @@ export const Process: React.FC = () => {
       </div>
     </section>
   );
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   ROOT: Switches between mobile / desktop based on viewport
+   ═══════════════════════════════════════════════════════════════ */
+export const Process: React.FC = () => {
+  const isMobile = useIsMobile();
+  return isMobile ? <ProcessMobile /> : <ProcessDesktop />;
 };
 
 export default Process;

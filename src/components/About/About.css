@@ -125,4 +125,7 @@
     font-size: clamp(1.4rem, 4.8vw, 2rem);
     line-height: 1.35;
   }
+  .about-large-text .scroll-reveal-word {
+    filter: none !important;
+  }
 }

@@ -94,23 +94,28 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
         }
       );
 
+      const mm = gsap.matchMedia();
+
+      // Only enable blur animation on desktop and laptop screens (min-width: 769px)
       if (enableBlur) {
-        gsap.fromTo(
-          wordElements,
-          { filter: `blur(${blurStrength}px)` },
-          {
-            ease: 'none',
-            filter: 'blur(0px)',
-            stagger: 0.04,
-            scrollTrigger: {
-              trigger: el,
-              scroller,
-              start: wordAnimationStart,
-              end: wordAnimationEnd,
-              scrub: true
+        mm.add('(min-width: 769px)', () => {
+          gsap.fromTo(
+            wordElements,
+            { filter: `blur(${blurStrength}px)` },
+            {
+              ease: 'none',
+              filter: 'blur(0px)',
+              stagger: 0.04,
+              scrollTrigger: {
+                trigger: el,
+                scroller,
+                start: wordAnimationStart,
+                end: wordAnimationEnd,
+                scrub: true
+              }
             }
-          }
-        );
+          );
+        });
       }
     }, el);
 

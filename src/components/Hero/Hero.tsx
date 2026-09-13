@@ -14,15 +14,47 @@ export const Hero: React.FC = () => {
   const [mountScanner, setMountScanner] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-        (window as any).requestIdleCallback(() => setMountScanner(true));
-      } else {
-        setMountScanner(true);
-      }
-    }, 120);
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    let idleHandle: number | null = null;
+    let hasTriggered = false;
 
-    return () => clearTimeout(timer);
+    const activateScanner = () => {
+      if (hasTriggered) return;
+      hasTriggered = true;
+      cleanup();
+      setMountScanner(true);
+    };
+
+    const cleanup = () => {
+      if (timer) clearTimeout(timer);
+      if (idleHandle && typeof window !== 'undefined' && 'cancelIdleCallback' in window) {
+        (window as any).cancelIdleCallback(idleHandle);
+      }
+      window.removeEventListener('scroll', activateScanner);
+      window.removeEventListener('pointerdown', activateScanner);
+      window.removeEventListener('touchstart', activateScanner);
+      window.removeEventListener('keydown', activateScanner);
+    };
+
+    // User interaction activates the 3D atmosphere immediately
+    window.addEventListener('scroll', activateScanner, { passive: true, once: true });
+    window.addEventListener('pointerdown', activateScanner, { passive: true, once: true });
+    window.addEventListener('touchstart', activateScanner, { passive: true, once: true });
+    window.addEventListener('keydown', activateScanner, { passive: true, once: true });
+
+    // Idle fallback: wait until initial paint and thread activity have cleared
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      idleHandle = (window as any).requestIdleCallback(
+        () => {
+          timer = setTimeout(activateScanner, 1800);
+        },
+        { timeout: 3500 }
+      );
+    } else {
+      timer = setTimeout(activateScanner, 2500);
+    }
+
+    return cleanup;
   }, []);
 
   return (

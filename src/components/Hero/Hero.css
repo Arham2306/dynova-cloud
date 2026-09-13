@@ -110,7 +110,7 @@
 
 .headline-text {
   font-family: var(--font-primary);
-  font-size: clamp(2.1rem, 4.8vw, 4.6rem);
+  font-size: clamp(2.2rem, 5vw, 4.8rem);
   font-weight: 500;
   color: var(--text-white);
   letter-spacing: -0.025em;
@@ -120,7 +120,7 @@
 
 .headline-highlight {
   font-family: var(--font-primary);
-  font-size: clamp(2.1rem, 4.8vw, 4.6rem);
+  font-size: clamp(2.2rem, 5vw, 4.8rem);
   font-weight: 600;
   color: var(--yellow-primary);
   letter-spacing: -0.025em;
@@ -271,13 +271,16 @@
   .headline-subtitle {
     margin-bottom: 12px;
   }
+  .headline-line {
+    line-height: 1.1;
+    margin-bottom: 0.06em;
+  }
   .headline-text,
   .headline-highlight {
-    font-size: clamp(1.75rem, 7.5vw, 3rem);
+    font-size: clamp(2.25rem, 9.8vw, 3.6rem);
   }
   .inline-media-pill {
-    height: clamp(1.6rem, 6.2vw, 2.4rem);
-    width: clamp(3.8rem, 14vw, 5.5rem);
+    display: none !important;
   }
   .hero-bottom-row {
     flex-direction: column;
