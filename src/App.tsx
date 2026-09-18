@@ -3,7 +3,7 @@ import Lenis from 'lenis';
 import { MotionConfig } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import HomePage from './pages/HomePage';
 import { LeadModalProvider } from './context/LeadModalContext';
@@ -20,6 +20,7 @@ const LogoDesigningPage = lazy(() => import('./pages/services/LogoDesigningPage'
 const DigitalMarketingPage = lazy(() => import('./pages/services/DigitalMarketingPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const LeadModal = lazy(() => import('./components/LeadForm/LeadModal'));
 
 gsap.registerPlugin(ScrollTrigger);
@@ -103,7 +104,7 @@ export function App() {
                 <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                 <Route path="/terms-of-service" element={<TermsOfServicePage />} />
                 <Route path="/terms" element={<TermsOfServicePage />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Suspense>
             <Suspense fallback={null}>

@@ -253,10 +253,80 @@ app.use(express.static(distPath, {
   },
 }));
 
-// Safe SPA Fallback for non-API GET requests (avoids Express 5 wildcard regex issues)
+/**
+ * Authoritative registry of valid frontend client-side routes.
+ *
+ * IMPORTANT FOR ROUTE MAINTENANCE:
+ * When a new BrowserRouter route is added to src/App.tsx, it MUST also be
+ * added to VALID_FRONTEND_ROUTES below. Direct GET navigation/refresh requests
+ * to routes not in this set will receive HTTP 404 (with index.html rendered by
+ * React's NotFoundPage) to eliminate soft-404 indexing by search engines.
+ */
+const VALID_FRONTEND_ROUTES = new Set([
+  '/',
+  '/services/website-development',
+  '/services/ecommerce',
+  '/services/logo-designing',
+  '/services/digital-marketing',
+  '/privacy-policy',
+  '/terms-of-service',
+  '/terms',
+]);
+
+/**
+ * Obsolete legacy routes (e.g. from the previous WordPress installation)
+ * that must be permanently removed from search engine indexes.
+ * Requests to these routes return HTTP 410 Gone.
+ */
+const DEPRECATED_LEGACY_ROUTES = new Set([
+  '/hello-world',
+]);
+
+// Route-aware SPA Fallback for non-API GET requests
 app.use((req, res, next) => {
   if (req.method === 'GET' && !req.path.startsWith('/api')) {
-    return res.sendFile(path.resolve(distPath, 'index.html'));
+    // Nonexistent static assets or files under /assets must return 404 without serving index.html
+    if (req.path.startsWith('/assets/') || /\.(?:js|css|png|jpg|jpeg|gif|svg|webp|ico|woff2?|map|json|txt|xml)$/i.test(req.path)) {
+      return res.status(404).type('text/plain').send('Not Found');
+    }
+
+    // Normalize trailing slashes (e.g. '/services/ecommerce/' -> '/services/ecommerce', '/' -> '/')
+    const normalized = req.path.replace(/\/+$/, '') || '/';
+
+    // 1. Return HTTP 410 Gone for known obsolete legacy WordPress endpoints
+    if (DEPRECATED_LEGACY_ROUTES.has(normalized)) {
+      return res.status(410).type('text/html').send(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>410 Gone | Dynova Cloud</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    body { background-color: #000814; color: #F5F7FA; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; text-align: center; }
+    h1 { font-size: 3rem; margin-bottom: 0.5rem; color: #FFC300; }
+    p { color: #AAB4C3; margin-bottom: 1.5rem; }
+    a { color: #FFC300; text-decoration: none; font-weight: 600; border: 1px solid rgba(255,195,0,0.4); padding: 10px 20px; border-radius: 6px; }
+    a:hover { background: rgba(255,195,0,0.1); }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>410</h1>
+    <p>This legacy resource has been permanently removed.</p>
+    <a href="/">Return to Dynova Cloud</a>
+  </div>
+</body>
+</html>`);
+    }
+
+    // 2. Legitimate React frontend routes return HTTP 200
+    if (VALID_FRONTEND_ROUTES.has(normalized)) {
+      return res.status(200).sendFile(path.resolve(distPath, 'index.html'));
+    }
+
+    // 3. Unrecognized frontend routes return HTTP 404 while serving index.html for React NotFoundPage
+    return res.status(404).sendFile(path.resolve(distPath, 'index.html'));
   }
   next();
 });
