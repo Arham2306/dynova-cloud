@@ -29,6 +29,7 @@ export const EcommercePage: React.FC = () => {
       specValue="Sub-1.2s Express Funnel"
       metaTitle="E-Commerce Development & Shopify Plus Architecture | Dynova Cloud"
       metaDescription="Custom Shopify Plus and headless commerce architectures engineered for rapid checkout, high AOV, seamless ERP integrations, and enterprise reliability."
+      canonical="https://dynova.cloud/services/ecommerce"
     >
       {/* ── Key Performance Metrics ── */}
       <MetricsGrid>

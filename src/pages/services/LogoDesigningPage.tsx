@@ -29,6 +29,7 @@ export const LogoDesigningPage: React.FC = () => {
       specValue="Complete Vector Master Kit"
       metaTitle="Logo Designing & Brand Identity Systems | Dynova Cloud"
       metaDescription="Iconic logo design, vector marks, typography hierarchies, and complete brand design systems crafted for modern digital-first enterprises."
+      canonical="https://dynova.cloud/services/logo-designing"
     >
       {/* ── Key Performance Metrics ── */}
       <MetricsGrid>

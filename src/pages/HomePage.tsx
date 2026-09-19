@@ -1,6 +1,22 @@
 import React, { Suspense, lazy, useState, useEffect, useRef } from 'react';
 import Hero from '../components/Hero/Hero';
 import SEO from '../components/SEO/SEO';
+import { generateOrganizationSchema, generateWebSiteSchema } from '../lib/seo';
+
+const organizationSchema = generateOrganizationSchema({
+  name: 'Dynova Cloud',
+  url: 'https://dynova.cloud',
+  logo: 'https://dynova.cloud/logo.png',
+  description: 'Dynova Cloud unifies custom website development, high-converting e-commerce, iconic logo designing, and data-driven digital marketing into one scalable growth engine.',
+  sameAs: ['https://www.instagram.com/dynovacloud'],
+});
+
+const websiteSchema = generateWebSiteSchema({
+  name: 'Dynova Cloud',
+  url: 'https://dynova.cloud',
+  description: 'Dynova Cloud unifies custom website development, high-converting e-commerce, iconic logo designing, and data-driven digital marketing into one scalable growth engine.',
+  inLanguage: 'en',
+});
 
 const About = lazy(() => import('../components/About/About'));
 const Services = lazy(() => import('../components/Services/Services'));
@@ -90,6 +106,15 @@ export const HomePage: React.FC = () => {
       <SEO
         title="Dynova Cloud | Website Development, E-Commerce, Logo Designing & Digital Marketing"
         description="Dynova Cloud unifies custom website development, high-converting e-commerce, iconic logo designing, and data-driven digital marketing into one scalable growth engine."
+        canonical="https://dynova.cloud/"
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
       <main>
         <Hero />

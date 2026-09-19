@@ -92,68 +92,71 @@ export const Hero: React.FC = () => {
             />
           </div>
 
-          {/* Line 1 */}
-          <div className="headline-line line-1">
-            <BlurText
-              text="FULL-STACK DIGITAL"
-              delay={90}
-              className="headline-text"
-              direction="bottom"
-              stepDuration={0.35}
-            />
-            <motion.div
-              className="inline-media-pill pill-architect"
-              title="Lead Cloud Architect"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{
-                delay: 0.65,
-                duration: 0.55,
-                ease: [0.16, 1, 0.3, 1]
-              }}
-              whileHover={{ scale: 1.06 }}
-            >
-              <img src={architectImg} alt="Dynova Cloud strategist reviewing digital growth performance" className="pill-img" decoding="async" loading="lazy" width={140} height={60} />
-              <div className="pill-gloss" />
-            </motion.div>
-          </div>
+          {/* Semantic Homepage H1 Headline */}
+          <h1 className="editorial-headline-title">
+            {/* Line 1 */}
+            <div className="headline-line line-1">
+              <BlurText
+                text="FULL-STACK DIGITAL"
+                delay={90}
+                className="headline-text"
+                direction="bottom"
+                stepDuration={0.35}
+              />
+              <motion.div
+                className="inline-media-pill pill-architect"
+                title="Lead Cloud Architect"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  delay: 0.65,
+                  duration: 0.55,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                whileHover={{ scale: 1.06 }}
+              >
+                <img src={architectImg} alt="Dynova Cloud strategist reviewing digital growth performance" className="pill-img" decoding="async" loading="lazy" width={140} height={60} />
+                <div className="pill-gloss" />
+              </motion.div>
+            </div>
 
-          {/* Line 2 */}
-          <div className="headline-line line-2">
-            <BlurText
-              text="MARKETING & ENGINEERING"
-              delay={110}
-              className="headline-text"
-              direction="bottom"
-              stepDuration={0.35}
-            />
-          </div>
+            {/* Line 2 */}
+            <div className="headline-line line-2">
+              <BlurText
+                text="MARKETING & ENGINEERING"
+                delay={110}
+                className="headline-text"
+                direction="bottom"
+                stepDuration={0.35}
+              />
+            </div>
 
-          {/* Line 3 */}
-          <div className="headline-line line-3">
-            <BlurText
-              text="ECOSYSTEM"
-              delay={170}
-              className="headline-highlight"
-              direction="bottom"
-              stepDuration={0.4}
-            />
-            <motion.div
-              className="inline-media-pill pill-platform"
-              title="Digital Cloud Platform"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{
-                delay: 0.85,
-                duration: 0.55,
-                ease: [0.16, 1, 0.3, 1]
-              }}
-              whileHover={{ scale: 1.06 }}
-            >
-              <img src={platformImg} alt="Dashboard showing SEO and paid media performance metrics" className="pill-img" decoding="async" loading="lazy" width={140} height={60} />
-              <div className="pill-gloss" />
-            </motion.div>
-          </div>
+            {/* Line 3 */}
+            <div className="headline-line line-3">
+              <BlurText
+                text="ECOSYSTEM"
+                delay={170}
+                className="headline-highlight"
+                direction="bottom"
+                stepDuration={0.4}
+              />
+              <motion.div
+                className="inline-media-pill pill-platform"
+                title="Digital Cloud Platform"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  delay: 0.85,
+                  duration: 0.55,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                whileHover={{ scale: 1.06 }}
+              >
+                <img src={platformImg} alt="Dashboard showing SEO and paid media performance metrics" className="pill-img" decoding="async" loading="lazy" width={140} height={60} />
+                <div className="pill-gloss" />
+              </motion.div>
+            </div>
+          </h1>
         </div>
 
         {/* Bottom Editorial Narrative & Scroll Indicator (Orchestrated Fade-in) */}

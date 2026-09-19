@@ -13,6 +13,7 @@ export const TermsOfServicePage: React.FC = () => {
       <SEO
         title="Terms of Service | Dynova Cloud"
         description="These Terms of Service govern your access to and use of dynova.cloud and Dynova Cloud's services."
+        canonical="https://dynova.cloud/terms-of-service"
       />
 
       {/* Subtle Ambient Glow */}

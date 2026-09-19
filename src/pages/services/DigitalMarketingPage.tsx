@@ -29,6 +29,7 @@ export const DigitalMarketingPage: React.FC = () => {
       specValue="Verified 3.8x - 5.2x Blended"
       metaTitle="Performance Digital Marketing & SEO Services | Dynova Cloud"
       metaDescription="Data-driven performance marketing, technical SEO, high-ROAS Google and Meta Ads campaigns, and full-funnel attribution built to scale qualified revenue."
+      canonical="https://dynova.cloud/services/digital-marketing"
     >
       {/* ── Key Performance Metrics ── */}
       <MetricsGrid>

@@ -18,6 +18,7 @@ export interface ServiceTemplateProps {
   specValue?: string;
   metaTitle: string;
   metaDescription: string;
+  canonical?: string;
   children: React.ReactNode;
 }
 
@@ -33,6 +34,7 @@ export const ServiceTemplate: React.FC<ServiceTemplateProps> = ({
   specValue = 'Production Enterprise SLA',
   metaTitle,
   metaDescription,
+  canonical,
   children
 }) => {
   const { openLeadModal } = useLeadModal();
@@ -57,7 +59,7 @@ export const ServiceTemplate: React.FC<ServiceTemplateProps> = ({
 
   return (
     <div className="service-detail-wrapper">
-      <SEO title={metaTitle} description={metaDescription} />
+      <SEO title={metaTitle} description={metaDescription} canonical={canonical} />
 
       {/* JSON-LD Service Structured Data */}
       <script

@@ -22,6 +22,17 @@ const app = express();
 app.disable('x-powered-by');
 app.set('trust proxy', 1);
 
+// Canonical Host Normalization: 301 Redirect www.dynova.cloud -> dynova.cloud
+app.use((req, res, next) => {
+  const hostHeader = (req.headers['x-forwarded-host'] || req.headers.host || '').trim();
+  const rawHost = hostHeader.split(',')[0].trim().toLowerCase();
+  const hostname = rawHost.split(':')[0];
+  if (hostname === 'www.dynova.cloud') {
+    return res.redirect(301, `https://dynova.cloud${req.originalUrl}`);
+  }
+  next();
+});
+
 // Parse JSON request bodies
 app.use(express.json({ limit: '500kb' }));
 

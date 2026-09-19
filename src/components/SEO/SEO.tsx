@@ -46,8 +46,16 @@ function upsertMeta(attribute: 'name' | 'property', key: string, content: string
  */
 function upsertLink(rel: string, href: string): void {
   const selector = `link[rel="${rel}"]`;
-  let element = document.querySelector<HTMLLinkElement>(selector);
+  const elements = document.querySelectorAll<HTMLLinkElement>(selector);
 
+  // Remove any duplicate link tags
+  if (elements.length > 1) {
+    elements.forEach((el, idx) => {
+      if (idx > 0) el.remove();
+    });
+  }
+
+  let element = elements[0];
   if (!element) {
     element = document.createElement('link');
     element.setAttribute('rel', rel);
@@ -87,6 +95,15 @@ export function SEO({
     if (canonical) {
       upsertLink('canonical', canonical);
     }
+    return () => {
+      if (canonical) {
+        const selector = 'link[rel="canonical"]';
+        const element = document.querySelector<HTMLLinkElement>(selector);
+        if (element && element.getAttribute('href') === canonical) {
+          element.remove();
+        }
+      }
+    };
   }, [canonical]);
 
   // Open Graph tags

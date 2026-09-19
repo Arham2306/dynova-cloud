@@ -13,6 +13,7 @@ export const PrivacyPolicyPage: React.FC = () => {
       <SEO
         title="Privacy Policy | Dynova Cloud"
         description="This Privacy Policy explains how Dynova Cloud collects, uses, and safeguards your personal information when you visit dynova.cloud."
+        canonical="https://dynova.cloud/privacy-policy"
       />
 
       {/* Subtle Ambient Glow */}

@@ -29,6 +29,7 @@ export const WebsiteDevelopmentPage: React.FC = () => {
       specValue="Production Enterprise SLA"
       metaTitle="Website Development Services — WordPress, Webflow, Shopify & Custom | Dynova Cloud"
       metaDescription="End-to-end website development across WordPress, Webflow, Shopify, and custom React/Next.js platforms. Engineered for sub-second speed, 95+ Core Web Vitals, and organic search dominance."
+      canonical="https://dynova.cloud/services/website-development"
     >
       {/* ── Key Performance Metrics ── */}
       <MetricsGrid>
