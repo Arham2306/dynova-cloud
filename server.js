@@ -33,6 +33,20 @@ app.use((req, res, next) => {
   next();
 });
 
+// 301 Permanent Redirect: Legacy /terms -> /terms-of-service
+app.use((req, res, next) => {
+  if (req.method === 'GET') {
+    const normalizedPath = req.path.replace(/\/+$/, '').toLowerCase();
+    if (normalizedPath === '/terms') {
+      const queryString = req.originalUrl.includes('?')
+        ? req.originalUrl.slice(req.originalUrl.indexOf('?'))
+        : '';
+      return res.redirect(301, `https://dynova.cloud/terms-of-service${queryString}`);
+    }
+  }
+  next();
+});
+
 // Parse JSON request bodies
 app.use(express.json({ limit: '500kb' }));
 
@@ -281,7 +295,6 @@ const VALID_FRONTEND_ROUTES = new Set([
   '/services/digital-marketing',
   '/privacy-policy',
   '/terms-of-service',
-  '/terms',
 ]);
 
 /**

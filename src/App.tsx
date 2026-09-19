@@ -103,7 +103,6 @@ export function App() {
                 <Route path="/services/digital-marketing" element={<DigitalMarketingPage />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                 <Route path="/terms-of-service" element={<TermsOfServicePage />} />
-                <Route path="/terms" element={<TermsOfServicePage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Suspense>
