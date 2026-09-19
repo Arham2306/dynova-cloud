@@ -16,7 +16,7 @@ import {
   FAQItem
 } from '../../components/ServiceDetail/blocks';
 
-import imgWebDev from '../../assets/services/Web Development.jpg';
+import imgWebDev from '../../assets/services/Web Development.webp';
 
 export const WebsiteDevelopmentPage: React.FC = () => {
   return (

@@ -117,7 +117,7 @@ export function App() {
               <div className="footer-container">
                 <div className="footer-brand-column">
                   <Link to="/" className="footer-brand" aria-label="Dynova Cloud Home">
-                    <img src={logoImg} alt="Dynova Cloud - Digital Marketing and Engineering Agency" className="footer-logo-img" />
+                    <img src={logoImg} alt="Dynova Cloud - Digital Marketing and Engineering Agency" className="footer-logo-img" width={76} height={76} loading="lazy" decoding="async" />
                   </Link>
                   <p className="footer-tagline">DIGITAL SOLUTIONS. REAL GROWTH.</p>
                   <p className="footer-bio">

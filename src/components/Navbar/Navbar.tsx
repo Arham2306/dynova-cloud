@@ -103,7 +103,7 @@ export const Navbar: React.FC = () => {
       <div className="navbar-container">
         {/* Brand Logo - Links to Root Site URL */}
         <Link to="/" className="navbar-brand" aria-label="Dynova Cloud Home">
-          <img src={logoImg} alt="Dynova Cloud - Digital Marketing and Engineering Agency" className="navbar-logo-img" />
+          <img src={logoImg} alt="Dynova Cloud - Digital Marketing and Engineering Agency" className="navbar-logo-img" width={110} height={110} />
         </Link>
 
         {/* Desktop Navigation Links */}

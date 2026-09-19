@@ -16,7 +16,7 @@ import {
   FAQItem
 } from '../../components/ServiceDetail/blocks';
 
-import imgLogoDesigning from '../../assets/services/Logo Designing.jpg';
+import imgLogoDesigning from '../../assets/services/Logo Designing.webp';
 
 export const LogoDesigningPage: React.FC = () => {
   return (

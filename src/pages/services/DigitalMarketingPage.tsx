@@ -16,7 +16,7 @@ import {
   FAQItem
 } from '../../components/ServiceDetail/blocks';
 
-import imgDigitalMarketing from '../../assets/services/Digital Marketing.jpg';
+import imgDigitalMarketing from '../../assets/services/Digital Marketing.webp';
 
 export const DigitalMarketingPage: React.FC = () => {
   return (

@@ -16,7 +16,7 @@ import {
   FAQItem
 } from '../../components/ServiceDetail/blocks';
 
-import imgEcommerce from '../../assets/services/E-Commerce.jpg';
+import imgEcommerce from '../../assets/services/E-Commerce.webp';
 
 export const EcommercePage: React.FC = () => {
   return (

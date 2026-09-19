@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { useLeadModal } from '../../context/LeadModalContext';
 import BlurText from '../BlurText/BlurText';
 
-import imgWebDev from '../../assets/services/Web Development.jpg';
-import imgEcommerce from '../../assets/services/E-Commerce.jpg';
-import imgLogoDesigning from '../../assets/services/Logo Designing.jpg';
-import imgDigitalMarketing from '../../assets/services/Digital Marketing.jpg';
+import imgWebDev from '../../assets/services/Web Development.webp';
+import imgEcommerce from '../../assets/services/E-Commerce.webp';
+import imgLogoDesigning from '../../assets/services/Logo Designing.webp';
+import imgDigitalMarketing from '../../assets/services/Digital Marketing.webp';
 
 import './Services.css';
 
@@ -173,7 +173,15 @@ const BentoSpotlightCard: React.FC<{ service: ServiceItem; index: number }> = Re
 
         {/* Visual Showcase Stage */}
         <Link to={`/services/${service.id}`} className="bento-visual-frame" aria-label={`View ${service.title} service blueprint`}>
-          <img src={service.image} alt={service.title} className="bento-img" loading="lazy" decoding="async" />
+          <img
+            src={service.image}
+            alt={service.title}
+            className="bento-img"
+            loading="lazy"
+            decoding="async"
+            width={550}
+            height={250}
+          />
         </Link>
 
         {/* Tags Matrix & Blueprint Link */}

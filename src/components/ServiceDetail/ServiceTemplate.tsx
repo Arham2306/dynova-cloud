@@ -151,6 +151,9 @@ export const ServiceTemplate: React.FC<ServiceTemplateProps> = ({
                       className="service-hero-img"
                       loading="eager"
                       decoding="async"
+                      fetchPriority="high"
+                      width={580}
+                      height={362}
                     />
                     <div className="hero-img-glass-overlay" />
                   </div>
