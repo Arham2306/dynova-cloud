@@ -30,8 +30,16 @@ export interface SEOProps {
  */
 function upsertMeta(attribute: 'name' | 'property', key: string, content: string): void {
   const selector = `meta[${attribute}="${key}"]`;
-  let element = document.querySelector<HTMLMetaElement>(selector);
+  const elements = document.querySelectorAll<HTMLMetaElement>(selector);
 
+  // Remove any duplicate meta tags
+  if (elements.length > 1) {
+    elements.forEach((el, idx) => {
+      if (idx > 0) el.remove();
+    });
+  }
+
+  let element = elements[0];
   if (!element) {
     element = document.createElement('meta');
     element.setAttribute(attribute, key);
@@ -82,6 +90,12 @@ export function SEO({
   useEffect(() => {
     if (title) {
       document.title = title;
+      const titles = document.querySelectorAll('title');
+      if (titles.length > 1) {
+        titles.forEach((el, idx) => {
+          if (idx > 0) el.remove();
+        });
+      }
     }
   }, [title]);
 

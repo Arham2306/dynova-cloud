@@ -27,8 +27,8 @@ export const EcommercePage: React.FC = () => {
       heroImage={imgEcommerce}
       specLabel="CHECKOUT SPEED"
       specValue="Sub-1.2s Express Funnel"
-      metaTitle="E-Commerce Development & Shopify Plus Architecture | Dynova Cloud"
-      metaDescription="Custom Shopify Plus and headless commerce architectures engineered for rapid checkout, high AOV, seamless ERP integrations, and enterprise reliability."
+      metaTitle="E-Commerce Development & Shopify Solutions | Dynova Cloud"
+      metaDescription="Custom Shopify and headless commerce architectures engineered for rapid checkout, high AOV, ERP integrations, and enterprise scalability."
       canonical="https://dynova.cloud/services/ecommerce"
     >
       {/* ── Key Performance Metrics ── */}

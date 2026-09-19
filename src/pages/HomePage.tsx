@@ -104,8 +104,8 @@ export const HomePage: React.FC = () => {
   return (
     <>
       <SEO
-        title="Dynova Cloud | Website Development, E-Commerce, Logo Designing & Digital Marketing"
-        description="Dynova Cloud unifies custom website development, high-converting e-commerce, iconic logo designing, and data-driven digital marketing into one scalable growth engine."
+        title="Dynova Cloud | Digital Engineering & Marketing Agency"
+        description="Dynova Cloud builds high-performance web platforms, e-commerce storefronts, brand identity systems, and data-driven digital marketing engines."
         canonical="https://dynova.cloud/"
       />
       <script
