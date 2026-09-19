@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ServiceTemplate } from '../../components/ServiceDetail/ServiceTemplate';
 import {
   MetricsGrid,
@@ -135,7 +136,15 @@ export const LogoDesigningPage: React.FC = () => {
             'Curated headline, subhead, and body font pairing recommendations',
             'Primary, secondary, and accent color palettes with HEX, RGB, and CMYK values',
             'WCAG 2.1 AA/AAA contrast ratios verified for digital readability',
-            'CSS Custom Properties and Tailwind CSS color token export files'
+            <>
+              CSS Custom Properties and Tailwind CSS color token export files ready for{' '}
+              <Link
+                to="/services/website-development"
+                className="text-[#FFC300] hover:text-[#FFD60A] underline underline-offset-3 transition-colors"
+              >
+                custom website development
+              </Link>
+            </>
           ]}
           delay={0.2}
         />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ServiceTemplate } from '../../components/ServiceDetail/ServiceTemplate';
 import {
   MetricsGrid,
@@ -78,7 +79,13 @@ export const DigitalMarketingPage: React.FC = () => {
           delay={0.1}
         >
           <p>
-            Because we build both the code and the marketing strategy, we fix the entire revenue pipeline. We deploy robust server-side attribution, engineer high-converting bespoke landing pages, optimize crawl budgets for Google search bots, and scale paid budgets only when profitability metrics are verified.
+            Because we build both the code and the marketing strategy, we fix the entire revenue pipeline. We deploy robust server-side attribution, engineer high-converting{' '}
+            <Link
+              to="/services/website-development"
+              className="text-[#FFC300] hover:text-[#FFD60A] underline underline-offset-3 transition-colors"
+            >
+              bespoke landing pages
+            </Link>, optimize crawl budgets for Google search bots, and scale paid budgets only when profitability metrics are verified.
           </p>
         </ComparisonCard>
       </ComparisonSection>
@@ -99,7 +106,15 @@ export const DigitalMarketingPage: React.FC = () => {
           }
           features={[
             'High-intent Google Search keyword architecture eliminating negative match waste',
-            'Dynamic product catalog ads (DPA) and Performance Max shopping campaigns',
+            <>
+              <Link
+                to="/services/ecommerce"
+                className="text-[#FFC300] hover:text-[#FFD60A] underline underline-offset-3 transition-colors"
+              >
+                Dynamic product catalog ads
+              </Link>{' '}
+              (DPA) and Performance Max shopping campaigns
+            </>,
             'Creative sprint testing pipelines testing 10+ new ad variations weekly',
             'Aggressive retargeting funnels tailored to specific user journey stages'
           ]}

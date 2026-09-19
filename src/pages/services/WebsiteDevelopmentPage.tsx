@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ServiceTemplate } from '../../components/ServiceDetail/ServiceTemplate';
 import {
   MetricsGrid,
@@ -128,7 +129,14 @@ export const WebsiteDevelopmentPage: React.FC = () => {
           title="Conversion-Focused Shopify Storefronts"
           summary={
             <p>
-              Custom Liquid and Hydrogen headless Shopify architectures designed to eliminate checkout friction, maximize average order value (AOV), and scale effortlessly during traffic spikes.
+              Custom Liquid and Hydrogen headless architectures for{' '}
+              <Link
+                to="/services/ecommerce"
+                className="text-[#FFC300] hover:text-[#FFD60A] underline underline-offset-3 transition-colors"
+              >
+                conversion-focused Shopify storefronts
+              </Link>{' '}
+              designed to eliminate checkout friction, maximize average order value (AOV), and scale effortlessly during traffic spikes.
             </p>
           }
           features={[
@@ -262,7 +270,14 @@ export const WebsiteDevelopmentPage: React.FC = () => {
 
         <FAQItem question="How do you handle existing SEO rankings and 301 redirects?">
           <p>
-            Preserving your search traffic is non-negotiable. Before launch, we scrape your entire existing domain, generate a 1-to-1 <strong>301 redirect map</strong>, preserve all high-ranking URL slugs where possible, and verify that title tags, meta descriptions, and canonical headers match or improve upon your current rankings.
+            Preserving your search traffic with strict{' '}
+            <Link
+              to="/services/digital-marketing"
+              className="text-[#FFC300] hover:text-[#FFD60A] underline underline-offset-3 transition-colors"
+            >
+              technical SEO
+            </Link>{' '}
+            is non-negotiable. Before launch, we scrape your entire existing domain, generate a 1-to-1 <strong>301 redirect map</strong>, preserve all high-ranking URL slugs where possible, and verify that title tags, meta descriptions, and canonical headers match or improve upon your current rankings.
           </p>
         </FAQItem>
       </FAQAccordion>

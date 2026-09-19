@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ServiceTemplate } from '../../components/ServiceDetail/ServiceTemplate';
 import {
   MetricsGrid,
@@ -78,7 +79,13 @@ export const EcommercePage: React.FC = () => {
           delay={0.1}
         >
           <p>
-            We code custom Shopify themes and headless Hydrogen platforms from the ground up. By building upsells, bundle creators, size guides, and drawer carts directly into native theme code, we cut app subscriptions, boost page speed to the 95th percentile, and capture maximum revenue from every ad click.
+            We code custom Shopify themes and headless Hydrogen platforms from the ground up. By building upsells, bundle creators, size guides, and drawer carts directly into native theme code, we cut app subscriptions, boost page speed to the 95th percentile, and capture maximum revenue from every ad click with{' '}
+            <Link
+              to="/services/digital-marketing"
+              className="text-[#FFC300] hover:text-[#FFD60A] underline underline-offset-3 transition-colors"
+            >
+              data-driven digital marketing
+            </Link>.
           </p>
         </ComparisonCard>
       </ComparisonSection>
@@ -111,7 +118,14 @@ export const EcommercePage: React.FC = () => {
           title="Headless Hydrogen & Next.js Commerce"
           summary={
             <p>
-              Decoupled web storefronts powered by Shopify Storefront API or MedusaJS with React 19 for brands demanding global micro-second rendering.
+              Decoupled web storefronts powered by Shopify Storefront API or MedusaJS on{' '}
+              <Link
+                to="/services/website-development"
+                className="text-[#FFC300] hover:text-[#FFD60A] underline underline-offset-3 transition-colors"
+              >
+                custom React/Next.js platforms
+              </Link>{' '}
+              for brands demanding global micro-second rendering.
             </p>
           }
           features={[
