@@ -11,7 +11,7 @@ interface WhatsAppButtonProps {
 }
 
 export const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
-  phoneNumber = '923201611813',
+  phoneNumber = '+1(228)227-8664',
   message = "Hi Dynova Cloud, I'd like to inquire about your services.",
   tooltipLabel = 'Chat on WhatsApp',
 }) => {
